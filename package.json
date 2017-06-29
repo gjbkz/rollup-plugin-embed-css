@@ -13,7 +13,8 @@
   },
   "repository": "kei-ito/rollup-plugin-embed-css",
   "scripts": {
-    "test": "node test"
+    "test": "node test",
+    "test_coverage": "istanbul cover test"
   },
   "dependencies": {
     "bignumber.js": "^4.0.2",

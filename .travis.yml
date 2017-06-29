@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- '7'
+script: npm run test_coverage
+after_success:
+- npm install codacy-coverage
+- cat ./coverage/lcov.info | ./node_modules/codacy-coverage/bin/codacy-coverage.js
+  --debug
+deploy:
+  provider: npm
+  email: kei.itof@gmail.com
+  api_key:
+    secure: E87ucHUE8XDOCsWKzcDkmtzjYRfJifu2/Pa38wQliFxZMpju2O3CsU06JzmXZjkNQBfGuCePTrb0CrwJ1W3mpr5HZTbYb4xk6s5iPbjSeEQS99qX1ysUveSa1HmSV5nml3SedggjtfOCGhZZWVbDVJaHOi/lfyj7u1v8vG8zOmiQEl9KvGMBl60i9e+02gAHQh7HNuRkrW/T3haQOMu0twWkEAt5JgwSXvmCla2X2EcIBrIuWzIC35nvmqQ+lPcECAyUnkvlFcL0Kfb8F5J1eyvpaVtZiNOFHkiWxW1BREAmQf7Pe5fiMC/EljVKouzlrY5kKsHzbTvB2ZByKDKnnM3wlDYZ8ImdtIauLUQ3YYmL3CRL4P8kk6hc8ULzaIje/UGZhlRKjMhOm6DbNlwU/HQltD68SVDJbH3mzB3MReSEIiwrxfc3++2ZksjgsnF2K+M2M5318zZqMhBSLzziv9KkBLxIaee5BgDeC/BnGoZLrIAf0eiSRHwXzz0Ju7OlRzOdWlXygoHRVQVZNpeROImkl8hw7hvIVbPPaGGj86ufZnztRHNDH3cVPlNljpbuc6llnHCivowhlLGybqDIKwq2s4OvosM1YC03ktX4rrMHd8HhIyfp9o6zD65+PYz3R/2HAsiDfADA255JHU0A2+jyL2HiLEBTxVIciDE8zLo=
+  on:
+    tags: true
+    repo: kei-ito/rollup-plugin-embed-css
+    branch: master
