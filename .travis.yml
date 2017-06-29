@@ -15,3 +15,6 @@ deploy:
     tags: true
     repo: kei-ito/rollup-plugin-embed-css
     branch: master
+env:
+  global:
+    secure: Vh3ZDq+q4SazbjazKRUGCdBZeIVdmGaWXN8amuceuj+7eXLTGNYXoO1ypL016bWhpm31XNXoa+5Z7mGbX+go1DOstDmF3EhFLsrD0hboa7DKXcHzDlmLumgEh/P6a68eSazPoshseAIRSYconTIPrnOaek5LLEMGYII+m9Lk9ZlPnqOjTQphvJvbVo6BOE2UumP9inJN4caJNziHxX/dLV3Zpi4pNOeomsP7+n+uz5rtg197+ucNQd6sTRiUcG7sAYtB/ltdL8Wq8oIzN2ES+4x4MJH0qCCJ5XzBBASPFaqeR03Ob/KcCYUbiqTca75vxpxjBGAox3UQc4LNfgf1HMbmdd7vrQyONiPdNSW86/M4bVQC1uK6MhLe2Lu70/8q6jpz5sHQeqwQLtX7uQi/FMuICL78jneqOVBfTaIDrQuP7Ni8S9eOHZ2jN5/Gph2jujc/bxnyEopjJ+yVmeMDfebuvH/q5oSc9JsLdHrhwlbcGthbAXCxilR/gkQUqzInndVESFAYarxd/JD1O1eVnW/kYhMkFRWT/NRHnVxvAxraB1yVmiBtPgZc7cTzQ6Nv3NhsyNiw7y/tbK7phicU+yJ5yOutgaFz0kPGhZg9ROjkWQYP1JdwQZmaPCbhrFpYfrKiVoEl0BuFd1xYQH0WdqnGf7ED3+HshZrSvTym8yQ=
