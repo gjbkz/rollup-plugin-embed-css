@@ -1,0 +1,27 @@
+{
+  "name": "rollup-plugin-embed-css",
+  "version": "0.0.1",
+  "description": "Embed CSS into JavaScript",
+  "author": {
+    "name": "Kei Ito",
+    "email": "kei.itof@gmail.com",
+    "url": "https://github.com/kei-ito"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=7.6"
+  },
+  "repository": "kei-ito/rollup-plugin-embed-css",
+  "scripts": {
+    "test": "node test"
+  },
+  "dependencies": {
+    "bignumber.js": "^4.0.2",
+    "j1": "0.0.31",
+    "postcss": "^6.0.3",
+    "rollup-pluginutils": "^2.0.1"
+  },
+  "devDependencies": {
+    "rollup": "^0.43.0"
+  }
+}

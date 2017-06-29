@@ -1,0 +1,6 @@
+{
+  "css": "/* .red */\n._0{color:red;}",
+  "style": {
+    "red": "_0"
+  }
+}
