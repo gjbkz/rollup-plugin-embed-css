@@ -10,7 +10,7 @@ const RADIX = 62;
 function plugin(params = {}) {
 
 	const filter = createFilter(params.include, params.exclude);
-	const labeler = new Labeler('classNames');
+	const classLabeler = new Labeler('classNames');
 	const globalRoot = postcss.root();
 
 	async function transform (source, id) {
@@ -24,7 +24,7 @@ function plugin(params = {}) {
 			let replaceCount = 0;
 			rule.selector = selector.replace(/\.([^,\s]+)/g, (match, className) => {
 				replaceCount++;
-				const label = labeler.label(`${id}${className}`);
+				const label = classLabeler.label(`${id}${className}`);
 				const newClassName = `_${new BigNumber(label).toString(RADIX)}`;
 				labeled[className] = newClassName;
 				return `.${newClassName}`;
@@ -51,6 +51,8 @@ function plugin(params = {}) {
 		.map((node) => {
 			return encodeString(`${node}`, labeler);
 		});
+		classLabeler.clear();
+		globalRoot.nodes.splice(0, globalRoot.nodes.length);
 		return `${source}\n${generageCode(labeler.items, encodedRules, params.debug)}`;
 	}
 
