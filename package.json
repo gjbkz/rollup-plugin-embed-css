@@ -17,13 +17,13 @@
     "test_coverage": "istanbul cover test"
   },
   "dependencies": {
+    "j1": "0.0.32",
     "bignumber.js": "^4.0.2",
     "postcss": "^6.0.3",
     "rollup-pluginutils": "^2.0.1"
   },
   "devDependencies": {
     "istanbul": "^1.1.0-alpha.1",
-    "j1": "0.0.32",
     "rollup": "^0.43.0"
   }
 }
