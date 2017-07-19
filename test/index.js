@@ -1,48 +1,57 @@
-const assert = require('assert');
-const fs = require('fs');
-const path = require('path');
-const vm = require('vm');
-const {rollup} = require('rollup');
-const promisify = require('j1/promisify');
-const $console = require('j1/console').create('test');
-const embedCSS = require('..');
+async function test(run) {
 
-async function runTests() {
-	const testsDir = path.join(__dirname, 'tests');
-	const tests = await promisify(fs.readdir, fs)(testsDir);
+	const assert = require('assert');
+	const fs = require('fs');
+	const path = require('path');
+	const vm = require('vm');
+	const {rollup} = require('rollup');
+	const promisify = require('j1/promisify');
+	const readdir = promisify(fs.readdir, fs);
 	const readFile = promisify(fs.readFile, fs);
-	async function run() {
-		const testName = tests.shift();
-		if (!testName) {
-			return;
-		}
-		const testDir = path.join(testsDir, testName);
-		const console = $console.create(`${testName}`);
-		console.info('bundle');
-		const bundle = await rollup({
-			entry: path.join(testDir, 'index.js'),
-			plugins: [
-				embedCSS({
-					debug: true
-				})
-			]
+	const embedCSS = require('..');
+	const testsDir = path.join(__dirname, 'tests');
+
+	for (const testName of await readdir(testsDir)) {
+		await run(testName, async (run) => {
+
+			const testDir = path.join(testsDir, testName);
+			const params = {};
+
+			await run('bundle', async () => {
+				params.bundle = await rollup({
+					entry: path.join(testDir, 'index.js'),
+					plugins: [
+						embedCSS({
+							debug: true
+						})
+					]
+				});
+			});
+
+			await run('generate code', async () => {
+				params.code = (await params.bundle.generate({
+					format: 'cjs'
+				})).code;
+			});
+
+			await run('run code', () => {
+				params.result = {};
+				vm.runInNewContext(params.code, {result: params.result});
+			});
+
+			await run('load expected data', async () => {
+				params.expected = JSON.parse(await readFile(path.join(testDir, 'expected.json'), 'utf8'));
+			});
+
+			await run('test the result', async () => {
+				const {result, expected} = params;
+				assert.equal(result.css, expected.css);
+				assert.deepEqual(result.style, expected.style);
+			});
+
 		});
-		console.info('generate code');
-		const {code} = bundle.generate({
-			format: 'cjs'
-		});
-		const context = {result: {}};
-		vm.runInNewContext(code, context);
-		console.info('load expected data');
-		const expected = JSON.parse(await readFile(path.join(testDir, 'expected.json'), 'utf8'));
-		console.info('test the result');
-		assert.equal(context.result.css, expected.css);
-		assert.deepEqual(context.result.style, expected.style);
-		console.info('end');
-		await run();
 	}
-	await run();
+
 }
 
-runTests()
-.catch($console.onError);
+module.exports = test;

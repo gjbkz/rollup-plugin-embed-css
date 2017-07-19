@@ -13,12 +13,12 @@
   },
   "repository": "kei-ito/rollup-plugin-embed-css",
   "scripts": {
-    "test": "node test",
-    "test_coverage": "istanbul cover test"
+    "test": "node node_modules/j1/run test",
+    "test_coverage": "istanbul cover node_modules/j1/run test"
   },
   "dependencies": {
-    "j1": "0.0.32",
     "bignumber.js": "^4.0.2",
+    "j1": "0.0.36",
     "postcss": "^6.0.3",
     "rollup-pluginutils": "^2.0.1"
   },
