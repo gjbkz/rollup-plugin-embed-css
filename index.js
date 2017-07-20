@@ -11,7 +11,7 @@ function plugin(params = {}) {
 
 	const filter = createFilter(params.include, params.exclude);
 	const classLabeler = new Labeler('classNames');
-	const cache = new Map();
+	const roots = new Map();
 
 	return {
 		name: 'embed-css',
@@ -35,27 +35,27 @@ function plugin(params = {}) {
 					rule.before({text: selector});
 				}
 			});
-			cache.set(id, root.nodes);
+			roots.set(id, root);
 			return `export default ${JSON.stringify(labeled, null, '\t')};`;
 		},
 		transformBundle(source) {
-			const root = postcss.root();
-			for (const [, nodes] of cache) {
-				root.append(...nodes);
-			}
-			root.walk(({raws}) => {
-				for (const key of ['before', 'between', 'after']) {
-					const value = raws[key];
-					if (value) {
-						raws[key] = value.replace(/\s/g, '');
-					}
-				}
-			});
 			const labeler = new Labeler('css');
-			const encodedRules = root.nodes
-			.map((node) => {
-				return encodeString(`${node}`, labeler);
-			});
+			const encodedRules = [];
+			for (const [, root] of roots) {
+				root.walk(({raws}) => {
+					for (const key of ['before', 'between', 'after']) {
+						const value = raws[key];
+						if (value) {
+							raws[key] = value.replace(/\s/g, '');
+						}
+					}
+				});
+				encodedRules.push(
+					...root.nodes.map((node) => {
+						return encodeString(`${node}`, labeler);
+					})
+				);
+			}
 			return `${source}\n${generageCode(labeler.items, encodedRules, params.debug)}`;
 		}
 	};
