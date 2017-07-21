@@ -1,3 +1,6 @@
+@import './module1.css';
+@import './module2.css' $mod2;
+
 .red>div {
 	color: red;
 }
@@ -22,6 +25,12 @@
 		color: red;
 	}
 	.red+.blue>*>.green:active {
+		color: red;
+	}
+	$1.one {
+		color: red;
+	}
+	$mod2.two {
 		color: red;
 	}
 }
