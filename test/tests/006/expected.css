@@ -1,10 +1,13 @@
-/* .one */
-._0 {
-	color: red;
-}
 /* .two */
+._0 {
+	color: green;
+}
+/* .one */
 ._1 {
 	color: red;
+}
+._0 {
+	color: blue;
 }
 /* .red>div */
 ._2>div {
@@ -38,9 +41,6 @@
 	}
 	/* .red+.blue>*>.green:active */
 	._2+._3>*>._4:active {
-		color: red;
-	}
-	._0 {
 		color: red;
 	}
 	._1 {
