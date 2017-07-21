@@ -38,16 +38,16 @@ const embedCSS = require('rollup-plugin-embed-css');
 
 Promise.resolve()
 .then(async () => {
-  const bundle = await rollup({
-    entry: 'index.js',
-    plugins: [embedCSS()]
-  });
-  const {code} = await bundle.generate({format: 'es'});
-  fs.writeFileSync('result.js', code);
+	const bundle = await rollup({
+		entry: 'index.js',
+		plugins: [embedCSS()]
+	});
+	const {code} = await bundle.generate({format: 'es'});
+	fs.writeFileSync('result.js', code);
 })
 .catch((error) => {
-  console.error(error);
-  process.exit(1);
+	console.error(error);
+	process.exit(1);
 });
 ```
 
