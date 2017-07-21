@@ -7,6 +7,20 @@ const encodeString = require('./encodeString');
 const generageCode = require('./generageCode');
 const RADIX = 62;
 
+function minify(node) {
+	const {raws, nodes = []} = node;
+	for (const key of ['before', 'between', 'after']) {
+		const value = raws[key];
+		if (value) {
+			raws[key] = value.replace(/\s/g, '');
+		}
+	}
+	for (const childNode of nodes) {
+		minify(childNode);
+	}
+	return node;
+}
+
 function plugin(params = {}) {
 
 	const filter = createFilter(params.include, params.exclude);
@@ -24,7 +38,7 @@ function plugin(params = {}) {
 			root.walkRules((rule) => {
 				const {selector} = rule;
 				let replaceCount = 0;
-				rule.selector = selector.replace(/\.([^,\s]+)/g, (match, className) => {
+				rule.selector = selector.replace(/\.([^,\s>+~]+)/g, (match, className) => {
 					replaceCount++;
 					const label = classLabeler.label(`${id}${className}`);
 					const newClassName = `_${new BigNumber(label).toString(RADIX)}`;
@@ -32,7 +46,7 @@ function plugin(params = {}) {
 					return `.${newClassName}`;
 				});
 				if (0 < replaceCount && params.debug) {
-					rule.before({text: selector});
+					rule.before({text: selector.replace(/[\r\n]+/, ' ')});
 				}
 			});
 			roots.set(id, root);
@@ -42,16 +56,9 @@ function plugin(params = {}) {
 			const labeler = new Labeler('css');
 			const encodedRules = [];
 			for (const [, root] of roots) {
-				root.walk(({raws}) => {
-					for (const key of ['before', 'between', 'after']) {
-						const value = raws[key];
-						if (value) {
-							raws[key] = value.replace(/\s/g, '');
-						}
-					}
-				});
 				encodedRules.push(
-					...root.nodes.map((node) => {
+					...(params.debug ? root : minify(root)).nodes
+					.map((node) => {
 						return encodeString(`${node}`, labeler);
 					})
 				);

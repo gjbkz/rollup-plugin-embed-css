@@ -1,0 +1,15 @@
+.red>div {
+	color: red;
+}
+.red>div,
+.red+.blue {
+	color: red;
+}
+@media (max-width: 500px) {
+	.red {
+		color: green;
+	}
+	.red+.blue>*>.green {
+		color: red;
+	}
+}

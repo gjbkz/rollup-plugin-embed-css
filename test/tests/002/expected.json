@@ -1,6 +1,3 @@
 {
-  "css": "/* .red */\n._0{color:red;}\n@media (max-width: 500px){/* .red */._0{color:green;}}",
-  "style": {
-    "red": "_0"
-  }
+  "red": "_0"
 }
