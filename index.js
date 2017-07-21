@@ -50,7 +50,8 @@ function plugin(params = {}) {
 		});
 		const replacements = new Map();
 		for (const [name, target] of dependencies) {
-			const {classNames: importedClassNames} = await load(path.join(path.dirname(id), target));
+			const result = await load(path.join(path.dirname(id), target));
+			const {classNames: importedClassNames} = result;
 			for (const className of Object.keys(importedClassNames)) {
 				replacements.set(importedClassNames[className], `${name}.${className}`);
 			}
@@ -77,11 +78,12 @@ function plugin(params = {}) {
 			}
 		});
 		roots.set(id, root);
-		cache.set(id, classNames);
-		return {
+		const result = {
 			classNames,
 			dependencies
 		};
+		cache.set(id, result);
+		return result;
 	}
 
 	return {
