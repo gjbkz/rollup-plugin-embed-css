@@ -38,7 +38,7 @@ function plugin(params = {}) {
 			root.walkRules((rule) => {
 				const {selector} = rule;
 				let replaceCount = 0;
-				rule.selector = selector.replace(/\.([^,\s>+~]+)/g, (match, className) => {
+				rule.selector = selector.replace(/\.([^,\s>+~\[\]]+)/g, (match, className) => {
 					replaceCount++;
 					const label = classLabeler.label(`${id}${className}`);
 					const newClassName = `_${new BigNumber(label).toString(RADIX)}`;
