@@ -45,8 +45,16 @@ async function test(run) {
 
 			await run('test the result', async () => {
 				const {result, expected} = params;
-				assert.equal(result.css, expected.css);
-				assert.deepEqual(result.style, expected.style);
+				assert.deepEqual(result.style, expected);
+			});
+
+			await run('load expected css', async () => {
+				params.expectedCSS = (await readFile(path.join(testDir, 'expected.css'), 'utf8')).trim();
+			});
+
+			await run('test the result', async () => {
+				const {result, expectedCSS} = params;
+				assert.equal(result.css, expectedCSS);
 			});
 
 		});

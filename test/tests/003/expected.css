@@ -1,0 +1,19 @@
+/* .red>div */
+._0>div {
+	color: red;
+}
+/* .red>div, .red+.blue */
+._0>div,
+._0+._1 {
+	color: red;
+}
+@media (max-width: 500px) {
+	/* .red */
+	._0 {
+		color: green;
+	}
+	/* .red+.blue>*>.green */
+	._0+._1>*>._2 {
+		color: red;
+	}
+}

@@ -1,0 +1,10 @@
+/* .red */
+._0 {
+	color: red;
+}
+@media (max-width: 500px) {
+	/* .red */
+	._0 {
+		color: green;
+	}
+}
