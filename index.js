@@ -63,7 +63,7 @@ function plugin(params = {}) {
 			.reduce((selector, [to, from]) => {
 				return selector.split(from).join(`.${to}`);
 			}, selector)
-			.replace(/\.([^,\s>+~:\[\]]+)/g, (match, className) => {
+			.replace(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g, (match, className) => {
 				if (replacements.has(className)) {
 					return match;
 				}
