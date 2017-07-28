@@ -40,7 +40,9 @@ Promise.resolve()
 .then(async () => {
 	const bundle = await rollup({
 		entry: 'index.js',
-		plugins: [embedCSS()]
+		plugins: [embedCSS({
+			postcss: [] // optional
+		})]
 	});
 	const {code} = await bundle.generate({format: 'es'});
 	fs.writeFileSync('result.js', code);
@@ -124,6 +126,10 @@ You can also name the imports.
 .sample>modA.classA {...}
 .sample>modB.classB {...}
 ```
+
+## Options
+
+- `postcss`: An array which passed to [postcss](https://github.com/postcss/postcss).
 
 ## LICENSE
 
