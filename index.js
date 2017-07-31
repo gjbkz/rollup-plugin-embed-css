@@ -7,7 +7,7 @@ const {createFilter} = require('rollup-pluginutils');
 const postcss = require('postcss');
 const BigNumber = require('bignumber.js');
 const encodeString = require('./encodeString');
-const generageCode = require('./generageCode');
+const generateCode = require('./generateCode');
 const RADIX = 62;
 
 function minify(node) {
@@ -113,7 +113,7 @@ function plugin(params = {}) {
 					})
 				);
 			}
-			return `${source}\n${generageCode(labeler.items, encodedRules, params.debug)}`;
+			return `${source}\n${generateCode(labeler.items, encodedRules, params.debug)}`;
 		}
 	};
 }
