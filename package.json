@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-embed-css",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Embed CSS into JavaScript",
   "author": {
     "name": "Kei Ito",
