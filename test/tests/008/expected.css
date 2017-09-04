@@ -1,0 +1,64 @@
+/* .two */
+._0 {
+	color: green;
+}
+/* .one */
+._1 {
+	color: red;
+}
+._0 {
+	color: blue;
+}
+/* .red>div */
+._2>div {
+	color: red;
+}
+/* .red>div .=foo */
+._2>div .foo {
+	color: red;
+}
+/* .red>div, .red+.blue */
+._2>div,
+._2+._3 {
+	color: red;
+}
+/* .red+.blue[data-state='0'] */
+._2+._3[data-state='0'] {
+	color: red;
+}
+/* .red+.blue:hover */
+._2+._3:hover {
+	color: red;
+}
+/* .red.blue:hover */
+._2._3:hover {
+	color: red;
+}
+/* .red.blue.=foo:hover */
+._2._3.foo:hover {
+	color: red;
+}
+@media (max-width: 500px) {
+	/* .red */
+	._2 {
+		color: green;
+	}
+	/* .red+.blue>*>.green */
+	._2+._3>*>._4 {
+		color: red;
+	}
+	/* .red+.blue>*>.green[data-state=abc] */
+	._2+._3>*>._4[data-state=abc] {
+		color: red;
+	}
+	/* .red+.blue>*>.green:active */
+	._2+._3>*>._4:active {
+		color: red;
+	}
+	._1 {
+		color: red;
+	}
+	._1.bar {
+		color: red;
+	}
+}

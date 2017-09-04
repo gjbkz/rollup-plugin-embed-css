@@ -1,0 +1,44 @@
+@import './module1.css';
+
+.red>div {
+	color: red;
+}
+.red>div .=foo {
+	color: red;
+}
+.red>div,
+.red+.blue {
+	color: red;
+}
+.red+.blue[data-state='0'] {
+	color: red;
+}
+.red+.blue:hover {
+	color: red;
+}
+.red.blue:hover {
+	color: red;
+}
+.red.blue.=foo:hover {
+	color: red;
+}
+@media (max-width: 500px) {
+	.red {
+		color: green;
+	}
+	.red+.blue>*>.green {
+		color: red;
+	}
+	.red+.blue>*>.green[data-state=abc] {
+		color: red;
+	}
+	.red+.blue>*>.green:active {
+		color: red;
+	}
+	$1.one {
+		color: red;
+	}
+	$1.one.=bar {
+		color: red;
+	}
+}
