@@ -1,0 +1,8 @@
+@import './module2.css' $mod2;
+
+.one {
+	color: red;
+}
+$mod2.two {
+	color: blue;
+}

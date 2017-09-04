@@ -63,9 +63,9 @@ function plugin(params = {}) {
 			.reduce((selector, [to, from]) => {
 				return selector.split(from).join(`.${to}`);
 			}, selector)
-			.replace(/\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g, (match, className) => {
-				if (replacements.has(className)) {
-					return match;
+			.replace(/\.=?(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g, (match, className) => {
+				if (match.startsWith('.=') || replacements.has(className)) {
+					return `.${className}`;
 				}
 				replaceCount++;
 				const label = classLabeler.label(`${id}${className}`);
