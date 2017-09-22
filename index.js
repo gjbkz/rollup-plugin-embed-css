@@ -100,9 +100,12 @@ function plugin(params = {}) {
 				}),
 				`export default ${JSON.stringify(classNames, null, '\t')};`
 			].join('\n');
-			return code;
+			return {
+				code,
+				map: {mappings: ''},
+			};
 		},
-		transformBundle(source) {
+		outro() {
 			const labeler = new Labeler('css');
 			const encodedRules = [];
 			for (const [, root] of roots) {
@@ -113,7 +116,7 @@ function plugin(params = {}) {
 					})
 				);
 			}
-			return `${source}\n${generateCode(labeler.items, encodedRules, params.debug)}`;
+			return generateCode(labeler.items, encodedRules, params.debug);
 		}
 	};
 }
