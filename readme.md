@@ -8,9 +8,9 @@
 
 A plugin to embed css into JavaScript codes using [postcss](https://github.com/postcss/postcss).
 
-1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular.
-2. This plugin appends scripts which loads imported styles into the page. You don't have to load external .css files.
-3. This plugin supports `@import` syntax. The plugin detects them and append imported files to dependencies.
+1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular. This means you don't have to concern about naming somethings. For example, you can use `.container` for every components.
+2. This plugin appends a script which loads imported styles into the page using [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule). You don't have to load external .css files.
+3. This plugin detects `@import` syntax and append imported files to dependencies.
 
 ## Installation
 
@@ -41,7 +41,7 @@ const embedCSS = require('rollup-plugin-embed-css');
 Promise.resolve()
 .then(async () => {
 	const bundle = await rollup({
-		entry: 'index.js',
+		input: 'index.js',
 		plugins: [embedCSS({
 			postcss: [] // optional
 		})]
