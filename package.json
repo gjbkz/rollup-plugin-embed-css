@@ -2,6 +2,7 @@
   "name": "rollup-plugin-embed-css",
   "version": "0.1.4",
   "description": "Embed CSS into JavaScript",
+  "main": "src/index.js",
   "author": {
     "name": "Kei Ito",
     "email": "kei.itof@gmail.com",
@@ -18,12 +19,12 @@
   },
   "dependencies": {
     "bignumber.js": "^4.0.2",
-    "j1": "0.0.38",
+    "j1": "0.0.47",
     "postcss": "^6.0.10",
     "rollup-pluginutils": "^2.0.1"
   },
   "devDependencies": {
     "istanbul": "^1.1.0-alpha.1",
-    "rollup": "^0.49.2"
+    "rollup": "^0.50.0"
   }
 }
