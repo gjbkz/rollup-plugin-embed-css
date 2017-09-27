@@ -8,7 +8,7 @@
 
 A plugin to embed css into JavaScript codes using [postcss](https://github.com/postcss/postcss).
 
-1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular. This means you don't have to concern about naming somethings. For example, you can use `.container` for every components.
+1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular. This means you don't have to concern about naming somethings. For example, you can use `.container` for every components in a project.
 2. This plugin appends a script which loads imported styles into the page using [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule). You don't have to load external .css files.
 3. This plugin detects `@import` syntax and append imported files to dependencies.
 
@@ -40,18 +40,20 @@ const embedCSS = require('rollup-plugin-embed-css');
 
 Promise.resolve()
 .then(async () => {
-	const bundle = await rollup({
-		input: 'index.js',
-		plugins: [embedCSS({
-			postcss: [] // optional
-		})]
-	});
-	const {code} = await bundle.generate({format: 'es'});
-	fs.writeFileSync('result.js', code);
+  const bundle = await rollup({
+    input: 'index.js',
+    plugins: [
+      embedCSS({
+        postcss: [] // optional
+      })
+    ]
+  });
+  const {code} = await bundle.generate({format: 'es'});
+  fs.writeFileSync('result.js', code);
 })
 .catch((error) => {
-	console.error(error);
-	process.exit(1);
+  console.error(error);
+  process.exit(1);
 });
 ```
 
@@ -61,40 +63,40 @@ Then, you'll get [result.js](https://github.com/kei-ito/rollup-plugin-embed-css/
 ```javascript
 // result.js
 var style = {
-	"container": "_1"
+  "container": "_1"
 };
 
 function header() {
-	const element = document.createElement('header');
-	element.classList.add(style.container);
-	return element;
+  const element = document.createElement('header');
+  element.classList.add(style.container);
+  return element;
 }
 
 var style$1 = {
-	"container": "_2"
+  "container": "_2"
 };
 
 function footer() {
-	const element = document.createElement('footer');
-	element.classList.add(style$1.container);
-	return element;
+  const element = document.createElement('footer');
+  element.classList.add(style$1.container);
+  return element;
 }
 
 document.body.appendChild(header());
 document.body.appendChild(footer());
 (function (words, rules) {
-	var sheet = document.head.appendChild(document.createElement('style')).sheet;
-	function decode(indexes) {
-		return indexes.map(function (index) {
-			return words[index];
-		}).join('');
-	}
-	for (var i = rules.length; i--;) {
-		sheet.insertRule(decode(rules[i]), 0);
-	}
+  var sheet = document.head.appendChild(document.createElement('style')).sheet;
+  function decode(indexes) {
+    return indexes.map(function (index) {
+      return words[index];
+    }).join('');
+  }
+  for (var i = rules.length; i--;) {
+    sheet.insertRule(decode(rules[i]), 0);
+  }
 }(
-	[".","_0","{","width",":","100","px",";","}","_1","background","red",">","200","_2","blue"],
-	[[0,1,2,3,4,5,6,7,8],[0,9,2,10,4,11,7,8],[0,9,12,0,1,2,3,4,13,6,7,8],[0,14,2,10,4,15,7,8]]
+  [".","_0","{","width",":","100","px",";","}","_1","background","red",">","200","_2","blue"],
+  [[0,1,2,3,4,5,6,7,8],[0,9,2,10,4,11,7,8],[0,9,12,0,1,2,3,4,13,6,7,8],[0,14,2,10,4,15,7,8]]
 ));
 ```
 
@@ -120,6 +122,7 @@ You can use `@import` syntax when the style declarations requires class names in
 ```
 
 Imports are named automatically as $1, $2, ...
+
 You can also name the imports.
 
 ```css
