@@ -19,7 +19,7 @@ async function test(run) {
 
 			await run('bundle', async () => {
 				params.bundle = await rollup({
-					entry: path.join(testDir, 'index.js'),
+					input: path.join(testDir, 'index.js'),
 					plugins: [
 						embedCSS({
 							debug: true
