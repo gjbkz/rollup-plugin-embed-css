@@ -13,7 +13,7 @@ function generateCode(words, rules, debug) {
 		}).join('');
 	}
 	for (var i = rules.length; i--;) {
-		const decoded = decode(rules[i]);
+		var decoded = decode(rules[i]);
 		try {
 			sheet.insertRule(decoded, 0);
 		} catch (error) {
