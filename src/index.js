@@ -1,11 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const {Labeler} = require('j1/labeler');
-const promisify = require('j1/promisify');
-const readFile = promisify(fs.readFile, fs);
 const {createFilter} = require('rollup-pluginutils');
 const postcss = require('postcss');
 const BigNumber = require('bignumber.js');
+const Labeler = require('./Labeler');
 const encodeString = require('./encodeString');
 const generateCode = require('./generateCode');
 const RADIX = 62;
@@ -35,7 +33,14 @@ function plugin(params = {}) {
 		if (!givenSource && cache.has(id)) {
 			return cache.get(id);
 		}
-		const source = givenSource || await readFile(id, 'utf8');
+		const source = givenSource || await new Promise((resolve, reject) => {
+			fs.readFile(id, 'utf8', (error, data) => {
+				if (error) {
+					return reject(error);
+				}
+				resolve(data);
+			});
+		});
 		const {root} = await postcss(params.postcss || []).process(source);
 		const classNames = {};
 		const dependencies = new Map();
@@ -116,7 +121,7 @@ function plugin(params = {}) {
 					})
 				);
 			}
-			return generateCode(labeler.items, encodedRules, params.debug);
+			return generateCode(labeler, encodedRules, params.debug);
 		}
 	};
 }

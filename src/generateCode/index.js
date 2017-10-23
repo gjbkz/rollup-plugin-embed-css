@@ -1,4 +1,8 @@
-function generateCode(words, rules, debug) {
+function generateCode(labeler, rules, debug) {
+	const words = [];
+	for (const [word, index] of labeler) {
+		words[index] = word;
+	}
 	return debug
 	? `result.css = ${JSON.stringify(rules.map((indexes) => {
 		return indexes.map((index) => {
