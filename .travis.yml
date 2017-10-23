@@ -5,8 +5,8 @@ node_js:
 script: npm run test_coverage
 after_success:
 - npm install codacy-coverage
-- cat ./coverage/lcov.info | ./node_modules/codacy-coverage/bin/codacy-coverage.js
-  --debug
+- cat ./coverage/lcov.info | ./node_modules/codacy-coverage/bin/codacy-coverage.js --debug
+- npm uninstall codacy-coverage
 deploy:
   provider: npm
   email: kei.itof@gmail.com
