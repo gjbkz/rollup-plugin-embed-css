@@ -5,6 +5,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/9b26fe15174b4c8a86f96bbdc0b00db2)](https://www.codacy.com/app/kei.itof/rollup-plugin-embed-css?utm_source=github.com&utm_medium=referral&utm_content=kei-ito/rollup-plugin-embed-css&utm_campaign=Badge_Coverage)
 [![dependencies Status](https://david-dm.org/kei-ito/rollup-plugin-embed-css/status.svg)](https://david-dm.org/kei-ito/rollup-plugin-embed-css)
 [![devDependencies Status](https://david-dm.org/kei-ito/rollup-plugin-embed-css/dev-status.svg)](https://david-dm.org/kei-ito/rollup-plugin-embed-css?type=dev)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css?ref=badge_shield)
 
 A plugin to embed css into JavaScript codes using [postcss](https://github.com/postcss/postcss).
 
@@ -139,3 +140,6 @@ You can also name the imports.
 ## LICENSE
 
 MIT
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css?ref=badge_large)
