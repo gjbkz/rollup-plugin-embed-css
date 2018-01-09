@@ -93,15 +93,25 @@ module.exports = function plugin(params = {}) {
 				}
 			});
 			const replacements = new Map();
-			return Promise.all(Array.from(dependencies).map(([name, target]) => {
-				return load(path.join(path.dirname(id), target))
-				.then((result) => {
-					const {classNames: importedClassNames} = result;
-					for (const className of Object.keys(importedClassNames)) {
-						replacements.set(importedClassNames[className], `${name}.${className}`);
+			return new Promise((resolve, reject) => {
+				const queue = Array.from(dependencies);
+				next();
+				function next() {
+					if (queue.length === 0) {
+						resolve();
 					}
-				});
-			}))
+					const [name, target] = queue.shift();
+					load(path.join(path.dirname(id), target))
+					.then((result) => {
+						const {classNames: importedClassNames} = result;
+						for (const className of Object.keys(importedClassNames)) {
+							replacements.set(importedClassNames[className], `${name}.${className}`);
+						}
+						next();
+					})
+					.catch(reject);
+				}
+			})
 			.then(() => {
 				root.walkRules((rule) => {
 					const {selector} = rule;
