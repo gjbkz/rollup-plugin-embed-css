@@ -27,7 +27,7 @@ test('projects', (test) => {
 				const params = {};
 				test('bundle', () => {
 					return rollup({
-						input: path.join(directory, 'index.js'),
+						input: path.join(directory, 'src', 'index.js'),
 						plugins: [
 							embedCSS({debug: true}),
 						],

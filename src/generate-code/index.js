@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+const source = fs.readFileSync(path.join(__dirname, 'source', 'index.js'), 'utf8');
 module.exports = function generateCode(labeler, rules, debug) {
 	const words = [];
 	for (const [word, index] of labeler) {
@@ -9,23 +12,7 @@ module.exports = function generateCode(labeler, rules, debug) {
 			return words[index];
 		}).join('');
 	}).join('\n'))};`
-	: `(function (words, rules) {
-	var sheet = document.head.appendChild(document.createElement('style')).sheet;
-	function decode(indexes) {
-		return indexes.map(function (index) {
-			return words[index];
-		}).join('');
-	}
-	for (var i = rules.length; i--;) {
-		var decoded = decode(rules[i]);
-		try {
-			sheet.insertRule(decoded, 0);
-		} catch (error) {
-			console.info(error, decoded);
-		}
-	}
-}(
-	${JSON.stringify(words)},
-	${JSON.stringify(rules)}
-));`;
+	: source
+	.replace('\'WORDS\'', JSON.stringify(words))
+	.replace('\'RULES\'', JSON.stringify(rules));
 };

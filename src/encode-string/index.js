@@ -1,5 +1,4 @@
-const Labeler = require('../-labeler');
-module.exports = function encodeString(string, labeler = new Labeler()) {
+module.exports = function encodeString(string, labeler) {
 	let pos = 0;
 	const labels = [];
 	string.replace(/[^\w]|px/g, (match, index, source) => {
