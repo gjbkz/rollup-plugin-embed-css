@@ -1,4 +1,4 @@
-const {Labeler} = require('j1/labeler');
+const {Labeler} = require('../Labeler');
 
 function encodeString(string, labeler = new Labeler()) {
 	let pos = 0;

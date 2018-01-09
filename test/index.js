@@ -1,65 +1,86 @@
-async function test(run) {
+const test = require('@nlib/test');
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
+const {rollup} = require('rollup');
+const promisify = require('@nlib/promisify');
+const readdir = promisify(fs.readdir, fs);
+const readFile = promisify(fs.readFile, fs);
+const embedCSS = require('..');
+const testsDir = path.join(__dirname, 'tests');
 
-	const assert = require('assert');
-	const fs = require('fs');
-	const path = require('path');
-	const vm = require('vm');
-	const {rollup} = require('rollup');
-	const promisify = require('j1/promisify');
-	const readdir = promisify(fs.readdir, fs);
-	const readFile = promisify(fs.readFile, fs);
-	const embedCSS = require('..');
-	const testsDir = path.join(__dirname, 'tests');
+test('rollup-plugin-embed-css', (test) => {
 
-	for (const testName of await readdir(testsDir)) {
-		await run(testName, async (run) => {
+	const projectsDirectory = path.join(__dirname, 'projects');
+	const projects = [];
 
-			const testDir = path.join(testsDir, testName);
-			const params = {};
+	test('readdir', () => {
+		return readdir(projectsDirectory)
+		.then((names) => {
+			projects.push(...names);
+		});
+	});
 
-			await run('bundle', async () => {
-				params.bundle = await rollup({
-					input: path.join(testDir, 'index.js'),
-					plugins: [
-						embedCSS({
-							debug: true
-						})
-					]
+	test('test projects', (test) => {
+		for (const name of projects) {
+			test(name, (test) => {
+				const directory = path.join(projectsDirectory, name);
+				const params = {};
+
+				test('bundle', () => {
+					return rollup({
+						input: path.join(directory, 'index.js'),
+						plugins: [
+							embedCSS({
+								debug: true
+							})
+						]
+					})
+					.then((bundle) => {
+						params.bundle = bundle;
+					});
+				});
+
+				test('generate code', () => {
+					return params.bundle.generate({
+						format: 'cjs'
+					})
+					.then(({code}) => {
+						params.code = code;
+					});
+				});
+
+				test('run code', () => {
+					const context = {result: {}};
+					vm.runInNewContext(params.code, context);
+					params.result = context.result;
+				});
+
+				test('load expected data', () => {
+					return readFile(path.join(directory, 'expected.json'), 'utf8')
+					.then((json) => {
+						params.expected = JSON.parse(json);
+					});
+				});
+
+				test('test the result', (test) => {
+					const {result, expected} = params;
+					test.object(result.style, expected);
+				});
+
+				test('load expected css', () => {
+					return readFile(path.join(directory, 'expected.css'), 'utf8')
+					.then((css) => {
+						params.expectedCSS = css.trim();
+					});
+				});
+
+				test('test the result', (test) => {
+					const {result, expectedCSS} = params;
+					test.lines(result.css, expectedCSS);
 				});
 			});
+		}
+	});
 
-			await run('generate code', async () => {
-				params.code = (await params.bundle.generate({
-					format: 'cjs'
-				})).code;
-			});
-
-			await run('run code', () => {
-				params.result = {};
-				vm.runInNewContext(params.code, {result: params.result});
-			});
-
-			await run('load expected data', async () => {
-				params.expected = JSON.parse(await readFile(path.join(testDir, 'expected.json'), 'utf8'));
-			});
-
-			await run('test the result', async () => {
-				const {result, expected} = params;
-				assert.deepEqual(result.style, expected);
-			});
-
-			await run('load expected css', async () => {
-				params.expectedCSS = (await readFile(path.join(testDir, 'expected.css'), 'utf8')).trim();
-			});
-
-			await run('test the result', async () => {
-				const {result, expectedCSS} = params;
-				assert.equal(result.css, expectedCSS);
-			});
-
-		});
-	}
-
-}
-
-module.exports = test;
+});

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@nlib/lint": "^2.2.1",
+    "@nlib/promisify": "^1.0.1",
     "@nlib/test": "^1.2.3",
     "bignumber.js": "^4.0.2",
     "postcss": "^6.0.16",
