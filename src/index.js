@@ -3,9 +3,9 @@ const path = require('path');
 const {createFilter} = require('rollup-pluginutils');
 const postcss = require('postcss');
 const BigNumber = require('bignumber.js');
-const Labeler = require('./Labeler');
-const encodeString = require('./encodeString');
-const generateCode = require('./generateCode');
+const Labeler = require('./-labeler');
+const encodeString = require('./encode-string');
+const generateCode = require('./generate-code');
 const RADIX = 62;
 
 function minify(node) {
@@ -25,7 +25,7 @@ function minify(node) {
 function plugin(params = {}) {
 
 	const filter = createFilter(params.include, params.exclude);
-	const classLabeler = new Labeler('classNames');
+	const classLabeler = new Labeler();
 	const roots = new Map();
 	const cache = new Map();
 
@@ -36,12 +36,13 @@ function plugin(params = {}) {
 		const source = givenSource || await new Promise((resolve, reject) => {
 			fs.readFile(id, 'utf8', (error, data) => {
 				if (error) {
-					return reject(error);
+					reject(error);
+				} else {
+					resolve(data);
 				}
-				resolve(data);
 			});
 		});
-		const {root} = await postcss(params.postcss || []).process(source);
+		const {root} = await postcss(params.postcss || []).process(source, {from: id});
 		const classNames = {};
 		const dependencies = new Map();
 		root.walkAtRules((node, index) => {
@@ -85,7 +86,7 @@ function plugin(params = {}) {
 		roots.set(id, root);
 		const result = {
 			classNames,
-			dependencies
+			dependencies,
 		};
 		cache.set(id, result);
 		return result;
@@ -93,7 +94,7 @@ function plugin(params = {}) {
 
 	return {
 		name: 'embed-css',
-		async transform (source, id) {
+		async transform(source, id) {
 			if (!filter(id) || path.extname(id) !== '.css') {
 				return null;
 			}
@@ -103,7 +104,7 @@ function plugin(params = {}) {
 				.map(([, target]) => {
 					return `import '${target}';`;
 				}),
-				`export default ${JSON.stringify(classNames, null, '\t')};`
+				`export default ${JSON.stringify(classNames, null, '\t')};`,
 			].join('\n');
 			return {
 				code,
@@ -111,7 +112,7 @@ function plugin(params = {}) {
 			};
 		},
 		outro() {
-			const labeler = new Labeler('css');
+			const labeler = new Labeler();
 			const encodedRules = [];
 			for (const [, root] of roots) {
 				encodedRules.push(
@@ -122,7 +123,7 @@ function plugin(params = {}) {
 				);
 			}
 			return generateCode(labeler, encodedRules, params.debug);
-		}
+		},
 	};
 }
 module.exports = plugin;

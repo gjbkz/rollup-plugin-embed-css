@@ -1,4 +1,4 @@
-function generateCode(labeler, rules, debug) {
+module.exports = function generateCode(labeler, rules, debug) {
 	const words = [];
 	for (const [word, index] of labeler) {
 		words[index] = word;
@@ -28,6 +28,4 @@ function generateCode(labeler, rules, debug) {
 	${JSON.stringify(words)},
 	${JSON.stringify(rules)}
 ));`;
-}
-
-module.exports = generateCode;
+};
