@@ -1,8 +1,8 @@
 # rollup-plugin-embed-css
 
 [![Build Status](https://travis-ci.org/kei-ito/rollup-plugin-embed-css.svg?branch=master)](https://travis-ci.org/kei-ito/rollup-plugin-embed-css)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9b26fe15174b4c8a86f96bbdc0b00db2)](https://www.codacy.com/app/kei.itof/rollup-plugin-embed-css?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kei-ito/rollup-plugin-embed-css&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/9b26fe15174b4c8a86f96bbdc0b00db2)](https://www.codacy.com/app/kei.itof/rollup-plugin-embed-css?utm_source=github.com&utm_medium=referral&utm_content=kei-ito/rollup-plugin-embed-css&utm_campaign=Badge_Coverage)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/kei-ito/rollup-plugin-embed-css?branch=master&svg=true)](https://ci.appveyor.com/project/kei-ito/rollup-plugin-embed-css/branch/master)
+[![codecov](https://codecov.io/gh/kei-ito/rollup-plugin-embed-css/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/rollup-plugin-embed-css)
 [![dependencies Status](https://david-dm.org/kei-ito/rollup-plugin-embed-css/status.svg)](https://david-dm.org/kei-ito/rollup-plugin-embed-css)
 [![devDependencies Status](https://david-dm.org/kei-ito/rollup-plugin-embed-css/dev-status.svg)](https://david-dm.org/kei-ito/rollup-plugin-embed-css?type=dev)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css?ref=badge_shield)
@@ -11,7 +11,7 @@ A plugin to embed css into JavaScript codes using [postcss](https://github.com/p
 
 1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular. This means you don't have to concern about naming somethings. For example, you can use `.container` for every components in a project.
 2. This plugin appends a script which loads imported styles into the page using [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule). You don't have to load external .css files.
-3. This plugin detects `@import` syntax and append imported files to dependencies.
+3. This plugin detects `@import` syntax and append imported files to dependencies. It works well with [`rollup.watch`](https://rollupjs.org/#rollup-watch).
 
 ## Installation
 

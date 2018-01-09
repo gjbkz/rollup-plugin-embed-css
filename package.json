@@ -14,17 +14,19 @@
   },
   "repository": "kei-ito/rollup-plugin-embed-css",
   "scripts": {
-    "test": "node node_modules/j1/run test",
-    "test_coverage": "istanbul cover node_modules/j1/run test"
+    "lint": "nlib-lint src test/*.js test/*/*.js",
+    "test": "node test",
+    "test_coverage": "nyc --reporter=lcov --reporter=text npm test"
   },
   "dependencies": {
+    "@nlib/lint": "^2.2.1",
+    "@nlib/test": "^1.2.3",
     "bignumber.js": "^4.0.2",
-    "postcss": "^6.0.10",
+    "postcss": "^6.0.16",
     "rollup-pluginutils": "^2.0.1"
   },
   "devDependencies": {
-    "istanbul": "^1.1.0-alpha.1",
-    "j1": "0.0.48",
-    "rollup": "^0.50.0"
+    "@nlib/promisify": "^1.0.1",
+    "rollup": "^0.50.1"
   }
 }
