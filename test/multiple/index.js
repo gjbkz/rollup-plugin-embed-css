@@ -8,7 +8,7 @@ const readdir = promisify(fs.readdir, fs);
 const readFile = promisify(fs.readFile, fs);
 const stat = promisify(fs.stat, fs);
 const embedCSS = require('../..');
-test('projects', (test) => {
+test('multiple', (test) => {
 	const projects = [];
 	test('readdir', () => {
 		return readdir(__dirname)

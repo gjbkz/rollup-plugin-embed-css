@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "no-var": "off",
+    "quotes": "off",
+    "comma-dangle": "off"
+  }
+}
