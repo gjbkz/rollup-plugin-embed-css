@@ -31,9 +31,7 @@ test('rollup-plugin-embed-css', (test) => {
 					return rollup({
 						input: path.join(directory, 'index.js'),
 						plugins: [
-							embedCSS({
-								debug: true
-							})
+							embedCSS({debug: true})
 						]
 					})
 					.then((bundle) => {
@@ -42,16 +40,14 @@ test('rollup-plugin-embed-css', (test) => {
 				});
 
 				test('generate code', () => {
-					return params.bundle.generate({
-						format: 'cjs'
-					})
+					return params.bundle.generate({format: 'es'})
 					.then(({code}) => {
 						params.code = code;
 					});
 				});
 
 				test('run code', () => {
-					const context = {result: {}};
+					const context = {};
 					vm.runInNewContext(params.code, context);
 					params.result = context.result;
 				});
