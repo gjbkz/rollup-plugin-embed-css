@@ -25,7 +25,7 @@ function minify(node) {
 module.exports = function plugin(params = {}) {
 
 	const filter = createFilter(params.include, params.exclude);
-	const classLabeler = new Labeler();
+	const classLabeler = params.labeler || new Labeler();
 	const roots = new Map();
 	const cache = new Map();
 
