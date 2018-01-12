@@ -19,7 +19,7 @@
     "test_coverage": "nyc --reporter=lcov --reporter=text npm test"
   },
   "dependencies": {
-    "@nlib/lint": "^2.2.1",
+    "@nlib/lint": "^2.2.2",
     "@nlib/test": "^1.2.3",
     "bignumber.js": "^4.0.2",
     "postcss": "^6.0.16",
