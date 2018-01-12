@@ -45,9 +45,9 @@ module.exports = function plugin(params = {}) {
 					})
 				);
 			}
-			// if (encodedRules.length === 0) {
-			// 	return null;
-			// }
+			if (encodedRules.length === 0) {
+				return null;
+			}
 			return generateCode(labeler, encodedRules, params.debug);
 		},
 	};

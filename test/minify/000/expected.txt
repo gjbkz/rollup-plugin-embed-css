@@ -1,0 +1,28 @@
+var style = {
+	"foo": "_0",
+	"bar": "_1"
+};
+
+style.foo = 'bar';
+
+(function (words, rules, sheet, i) {
+	for (i = rules.length; i--;) {
+		insert(decode(rules[i]));
+	}
+	function decode(indexes) {
+		return indexes.map(function (index) {
+			return words[index];
+		}).join('');
+	}
+	function insert(decoded) {
+		try {
+			sheet.insertRule(decoded, 0);
+		} catch (error) {
+			console.info(error, decoded);
+		}
+	}
+}(
+	[".","_0","{","color",":","red",";","}","_1","blue"],
+	[[0,1,2,3,4,5,6,7],[0,8,2,3,4,9,6,7]],
+	document.head.appendChild(document.createElement('style')).sheet
+));

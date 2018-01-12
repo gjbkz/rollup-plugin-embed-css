@@ -1,4 +1,5 @@
 const test = require('@nlib/test');
+const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const {rollup} = require('rollup');
@@ -33,13 +34,13 @@ test('minify', (test) => {
 				});
 			});
 			test('load expected code', () => {
-				return readFile(path.join(directory, 'expected', 'index.js'), 'utf8')
+				return readFile(path.join(directory, 'expected.txt'), 'utf8')
 				.then((code) => {
 					params.expected = code;
 				});
 			});
-			test('test code', (test) => {
-				test.lines(params.code, params.expected);
+			test('test code', () => {
+				assert.equal(params.code.trim(), params.expected.trim());
 			});
 		}
 	});
