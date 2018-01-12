@@ -4,20 +4,14 @@ const path = require('path');
 const vm = require('vm');
 const {rollup} = require('rollup');
 const promisify = require('@nlib/promisify');
+const loadProjects = require('../load-projects');
 const readdir = promisify(fs.readdir, fs);
 const readFile = promisify(fs.readFile, fs);
-const stat = promisify(fs.stat, fs);
 const embedCSS = require('../..');
 test('multiple', (test) => {
 	const projects = [];
 	test('readdir', () => {
-		return readdir(__dirname)
-		.then((names) => {
-			return Promise.all(names.map((name) => stat(path.join(__dirname, name))))
-			.then((results) => {
-				projects.push(...names.filter((name, index) => results[index].isDirectory()));
-			});
-		});
+		return loadProjects(__dirname).then((names) => projects.push(...names));
 	});
 	test('test projects', (test) => {
 		for (const name of projects) {
