@@ -8,7 +8,7 @@ const load = require('./load');
 
 module.exports = function plugin(params = {}) {
 
-	params.filter = createFilter(params.include, params.exclude);
+	params.filter = createFilter(params.include || '**/*.css', params.exclude);
 	params.labeler = params.labeler || new Labeler();
 	params.roots = new Map();
 	params.cache = new Map();
@@ -16,7 +16,7 @@ module.exports = function plugin(params = {}) {
 	return {
 		name: 'embed-css',
 		transform(source, id) {
-			if (!params.filter(id) || path.extname(id) !== '.css') {
+			if (!params.filter(id)) {
 				return null;
 			}
 			return load(id, source, params)
