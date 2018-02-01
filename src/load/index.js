@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
 const BigNumber = require('bignumber.js');
-
+BigNumber.config({ALPHABET: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'});
 module.exports = load;
 
 function load(id, givenSource, params) {

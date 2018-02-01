@@ -20,19 +20,13 @@ module.exports = function plugin(params = {}) {
 				return null;
 			}
 			return load(id, source, params)
-			.then(({classNames, dependencies}) => {
-				const code = [
-					...Array.from(dependencies)
-					.map(([, target]) => {
-						return `import '${target}';`;
-					}),
+			.then(({classNames, dependencies}) => ({
+				code: [
+					...[...dependencies].map(([, target]) => `import '${target}';`),
 					`export default ${JSON.stringify(classNames, null, '\t')};`,
-				].join('\n');
-				return {
-					code,
-					map: {mappings: ''},
-				};
-			});
+				].join('\n'),
+				map: {mappings: ''},
+			}));
 		},
 		outro() {
 			const labeler = new Labeler();
@@ -40,15 +34,13 @@ module.exports = function plugin(params = {}) {
 			for (const [, root] of params.roots) {
 				encodedRules.push(
 					...(params.debug ? root : minify(root)).nodes
-					.map((node) => {
-						return encodeString(`${node}`, labeler);
-					})
+					.map((node) => encodeString(`${node}`, labeler))
 				);
 			}
 			if (encodedRules.length === 0) {
 				return null;
 			}
-			return generateCode(labeler, encodedRules, params.debug);
+			return generateCode(labeler, encodedRules, params);
 		},
 	};
 };

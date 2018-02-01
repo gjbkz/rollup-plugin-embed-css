@@ -1,3 +1,2 @@
-import style from './style.css';
-import result from './result.js';
-result.style = style;
+import style from './foo.css';
+global.style = style;

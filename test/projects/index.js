@@ -10,56 +10,36 @@ const embedCSS = require('../..');
 
 test('projects', (test) => {
 	const projects = [];
-	test('readdir', () => {
-		return loadProjects(__dirname).then((names) => projects.push(...names));
-	});
+	test('readdir', () => loadProjects(__dirname).then((names) => projects.push(...names)));
 	test('test projects', (test) => {
 		for (const name of projects) {
 			test(name, (test) => {
 				const directory = path.join(__dirname, name);
-				const params = {};
+				const results = {};
 				test('bundle', () => {
 					return rollup({
 						input: path.join(directory, 'src', 'index.js'),
-						plugins: [
-							embedCSS({debug: true}),
-						],
+						plugins: [embedCSS({debug: true})],
 					})
-					.then((bundle) => {
-						params.bundle = bundle;
-					});
+					.then((bundle) => Object.assign(results, {bundle}));
 				});
 				test('generate code', () => {
-					return params.bundle.generate({format: 'es'})
-					.then(({code}) => {
-						params.code = code;
-					});
+					return results.bundle.generate({format: 'es'})
+					.then(({code: generatedCode}) => Object.assign(results, {generatedCode}));
 				});
 				test('run code', () => {
-					const context = {};
-					vm.runInNewContext(params.code, context);
-					params.result = context.result;
+					vm.runInNewContext(results.generatedCode, {global: results});
 				});
 				test('load expected data', () => {
 					return readFile(path.join(directory, 'expected.json'), 'utf8')
-					.then((json) => {
-						params.expected = JSON.parse(json);
-					});
+					.then((json) => Object.assign(results, {expected: JSON.parse(json)}));
 				});
-				test('test the result', (test) => {
-					const {result, expected} = params;
-					test.object(result.style, expected);
-				});
+				test('test the result', (test) => test.compare(results.style, results.expected));
 				test('load expected css', () => {
 					return readFile(path.join(directory, 'expected.css'), 'utf8')
-					.then((css) => {
-						params.expectedCSS = css.trim();
-					});
+					.then((css) => Object.assign(results, {expectedCSS: css.trim()}));
 				});
-				test('test the result', (test) => {
-					const {result, expectedCSS} = params;
-					test.lines(result.css, expectedCSS);
-				});
+				test('compare the css texts', (test) => test.compare(results.css, results.expectedCSS));
 			});
 		}
 	});
