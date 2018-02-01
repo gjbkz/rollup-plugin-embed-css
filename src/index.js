@@ -1,4 +1,3 @@
-const path = require('path');
 const {createFilter} = require('rollup-pluginutils');
 const Labeler = require('./-labeler');
 const encodeString = require('./encode-string');
