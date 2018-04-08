@@ -4,9 +4,6 @@
 [![Build Status](https://travis-ci.org/kei-ito/rollup-plugin-embed-css.svg?branch=master)](https://travis-ci.org/kei-ito/rollup-plugin-embed-css)
 [![Build status](https://ci.appveyor.com/api/projects/status/github/kei-ito/rollup-plugin-embed-css?branch=master&svg=true)](https://ci.appveyor.com/project/kei-ito/rollup-plugin-embed-css/branch/master)
 [![codecov](https://codecov.io/gh/kei-ito/rollup-plugin-embed-css/branch/master/graph/badge.svg)](https://codecov.io/gh/kei-ito/rollup-plugin-embed-css)
-[![dependencies Status](https://david-dm.org/kei-ito/rollup-plugin-embed-css/status.svg)](https://david-dm.org/kei-ito/rollup-plugin-embed-css)
-[![devDependencies Status](https://david-dm.org/kei-ito/rollup-plugin-embed-css/dev-status.svg)](https://david-dm.org/kei-ito/rollup-plugin-embed-css?type=dev)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css?ref=badge_shield)
 
 A plugin to embed css into JavaScript codes using [postcss](https://github.com/postcss/postcss).
 
