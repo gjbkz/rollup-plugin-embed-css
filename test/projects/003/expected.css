@@ -1,19 +1,15 @@
-/* .red>div */
-._0>div {
+._style_css_red>div {
 	color: red;
 }
-/* .red>div, .red+.blue */
-._0>div,
-._0+._1 {
+._style_css_red>div,
+._style_css_red+._style_css_blue {
 	color: red;
 }
 @media (max-width: 500px) {
-	/* .red */
-	._0 {
+	._style_css_red {
 		color: green;
 	}
-	/* .red+.blue>*>.green */
-	._0+._1>*>._2 {
+	._style_css_red+._style_css_blue>*>._style_css_green {
 		color: red;
 	}
 }
