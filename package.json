@@ -27,6 +27,6 @@
   },
   "devDependencies": {
     "@nlib/promisify": "^1.0.1",
-    "rollup": "^0.55.1"
+    "rollup": "^0.57.1"
   }
 }
