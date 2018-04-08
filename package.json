@@ -16,7 +16,8 @@
 	"scripts": {
 		"lint": "nlib-lint src test/*.js test/*/*.js",
 		"test": "node test",
-		"test_coverage": "nyc --reporter=lcov --reporter=text npm test"
+		"test_coverage": "nyc --reporter=lcov --reporter=text npm test",
+		"sample": "node sample/rollup.js"
 	},
 	"dependencies": {
 		"@nlib/lint": "^2.2.11",
@@ -26,6 +27,7 @@
 		"rollup-pluginutils": "^2.0.1"
 	},
 	"devDependencies": {
+		"@nlib/write-file": "^1.0.1",
 		"rollup": "^0.55.5"
 	}
 }
