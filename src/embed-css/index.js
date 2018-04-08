@@ -6,20 +6,19 @@ const {generateCode} = require('../generate-code');
 const {minify} = require('../minify');
 const {load} = require('../load');
 
-exports.embedCSS = function embedCSS(params = {}) {
+exports.embedCSS = function embedCSS(options = {}) {
 
-	params.filter = createFilter(params.include || '**/*.css', params.exclude);
-	params.roots = new Map();
-	params.cache = new Map();
-	if (!params.mangler) {
-		if (params.mangle) {
-			const labeler = params.labeler || new Labeler();
-			params.mangler = (id, className) => `_${labeler.label(`${id}/${className}`)}`;
+	options.filter = createFilter(options.include || '**/*.css', options.exclude);
+	options.roots = new Map();
+	options.cache = new Map();
+	if (!options.mangler) {
+		if (options.mangle) {
+			const labeler = options.labeler || new Labeler();
+			options.mangler = (id, className) => `_${labeler.label(`${id}/${className}`)}`;
 		} else {
-			params.base = params.base || process.cwd();
-			params.mangler = (id, className) => [
-				(path.isAbsolute(id) ? path.relative(params.base, id) : id)
-				.replace(/^(\w)/, '_$1').replace(/[^\w]+/g, '_'),
+			options.base = options.base || process.cwd();
+			options.mangler = (id, className) => [
+				path.relative(options.base, id).replace(/^(\w)/, '_$1').replace(/[^\w]+/g, '_'),
 				className,
 			].join('_');
 		}
@@ -27,10 +26,10 @@ exports.embedCSS = function embedCSS(params = {}) {
 	return {
 		name: 'embed-css',
 		transform(source, id) {
-			if (!params.filter(id)) {
+			if (!options.filter(id)) {
 				return null;
 			}
-			return load(id, source, params)
+			return load(id, source, options)
 			.then(({classNames, dependencies}) => ({
 				code: [...dependencies]
 				.map(([, target]) => `import '${target}';`)
@@ -42,16 +41,16 @@ exports.embedCSS = function embedCSS(params = {}) {
 		outro() {
 			const labeler = new Labeler();
 			const encodedRules = [];
-			for (const [, root] of params.roots) {
+			for (const [, root] of options.roots) {
 				encodedRules.push(
-					...(params.debug ? root : minify(root)).nodes
+					...(options.debug ? root : minify(root)).nodes
 					.map((node) => encodeString(`${node}`, labeler))
 				);
 			}
 			if (encodedRules.length === 0) {
 				return null;
 			}
-			return generateCode(labeler, encodedRules, params);
+			return generateCode(labeler, encodedRules, options);
 		},
 	};
 };

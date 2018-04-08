@@ -44,10 +44,8 @@ Promise.resolve()
   const bundle = await rollup({
     input: 'index.js',
     plugins: [
-      embedCSS({
-        postcss: [] // optional
-      })
-    ]
+      embedCSS()
+    ],
   });
   const {code} = await bundle.generate({format: 'es'});
   fs.writeFileSync('result.js', code);
@@ -63,9 +61,7 @@ Then, you'll get [result.js](https://github.com/kei-ito/rollup-plugin-embed-css/
 
 ```javascript
 // result.js
-var style = {
-  "container": "_1"
-};
+var style = {"container":"_header_style_css_container"};
 
 function header() {
   const element = document.createElement('header');
@@ -73,9 +69,7 @@ function header() {
   return element;
 }
 
-var style$1 = {
-  "container": "_2"
-};
+var style$1 = {"container":"_footer_style_css_container"};
 
 function footer() {
   const element = document.createElement('footer');
@@ -85,19 +79,27 @@ function footer() {
 
 document.body.appendChild(header());
 document.body.appendChild(footer());
-(function (words, rules) {
-  var sheet = document.head.appendChild(document.createElement('style')).sheet;
+
+(function (words, rules, sheet, i) {
+  for (i = rules.length; i--;) {
+    insert(decode(rules[i]));
+  }
   function decode(indexes) {
     return indexes.map(function (index) {
       return words[index];
     }).join('');
   }
-  for (var i = rules.length; i--;) {
-    sheet.insertRule(decode(rules[i]), 0);
+  function insert(decoded) {
+    try {
+      sheet.insertRule(decoded, 0);
+    } catch (error) {
+      console.info(error, decoded);
+    }
   }
 }(
-  [".","_0","{","width",":","100","px",";","}","_1","background","red",">","200","_2","blue"],
-  [[0,1,2,3,4,5,6,7,8],[0,9,2,10,4,11,7,8],[0,9,12,0,1,2,3,4,13,6,7,8],[0,14,2,10,4,15,7,8]]
+  [".","_","header","logo","css","{","width",":","100","px",";","}","style","container","background","red",">","200","footer","blue"],
+  [[0,1,2,1,3,1,4,1,3,5,6,7,8,9,10,11],[0,1,2,1,12,1,4,1,13,5,14,7,15,10,11],[0,1,2,1,12,1,4,1,13,16,0,1,2,1,3,1,4,1,3,5,6,7,17,9,10,11],[0,1,18,1,12,1,4,1,13,5,14,7,19,10,11]],
+  document.head.appendChild(document.createElement('style')).sheet
 ));
 ```
 
@@ -136,10 +138,38 @@ You can also name the imports.
 ## Options
 
 - `postcss`: An array which passed to [postcss](https://github.com/postcss/postcss).
+- `mangle`: Boolean. See the mangler section below.
+- `base`: String. See the mangler section below.
+- `mangler`: Function. See the mangler section below. If it is set, the `mangle` and `base` options are ignored.
+
+### `mangler` option
+
+`mangler` is a function generates a class name from (id, className).
+`base` and `mangle` options are shorthand for built-in `mangler` functions.
+They works as the code below.
+
+```javascript
+if (!options.mangler) {
+  if (options.mangle) {
+    const labeler = options.labeler || new embedCSS.Labeler();
+    options.mangler = (id, className) => `_${labeler.label(`${id}/${className}`)}`;
+    // ('/home/foo/bar.css', 'a') → _0
+    // ('/home/foo/bar.css', 'b') → _1
+    // ('/home/foo/baz.css', 'a') → _2
+  } else {
+    options.base = options.base || process.cwd();
+    options.mangler = (id, className) => [
+      path.relative(options.base, id).replace(/^(\w)/, '_$1').replace(/[^\w]+/g, '_'),
+      className,
+    ].join('_');
+    // Assume base is /home
+    // ('/home/foo/bar.css', 'a') → _foo_bar_css_a
+    // ('/home/foo/bar.css', 'b') → _foo_bar_css_b
+    // ('/home/foo/baz.css', 'a') → _foo_baz_css_a
+  }
+}
+```
 
 ## LICENSE
 
 MIT
-
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkei-ito%2Frollup-plugin-embed-css?ref=badge_large)
