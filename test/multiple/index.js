@@ -14,7 +14,6 @@ test('multiple', (test) => {
 	test('test projects', (test) => {
 		for (const name of projects) {
 			test(name, (test) => {
-				const labeler = new embedCSS.Labeler();
 				const directory = path.join(__dirname, name);
 				const files = [];
 				test('get files', () => {
@@ -26,9 +25,10 @@ test('multiple', (test) => {
 						test(file, (test) => {
 							const results = {};
 							test('bundle', () => {
+								const srcDirectory = path.join(directory, 'src');
 								return rollup({
-									input: path.join(directory, 'src', file),
-									plugins: [embedCSS({debug: true, labeler})],
+									input: path.join(srcDirectory, file),
+									plugins: [embedCSS({debug: true, base: srcDirectory})],
 								})
 								.then((bundle) => Object.assign(results, {bundle}));
 							});
@@ -43,12 +43,16 @@ test('multiple', (test) => {
 								return readFile(path.join(directory, `expected.${file}.json`), 'utf8')
 								.then((json) => Object.assign(results, {expected: JSON.parse(json)}));
 							});
-							test('test the result', (test) => test.compare(results.style, results.expected));
+							test('test the result', (test) => {
+								test.compare(results.style, results.expected);
+							});
 							test('load expected css', () => {
 								return readFile(path.join(directory, `expected.${file}.css`), 'utf8')
 								.then((css) => Object.assign(results, {expectedCSS: css.trim()}));
 							});
-							test('compare the result', (test) => test.compare(results.css, results.expectedCSS));
+							test('compare the result', (test) => {
+								test.compare(results.css, results.expectedCSS);
+							});
 						});
 					}
 				});

@@ -1,4 +1,4 @@
-module.exports = function minify(node) {
+exports.minify = function minify(node) {
 	const {raws, nodes = []} = node;
 	for (const key of ['before', 'between', 'after']) {
 		const value = raws[key];

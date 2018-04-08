@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const source = fs.readFileSync(path.join(__dirname, 'source', 'index.js'), 'utf8');
-module.exports = function generateCode(labeler, rules, {debug = false} = {}) {
+exports.generateCode = function generateCode(labeler, rules, {debug = false} = {}) {
 	const words = [];
 	for (const [word, index] of labeler) {
 		words[index] = word;

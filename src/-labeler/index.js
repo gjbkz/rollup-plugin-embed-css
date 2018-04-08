@@ -1,4 +1,4 @@
-module.exports = class Labeler extends Map {
+exports.Labeler = class Labeler extends Map {
 
 	label(value) {
 		if (!this.has(value)) {
