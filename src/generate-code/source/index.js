@@ -1,21 +1,11 @@
-(function (words, rules, sheet, i) {
-	for (i = rules.length; i--;) {
-		insert(decode(rules[i]));
-	}
-	function decode(indexes) {
-		return indexes.map(function (index) {
-			return words[index];
-		}).join('');
-	}
-	function insert(decoded) {
-		try {
-			sheet.insertRule(decoded, 0);
-		} catch (error) {
-			console.info(error, decoded);
-		}
-	}
+(function (words, rules, link) {
+	link.setAttribute('rel', 'stylesheet');
+	link.setAttribute('href', URL.createObjectURL(new Blob(rules.map(function (index) {
+		return words[index];
+	}))));
+	URL.revokeObjectURL(link.getAttribute('href'));
 }(
 	'WORDS',
 	'RULES',
-	document.head.appendChild(document.createElement('style')).sheet
+	document.head.appendChild(document.createElement('link'))
 ));
