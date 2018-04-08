@@ -1,32 +1,31 @@
 {
-  "name": "rollup-plugin-embed-css",
-  "version": "0.1.10",
-  "description": "Embed CSS into JavaScript",
-  "main": "src/index.js",
-  "author": {
-    "name": "Kei Ito",
-    "email": "kei.itof@gmail.com",
-    "url": "https://github.com/kei-ito"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": ">=7.6"
-  },
-  "repository": "kei-ito/rollup-plugin-embed-css",
-  "scripts": {
-    "lint": "nlib-lint src test/*.js test/*/*.js",
-    "test": "node test",
-    "test_coverage": "nyc --reporter=lcov --reporter=text npm test"
-  },
-  "dependencies": {
-    "@nlib/lint": "^2.2.10",
-    "@nlib/test": "^1.3.4",
-    "bignumber.js": "^6.0.0",
-    "postcss": "^6.0.21",
-    "rollup-pluginutils": "^2.0.1"
-  },
-  "devDependencies": {
-    "@nlib/promisify": "^1.0.1",
-    "rollup": "^0.55.5"
-  }
+	"name": "rollup-plugin-embed-css",
+	"version": "0.1.10",
+	"description": "Embed CSS into JavaScript",
+	"main": "src/index.js",
+	"author": {
+		"name": "Kei Ito",
+		"email": "kei.itof@gmail.com",
+		"url": "https://github.com/kei-ito"
+	},
+	"license": "MIT",
+	"engines": {
+		"node": ">=7.6"
+	},
+	"repository": "kei-ito/rollup-plugin-embed-css",
+	"scripts": {
+		"lint": "nlib-lint src test/*.js test/*/*.js",
+		"test": "node test",
+		"test_coverage": "nyc --reporter=lcov --reporter=text npm test"
+	},
+	"dependencies": {
+		"@nlib/lint": "^2.2.11",
+		"@nlib/promisify": "^1.0.1",
+		"@nlib/test": "^1.3.4",
+		"postcss": "^6.0.21",
+		"rollup-pluginutils": "^2.0.1"
+	},
+	"devDependencies": {
+		"rollup": "^0.55.5"
+	}
 }

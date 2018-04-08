@@ -1,13 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
-const BigNumber = require('bignumber.js');
-BigNumber.config({ALPHABET: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'});
-module.exports = load;
+const promisify = require('@nlib/promisify');
+const readFile = promisify(fs.readFile);
+exports.load = load;
 
 function load(id, givenSource, params) {
 	const {
-		labeler,
 		cache,
 		roots,
 		postcss: postcssOptions = [],
@@ -17,15 +16,7 @@ function load(id, givenSource, params) {
 		return Promise.resolve(cache.get(id));
 	}
 	return Promise.resolve()
-	.then(() => givenSource || new Promise((resolve, reject) => {
-		fs.readFile(id, 'utf8', (error, data) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(data);
-			}
-		});
-	}))
+	.then(() => givenSource || readFile(id, 'utf8'))
 	.then((source) => postcss(postcssOptions).process(source, {from: id}))
 	.then(({root}) => {
 		const classNames = {};
@@ -62,24 +53,16 @@ function load(id, givenSource, params) {
 		.then(() => {
 			root.walkRules((rule) => {
 				const {selector} = rule;
-				let replaceCount = 0;
 				rule.selector = Array.from(replacements)
-				.reduce((selector, [to, from]) => {
-					return selector.split(from).join(`.${to}`);
-				}, selector)
+				.reduce((selector, [to, from]) => selector.split(from).join(`.${to}`), selector)
 				.replace(/\.=?(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g, (match, className) => {
 					if (match.startsWith('.=') || replacements.has(className)) {
 						return `.${className}`;
 					}
-					replaceCount++;
-					const label = labeler.label(`${id}${className}`);
-					const newClassName = `_${new BigNumber(label).toString(62)}`;
+					const newClassName = params.mangler(id, className);
 					classNames[className] = newClassName;
 					return `.${newClassName}`;
 				});
-				if (0 < replaceCount && debug) {
-					rule.before({text: selector.replace(/[\r\n]+/, ' ')});
-				}
 			});
 			roots.set(id, root);
 			const result = {
