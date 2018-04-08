@@ -10,7 +10,6 @@ function load(id, givenSource, params) {
 		cache,
 		roots,
 		postcss: postcssOptions = [],
-		debug,
 	} = params;
 	if (!givenSource && cache.has(id)) {
 		return Promise.resolve(cache.get(id));
