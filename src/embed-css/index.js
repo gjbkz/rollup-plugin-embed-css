@@ -13,8 +13,8 @@ exports.embedCSS = function embedCSS(params = {}) {
 	params.cache = new Map();
 	if (!params.mangler) {
 		if (params.mangle) {
-			const labeler = new Labeler();
-			params.mangler = (id, className) => labeler.label(`${id}/${className}`);
+			const labeler = params.labeler || new Labeler();
+			params.mangler = (id, className) => `_${labeler.label(`${id}/${className}`)}`;
 		} else {
 			params.base = params.base || process.cwd();
 			params.mangler = (id, className) => [

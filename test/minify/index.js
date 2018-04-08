@@ -18,7 +18,7 @@ test('minify', (test) => {
 				test('bundle', () => {
 					return rollup({
 						input: path.join(directory, 'src', 'index.js'),
-						plugins: [embedCSS()],
+						plugins: [embedCSS({mangle: true})],
 					})
 					.then((bundle) => Object.assign(results, {bundle}));
 				});
@@ -30,7 +30,9 @@ test('minify', (test) => {
 					return readFile(path.join(directory, 'expected.txt'), 'utf8')
 					.then((expectedCode) => Object.assign(results, {expectedCode}));
 				});
-				test('compare the code', (test) => test.compare(results.generatedCode.trim(), results.expectedCode.trim()));
+				test('compare the code', (test) => {
+					test.compare(results.generatedCode.trim(), results.expectedCode.trim());
+				});
 			});
 		}
 	});
