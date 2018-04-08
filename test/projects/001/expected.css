@@ -1,8 +1,6 @@
-/* .red */
-._0 {
+._foo_css_red {
 	color: red;
 }
-/* .red-foo */
-._1 {
+._foo_css_red-foo {
 	color: #f00;
 }

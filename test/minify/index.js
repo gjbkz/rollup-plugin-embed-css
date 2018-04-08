@@ -6,6 +6,7 @@ const loadProjects = require('../load-projects');
 const promisify = require('@nlib/promisify');
 const readFile = promisify(fs.readFile, fs);
 const embedCSS = require('../..');
+
 test('minify', (test) => {
 	const projects = [];
 	test('readdir', () => loadProjects(__dirname).then((names) => projects.push(...names)));

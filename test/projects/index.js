@@ -1,11 +1,11 @@
 const test = require('@nlib/test');
 const fs = require('fs');
+const promisify = require('@nlib/promisify');
+const readFile = promisify(fs.readFile, fs);
 const path = require('path');
 const vm = require('vm');
 const {rollup} = require('rollup');
 const loadProjects = require('../load-projects');
-const promisify = require('@nlib/promisify');
-const readFile = promisify(fs.readFile, fs);
 const embedCSS = require('../..');
 
 test('projects', (test) => {
@@ -17,9 +17,10 @@ test('projects', (test) => {
 				const directory = path.join(__dirname, name);
 				const results = {};
 				test('bundle', () => {
+					const srcDirectory = path.join(directory, 'src');
 					return rollup({
-						input: path.join(directory, 'src', 'index.js'),
-						plugins: [embedCSS({debug: true})],
+						input: path.join(srcDirectory, 'index.js'),
+						plugins: [embedCSS({debug: true, base: srcDirectory})],
 					})
 					.then((bundle) => Object.assign(results, {bundle}));
 				});
@@ -34,12 +35,16 @@ test('projects', (test) => {
 					return readFile(path.join(directory, 'expected.json'), 'utf8')
 					.then((json) => Object.assign(results, {expected: JSON.parse(json)}));
 				});
-				test('test the result', (test) => test.compare(results.style, results.expected));
+				test('test the result', (test) => {
+					test.compare(results.style, results.expected);
+				});
 				test('load expected css', () => {
 					return readFile(path.join(directory, 'expected.css'), 'utf8')
 					.then((css) => Object.assign(results, {expectedCSS: css.trim()}));
 				});
-				test('compare the css texts', (test) => test.compare(results.css, results.expectedCSS));
+				test('compare the css texts', (test) => {
+					test.compare(results.css, results.expectedCSS);
+				});
 			});
 		}
 	});
