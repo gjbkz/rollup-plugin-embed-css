@@ -3,7 +3,7 @@
 	link.setAttribute('href', URL.createObjectURL(new Blob(rules.map(function (rule) {
 		return rule.map(function (index) {
 			return words[index];
-		}).join(';');
+		}).join('');
 	}))));
 	URL.revokeObjectURL(link.getAttribute('href'));
 }(
