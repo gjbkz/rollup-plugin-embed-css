@@ -17,24 +17,16 @@ function footer() {
 document.body.appendChild(header());
 document.body.appendChild(footer());
 
-(function (words, rules, sheet, i) {
-	for (i = rules.length; i--;) {
-		insert(decode(rules[i]));
-	}
-	function decode(indexes) {
-		return indexes.map(function (index) {
+(function (words, rules, link) {
+	link.setAttribute('rel', 'stylesheet');
+	link.setAttribute('href', URL.createObjectURL(new Blob(rules.map(function (rule) {
+		return rule.map(function (index) {
 			return words[index];
-		}).join('');
-	}
-	function insert(decoded) {
-		try {
-			sheet.insertRule(decoded, 0);
-		} catch (error) {
-			console.info(error, decoded);
-		}
-	}
+		}).join(';');
+	}))));
+	URL.revokeObjectURL(link.getAttribute('href'));
 }(
 	[".","_","0","{","width",":","100","px",";","}","1","background","red",">","200","2","blue"],
 	[[0,1,2,3,4,5,6,7,8,9],[0,1,10,3,11,5,12,8,9],[0,1,10,13,0,1,2,3,4,5,14,7,8,9],[0,1,15,3,11,5,16,8,9]],
-	document.head.appendChild(document.createElement('style')).sheet
+	document.head.appendChild(document.createElement('link'))
 ));
