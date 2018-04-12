@@ -8,7 +8,7 @@
 A plugin to embed css into JavaScript codes using [postcss](https://github.com/postcss/postcss).
 
 1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular. This means you don't have to concern about naming somethings. For example, you can use `.container` for every components in a project.
-2. This plugin appends a script which loads imported styles into the page using [CSSStyleSheet.insertRule](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/insertRule). You don't have to load external .css files.
+2. This plugin appends a script that loads imported styles into the page using objectURL. You don't have to load external .css files.
 3. This plugin detects `@import` syntax and append imported files to dependencies. It works well with [`rollup.watch`](https://rollupjs.org/#rollup-watch).
 
 ## Installation
