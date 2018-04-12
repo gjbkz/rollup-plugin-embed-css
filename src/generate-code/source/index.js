@@ -7,7 +7,7 @@
 					return words[index];
 				}).join('');
 			}),
-			{type : 'text/css'}
+			{type: 'text/css'}
 		)
 	));
 	URL.revokeObjectURL(link.getAttribute('href'));
