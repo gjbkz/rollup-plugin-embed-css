@@ -28,6 +28,6 @@
 	},
 	"devDependencies": {
 		"@nlib/write-file": "^1.0.1",
-		"rollup": "^0.57.1"
+		"rollup": "^0.58.0"
 	}
 }
