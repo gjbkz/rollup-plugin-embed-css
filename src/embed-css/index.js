@@ -9,9 +9,9 @@ const {load} = require('../load');
 
 exports.embedCSS = function embedCSS(options = {}) {
 
+	const roots = new Map();
+	const cache = new Map();
 	options.filter = createFilter(options.include || '**/*.css', options.exclude);
-	options.roots = new Map();
-	options.cache = new Map();
 	if (!options.mangler) {
 		if (options.mangle) {
 			const labeler = options.labeler || new Labeler();
@@ -30,7 +30,7 @@ exports.embedCSS = function embedCSS(options = {}) {
 			if (!options.filter(id)) {
 				return null;
 			}
-			return load(id, source, options)
+			return load(id, source, roots, cache, options)
 			.then(({classNames, dependencies}) => ({
 				code: [...dependencies]
 				.map(([, target]) => `import '${target}';`)
@@ -42,14 +42,14 @@ exports.embedCSS = function embedCSS(options = {}) {
 		transformBundle(source) {
 			const labeler = new Labeler();
 			const encodedRules = [];
-			for (const [, root] of options.roots) {
+			for (const [, root] of roots) {
 				encodedRules.push(...minify(root).nodes.map((node) => encodeString(`${node}`, labeler)));
 			}
 			if (encodedRules.length === 0) {
 				return null;
 			}
 			const s = new MagicString(source);
-			s.prepend(generateCode(labeler, encodedRules, options));
+			s.prepend(generateCode(labeler, encodedRules));
 			return {
 				code: s.toString(),
 				map: s.generateMap(),
