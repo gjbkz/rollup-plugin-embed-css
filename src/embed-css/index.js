@@ -1,5 +1,6 @@
 const path = require('path');
 const {createFilter} = require('rollup-pluginutils');
+const MagicString = require('magic-string');
 const {Labeler} = require('../-labeler');
 const {encodeString} = require('../encode-string');
 const {generateCode} = require('../generate-code');
@@ -38,19 +39,21 @@ exports.embedCSS = function embedCSS(options = {}) {
 				map: {mappings: ''},
 			}));
 		},
-		outro() {
+		transformBundle(source) {
 			const labeler = new Labeler();
 			const encodedRules = [];
 			for (const [, root] of options.roots) {
-				encodedRules.push(
-					...(options.debug ? root : minify(root)).nodes
-					.map((node) => encodeString(`${node}`, labeler))
-				);
+				encodedRules.push(...minify(root).nodes.map((node) => encodeString(`${node}`, labeler)));
 			}
 			if (encodedRules.length === 0) {
 				return null;
 			}
-			return generateCode(labeler, encodedRules, options);
+			const s = new MagicString(source);
+			s.prepend(generateCode(labeler, encodedRules, options));
+			return {
+				code: s.toString(),
+				map: s.generateMap(),
+			};
 		},
 	};
 };

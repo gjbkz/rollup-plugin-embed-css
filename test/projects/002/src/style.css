@@ -1,8 +1,0 @@
-.red {
-	color: red;
-}
-@media (max-width: 500px) {
-	.red {
-		color: green;
-	}
-}
