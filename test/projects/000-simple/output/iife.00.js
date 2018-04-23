@@ -1,7 +1,7 @@
 /*
 {
 	"format": "iife",
-	"option": {
+	"options": {
 		"base": "path-to-project-root/src"
 	}
 }

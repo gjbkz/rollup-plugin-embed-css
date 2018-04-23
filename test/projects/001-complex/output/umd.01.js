@@ -1,7 +1,7 @@
 /*
 {
 	"format": "umd",
-	"option": {
+	"options": {
 		"base": "path-to-project-root"
 	}
 }

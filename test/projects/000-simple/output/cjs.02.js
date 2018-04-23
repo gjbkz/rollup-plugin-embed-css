@@ -1,7 +1,7 @@
 /*
 {
 	"format": "cjs",
-	"option": {
+	"options": {
 		"mangle": true
 	}
 }

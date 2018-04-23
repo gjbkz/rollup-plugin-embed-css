@@ -1,7 +1,7 @@
 /*
 {
 	"format": "iife",
-	"option": {
+	"options": {
 		"mangle": true
 	}
 }

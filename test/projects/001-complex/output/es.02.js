@@ -1,7 +1,7 @@
 /*
 {
 	"format": "es",
-	"option": {
+	"options": {
 		"mangle": true
 	}
 }

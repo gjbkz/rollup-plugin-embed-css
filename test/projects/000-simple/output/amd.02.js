@@ -1,7 +1,7 @@
 /*
 {
 	"format": "amd",
-	"option": {
+	"options": {
 		"mangle": true
 	}
 }

@@ -1,7 +1,7 @@
 /*
 {
 	"format": "cjs",
-	"option": {
+	"options": {
 		"base": "path-to-project-root"
 	}
 }

@@ -1,7 +1,7 @@
 /*
 {
 	"format": "es",
-	"option": {
+	"options": {
 		"base": "path-to-project-root/src"
 	}
 }
