@@ -1,9 +1,0 @@
-{
-	"env": {
-		"browser": true
-	},
-	"rules": {
-		"prefer-arrow-callback": "off",
-		"no-console": "off"
-	}
-}
