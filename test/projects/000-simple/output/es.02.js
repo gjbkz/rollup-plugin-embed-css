@@ -1,4 +1,12 @@
-const [c1, c2, c3] = `(function (words, rules, link) {
+/*
+{
+	"format": "es",
+	"options": {
+		"mangle": true
+	}
+}
+*/
+(function (words, rules, link) {
 	link.setAttribute('rel', 'stylesheet');
 	link.setAttribute('href', URL.createObjectURL(
 		new Blob(
@@ -12,15 +20,10 @@ const [c1, c2, c3] = `(function (words, rules, link) {
 	));
 	URL.revokeObjectURL(link.getAttribute('href'));
 }(
-	'WORDS',
-	'RULES',
+	["/","*"," ","comment","1",".","_","0","{","color",":","red",";","}","2","green"],
+	[[0,1,2,3,2,4,2,1,0],[5,6,7,8,9,10,11,12,13],[0,1,2,3,2,14,2,1,0],[5,6,4,8,9,10,15,12,13]],
 	document.head.appendChild(document.createElement('link'))
 ));
-`.split(/'(?:WORDS|RULES)'/);
-exports.generateCode = function generateCode(labeler, rules) {
-	const words = [];
-	for (const [word, index] of labeler) {
-		words[index] = word;
-	}
-	return [c1, JSON.stringify(words), c2, JSON.stringify(rules), c3].join('');
-};
+var classNames = {"foo":"_0","bar-baz":"_1"};
+
+window.classNames = classNames;

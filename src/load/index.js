@@ -1,14 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
-const promisify = require('@nlib/promisify');
+const {promisify} = require('@nlib/util');
 const readFile = promisify(fs.readFile);
 exports.load = load;
 
-function load(id, givenSource, params) {
+function load(id, givenSource, roots, cache, params) {
 	const {
-		cache,
-		roots,
 		postcss: postcssOptions = [],
 	} = params;
 	if (!givenSource && cache.has(id)) {
@@ -38,7 +36,7 @@ function load(id, givenSource, params) {
 					resolve();
 				}
 				const [name, target] = queue.shift();
-				load(path.join(path.dirname(id), target), undefined, params)
+				load(path.join(path.dirname(id), target), undefined, roots, cache, params)
 				.then((result) => {
 					const {classNames: importedClassNames} = result;
 					for (const className of Object.keys(importedClassNames)) {

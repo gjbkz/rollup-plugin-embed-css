@@ -1,0 +1,7 @@
+@import './baz.css' baz;
+.bar {
+	bar: bar;
+}
+.bar>baz.baz {
+	bar: baz;
+}

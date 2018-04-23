@@ -1,0 +1,28 @@
+._src_baz_css_baz {
+	baz: baz;
+}
+._src_bar_css_bar {
+	bar: bar;
+}
+._src_bar_css_bar>._src_baz_css_baz {
+	bar: baz;
+}
+._src_foo_css_foo {
+	color: red;
+}
+[foo=false]._src_foo_css_foo {
+	color: green;
+}
+@media (max-width: 400px) {
+	._src_foo_css_foo {
+		color: blue;
+	}
+}
+@media (max-width: 800px) {
+	._src_bar_css_bar>._src_baz_css_baz {
+		foo: baz;
+	}
+	._src_foo_css_foo-bar {
+		foo-bar: foo-bar;
+	}
+}

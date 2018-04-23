@@ -1,5 +1,6 @@
 const path = require('path');
 const {createFilter} = require('rollup-pluginutils');
+const MagicString = require('magic-string');
 const {Labeler} = require('../-labeler');
 const {encodeString} = require('../encode-string');
 const {generateCode} = require('../generate-code');
@@ -8,9 +9,9 @@ const {load} = require('../load');
 
 exports.embedCSS = function embedCSS(options = {}) {
 
+	const roots = new Map();
+	const cache = new Map();
 	options.filter = createFilter(options.include || '**/*.css', options.exclude);
-	options.roots = new Map();
-	options.cache = new Map();
 	if (!options.mangler) {
 		if (options.mangle) {
 			const labeler = options.labeler || new Labeler();
@@ -29,7 +30,7 @@ exports.embedCSS = function embedCSS(options = {}) {
 			if (!options.filter(id)) {
 				return null;
 			}
-			return load(id, source, options)
+			return load(id, source, roots, cache, options)
 			.then(({classNames, dependencies}) => ({
 				code: [...dependencies]
 				.map(([, target]) => `import '${target}';`)
@@ -38,19 +39,21 @@ exports.embedCSS = function embedCSS(options = {}) {
 				map: {mappings: ''},
 			}));
 		},
-		outro() {
+		transformBundle(source) {
 			const labeler = new Labeler();
 			const encodedRules = [];
-			for (const [, root] of options.roots) {
-				encodedRules.push(
-					...(options.debug ? root : minify(root)).nodes
-					.map((node) => encodeString(`${node}`, labeler))
-				);
+			for (const [, root] of roots) {
+				encodedRules.push(...minify(root).nodes.map((node) => encodeString(`${node}`, labeler)));
 			}
 			if (encodedRules.length === 0) {
 				return null;
 			}
-			return generateCode(labeler, encodedRules, options);
+			const s = new MagicString(source);
+			s.prepend(generateCode(labeler, encodedRules));
+			return {
+				code: s.toString(),
+				map: s.generateMap(),
+			};
 		},
 	};
 };
