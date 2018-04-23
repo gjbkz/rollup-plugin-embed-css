@@ -1,4 +1,22 @@
-var style = {"container":"_1"};
+(function (words, rules, link) {
+	link.setAttribute('rel', 'stylesheet');
+	link.setAttribute('href', URL.createObjectURL(
+		new Blob(
+			rules.map(function (rule) {
+				return rule.map(function (index) {
+					return words[index];
+				}).join('');
+			}),
+			{type: 'text/css'}
+		)
+	));
+	URL.revokeObjectURL(link.getAttribute('href'));
+}(
+	[".","_","0","{","background",":","blue",";","}","1","width","100","px","2","red",">","200"],
+	[[0,1,2,3,4,5,6,7,8],[0,1,9,3,10,5,11,12,7,8],[0,1,13,3,4,5,14,7,8],[0,1,13,15,0,1,9,3,10,5,16,12,7,8]],
+	document.head.appendChild(document.createElement('link'))
+));
+var style = {"container":"_2"};
 
 function header() {
 	const element = document.createElement('header');
@@ -6,7 +24,7 @@ function header() {
 	return element;
 }
 
-var style$1 = {"container":"_2"};
+var style$1 = {"container":"_0"};
 
 function footer() {
 	const element = document.createElement('footer');
@@ -16,17 +34,3 @@ function footer() {
 
 document.body.appendChild(header());
 document.body.appendChild(footer());
-
-(function (words, rules, link) {
-	link.setAttribute('rel', 'stylesheet');
-	link.setAttribute('href', URL.createObjectURL(new Blob(rules.map(function (rule) {
-		return rule.map(function (index) {
-			return words[index];
-		}).join(';');
-	}))));
-	URL.revokeObjectURL(link.getAttribute('href'));
-}(
-	[".","_","0","{","width",":","100","px",";","}","1","background","red",">","200","2","blue"],
-	[[0,1,2,3,4,5,6,7,8,9],[0,1,10,3,11,5,12,8,9],[0,1,10,13,0,1,2,3,4,5,14,7,8,9],[0,1,15,3,11,5,16,8,9]],
-	document.head.appendChild(document.createElement('link'))
-));
