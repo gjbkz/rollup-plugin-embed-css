@@ -157,11 +157,7 @@ test('rollup-plugin-embed-css', (test) => {
 									return node;
 								};
 								const actualNodes = [];
-								actual.walk((node) => {
-									if (node.type !== 'comment') {
-										actualNodes.push(filterNode(node));
-									}
-								});
+								actual.walk((node) => actualNodes.push(filterNode(node)));
 								const expectedNodes = [];
 								expected.walk((node) => expectedNodes.push(filterNode(node)));
 								test.compare(actualNodes, expectedNodes);
