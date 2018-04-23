@@ -1,3 +1,11 @@
+/*
+{
+	"format": "iife",
+	"option": {
+		"base": "path-to-project-root/src"
+	}
+}
+*/
 (function () {
 	'use strict';
 

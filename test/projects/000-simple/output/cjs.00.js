@@ -1,3 +1,11 @@
+/*
+{
+	"format": "cjs",
+	"option": {
+		"base": "path-to-project-root/src"
+	}
+}
+*/
 (function (words, rules, link) {
 	link.setAttribute('rel', 'stylesheet');
 	link.setAttribute('href', URL.createObjectURL(

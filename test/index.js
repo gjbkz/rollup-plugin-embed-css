@@ -1,3 +1,4 @@
+const path = require('path');
 const {rollup} = require('rollup');
 const postcss = require('postcss');
 const embedCSS = require('..');
@@ -120,7 +121,24 @@ test('rollup-plugin-embed-css', (test) => {
 							return data.bundle.generate({format})
 							.then((result) => Object.assign(data, result));
 						});
-						test(`output ${format}.${option.id}.js`, () => project.writeFile(`${format}.${option.id}.js`, data.code));
+						test(`output ${format}.${option.id}.js`, () => {
+							const copied = Object.assign({}, option);
+							for (const key of ['id', 'roots', 'cache']) {
+								delete copied[key];
+							}
+							if (copied.base) {
+								copied.base = path.join('path-to-project-root', path.relative(project.root, copied.base));
+							}
+							return project.writeFile(`${format}.${option.id}.js`, [
+								'/*',
+								JSON.stringify({
+									format,
+									options: copied,
+								}, null, '\t'),
+								'*/',
+								data.code,
+							].join('\n'));
+						});
 						test('run the generated code', () => {
 							data.sandbox = createSandbox();
 							runInNewContext(data.code, data.sandbox);

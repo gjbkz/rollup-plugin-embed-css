@@ -1,3 +1,11 @@
+/*
+{
+	"format": "iife",
+	"option": {
+		"mangle": true
+	}
+}
+*/
 (function () {
 	'use strict';
 

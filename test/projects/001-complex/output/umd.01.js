@@ -1,3 +1,11 @@
+/*
+{
+	"format": "umd",
+	"option": {
+		"base": "path-to-project-root"
+	}
+}
+*/
 (function (words, rules, link) {
 	link.setAttribute('rel', 'stylesheet');
 	link.setAttribute('href', URL.createObjectURL(

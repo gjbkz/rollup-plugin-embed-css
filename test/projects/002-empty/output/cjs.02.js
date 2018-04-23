@@ -1,3 +1,11 @@
+/*
+{
+	"format": "cjs",
+	"option": {
+		"mangle": true
+	}
+}
+*/
 'use strict';
 
 var classNames = {};

@@ -1,3 +1,11 @@
+/*
+{
+	"format": "amd",
+	"option": {
+		"mangle": true
+	}
+}
+*/
 (function (words, rules, link) {
 	link.setAttribute('rel', 'stylesheet');
 	link.setAttribute('href', URL.createObjectURL(
