@@ -88,8 +88,21 @@ test('rollup-plugin-embed-css', (test) => {
 	const projects = [];
 	const formats = ['es', 'iife', 'amd', 'cjs', 'umd'];
 	const options = [
-		(project) => ({id: '00', base: project.path('src')}),
-		(project) => ({id: '01', base: project.root}),
+		(project) => ({
+			id: '00',
+			base: project.path('src'),
+			url(url, id) {
+				if (!url.startsWith('.')) {
+					return null;
+				}
+				return path.join(path.relative(project.path('src'), path.dirname(id)), url);
+			},
+		}),
+		(project) => ({
+			id: '01',
+			base: project.root,
+			url: (url) => new Promise(setImmediate).then(() => url),
+		}),
 		() => ({id: '02', mangle: true}),
 	];
 
