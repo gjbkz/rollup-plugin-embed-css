@@ -1,8 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
-const {promisify} = require('@nlib/util');
-const readFile = promisify(fs.readFile);
 exports.load = load;
 
 function load(id, givenSource, roots, cache, params) {
@@ -12,8 +10,11 @@ function load(id, givenSource, roots, cache, params) {
 	if (!givenSource && cache.has(id)) {
 		return Promise.resolve(cache.get(id));
 	}
-	return Promise.resolve()
-	.then(() => givenSource || readFile(id, 'utf8'))
+	return Promise.resolve(
+		givenSource || new Promise((resolve, reject) => {
+			fs.readFile(id, 'utf8', (error, source) => error ? reject(error) : resolve(source));
+		})
+	)
 	.then((source) => postcss(postcssOptions).process(source, {from: id}))
 	.then(({root}) => {
 		const classNames = {};
