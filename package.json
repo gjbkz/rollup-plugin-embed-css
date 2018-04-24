@@ -30,6 +30,7 @@
 	"devDependencies": {
 		"@nlib/rm": "^1.0.0",
 		"@nlib/write-file": "^1.0.1",
-		"rollup": "^0.58.0"
+		"rollup": "^0.58.0",
+		"rollup-plugin-glob-import": "^0.2.1"
 	}
 }
