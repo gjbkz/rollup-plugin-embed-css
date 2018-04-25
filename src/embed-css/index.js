@@ -24,6 +24,7 @@ exports.embedCSS = function embedCSS(options = {}) {
 			].join('_');
 		}
 	}
+	options.url = options.url || (() => null);
 	return {
 		name: 'embed-css',
 		transform(source, id) {

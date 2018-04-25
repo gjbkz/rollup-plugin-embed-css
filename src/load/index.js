@@ -1,21 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
-exports.load = load;
-
-function load(id, givenSource, roots, cache, params) {
-	const {
-		postcss: postcssOptions = [],
-	} = params;
+const unquote = (x) => x.replace(/^\s*['"]|['"]\s*$/g, '');
+exports.load = function load(id, givenSource, roots, cache, options) {
 	if (!givenSource && cache.has(id)) {
 		return Promise.resolve(cache.get(id));
 	}
-	return Promise.resolve(
-		givenSource || new Promise((resolve, reject) => {
-			fs.readFile(id, 'utf8', (error, source) => error ? reject(error) : resolve(source));
-		})
-	)
-	.then((source) => postcss(postcssOptions).process(source, {from: id}))
+	return Promise.resolve()
+	.then(() => givenSource || new Promise((resolve, reject) => {
+		fs.readFile(id, 'utf8', (error, source) => error ? reject(error) : resolve(source));
+	}))
+	.then((source) => postcss(options.postcss || []).process(source, {from: id}))
 	.then(({root}) => {
 		const classNames = {};
 		const dependencies = new Map();
@@ -37,7 +32,7 @@ function load(id, givenSource, roots, cache, params) {
 					resolve();
 				}
 				const [name, target] = queue.shift();
-				load(path.join(path.dirname(id), target), undefined, roots, cache, params)
+				load(path.join(path.dirname(id), target), undefined, roots, cache, options)
 				.then((result) => {
 					const {classNames: importedClassNames} = result;
 					for (const className of Object.keys(importedClassNames)) {
@@ -49,19 +44,40 @@ function load(id, givenSource, roots, cache, params) {
 			}
 		})
 		.then(() => {
-			root.walkRules((rule) => {
-				const {selector} = rule;
-				rule.selector = Array.from(replacements)
-				.reduce((selector, [to, from]) => selector.split(from).join(`.${to}`), selector)
-				.replace(/\.=?(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g, (match, className) => {
-					if (match.startsWith('.=') || replacements.has(className)) {
-						return `.${className}`;
+			const promises = [];
+			root.walk((node) => {
+				if (node.type === 'rule') {
+					const {selector} = node;
+					node.selector = Array.from(replacements)
+					.reduce((selector, [to, from]) => selector.split(from).join(`.${to}`), selector)
+					.replace(/\.=?(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g, (match, className) => {
+						if (match.startsWith('.=') || replacements.has(className)) {
+							return `.${className}`;
+						}
+						const newClassName = options.mangler(id, className);
+						classNames[className] = newClassName;
+						return `.${newClassName}`;
+					});
+				} else if (node.type === 'decl') {
+					const urlList = node.value.match(/url\(\s*[^)\s]+\s*\)/g);
+					if (urlList) {
+						promises.push(...urlList.map((value) => {
+							const url = unquote(value.replace(/url\(\s*([^)\s]+)\s*\)/, '$1'));
+							return Promise.resolve(options.url(url, id))
+							.then((result) => {
+								node.value = `url(${
+									path.normalize(result || url)
+									.replace(/\\/g, '/')
+									.replace(/^([^/])/g, './$1')
+								})`;
+							});
+						}));
 					}
-					const newClassName = params.mangler(id, className);
-					classNames[className] = newClassName;
-					return `.${newClassName}`;
-				});
+				}
 			});
+			return Promise.all(promises);
+		})
+		.then(() => {
 			roots.set(id, root);
 			const result = {
 				classNames,
@@ -71,4 +87,4 @@ function load(id, givenSource, roots, cache, params) {
 			return result;
 		});
 	});
-}
+};
