@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
+const unquote = (x) => x.replace(/^\s*['"]|['"]\s*$/g, '');
 exports.load = function load(id, givenSource, roots, cache, options) {
 	if (!givenSource && cache.has(id)) {
 		return Promise.resolve(cache.get(id));
@@ -61,7 +62,7 @@ exports.load = function load(id, givenSource, roots, cache, options) {
 					const urlList = node.value.match(/url\(\s*[^)\s]+\s*\)/g);
 					if (urlList) {
 						promises.push(...urlList.map((value) => {
-							const url = value.replace(/url\(\s*([^)\s]+)\s*\)/, '$1');
+							const url = unquote(value.replace(/url\(\s*([^)\s]+)\s*\)/, '$1'));
 							return Promise.resolve(options.url(url, id))
 							.then((result) => {
 								node.value = `url(${
