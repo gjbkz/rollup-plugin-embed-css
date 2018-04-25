@@ -1,9 +1,0 @@
-@import './logo.css';
-
-.container {
-	background: red;
-}
-
-.container>$1.logo {
-	width: 200px;
-}

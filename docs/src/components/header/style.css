@@ -1,0 +1,24 @@
+.container {
+	display: flex;
+	align-items: baseline;
+	justify-content: flex-start;
+	margin: 30px auto;
+	border-bottom: 1px solid currentColor;
+	&>* {
+		margin: 0;
+	}
+	h1 {
+		font-size: 36px;
+	}
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
+	&>a {
+		margin-left: 4px;
+	}
+}
+
+.spacer {
+	flex-grow: 1;
+}

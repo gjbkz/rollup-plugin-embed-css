@@ -1,16 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
-const {promisify} = require('@nlib/util');
-const readFile = promisify(fs.readFile);
-exports.load = load;
-
-function load(id, givenSource, roots, cache, options) {
+const unquote = (x) => x.replace(/^\s*['"]|['"]\s*$/g, '');
+exports.load = function load(id, givenSource, roots, cache, options) {
 	if (!givenSource && cache.has(id)) {
 		return Promise.resolve(cache.get(id));
 	}
 	return Promise.resolve()
-	.then(() => givenSource || readFile(id, 'utf8'))
+	.then(() => givenSource || new Promise((resolve, reject) => {
+		fs.readFile(id, 'utf8', (error, source) => error ? reject(error) : resolve(source));
+	}))
 	.then((source) => postcss(options.postcss || []).process(source, {from: id}))
 	.then(({root}) => {
 		const classNames = {};
@@ -63,7 +62,7 @@ function load(id, givenSource, roots, cache, options) {
 					const urlList = node.value.match(/url\(\s*[^)\s]+\s*\)/g);
 					if (urlList) {
 						promises.push(...urlList.map((value) => {
-							const url = value.replace(/url\(\s*([^)\s]+)\s*\)/, '$1');
+							const url = unquote(value.replace(/url\(\s*([^)\s]+)\s*\)/, '$1'));
 							return Promise.resolve(options.url(url, id))
 							.then((result) => {
 								node.value = `url(${
@@ -88,4 +87,4 @@ function load(id, givenSource, roots, cache, options) {
 			return result;
 		});
 	});
-}
+};
