@@ -2,7 +2,8 @@
 {
 	"format": "cjs",
 	"options": {
-		"mangle": true
+		"mangle": true,
+		"dest": "path-to-project-root/output/cjs.02.css"
 	}
 }
 */

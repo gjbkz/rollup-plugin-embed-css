@@ -2,7 +2,8 @@
 {
 	"format": "amd",
 	"options": {
-		"base": "path-to-project-root/src"
+		"base": "path-to-project-root/src",
+		"dest": "path-to-project-root/output/amd.00.css"
 	}
 }
 */

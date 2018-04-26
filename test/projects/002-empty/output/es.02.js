@@ -2,7 +2,8 @@
 {
 	"format": "es",
 	"options": {
-		"mangle": true
+		"mangle": true,
+		"dest": "path-to-project-root/output/es.02.css"
 	}
 }
 */

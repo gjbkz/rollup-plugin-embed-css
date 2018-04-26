@@ -2,7 +2,8 @@
 {
 	"format": "es",
 	"options": {
-		"base": "path-to-project-root/src"
+		"base": "path-to-project-root/src",
+		"dest": "path-to-project-root/output/es.00.css"
 	}
 }
 */
