@@ -75,7 +75,9 @@ You can also name the imports.
 - `postcss`: An array which passed to [postcss](https://github.com/postcss/postcss).
 - `mangle`: Boolean. See the mangler section below.
 - `base`: String. See the mangler section below.
-- `mangler`: Function. See the mangler section below. If it is set, the `mangle` and `base` options are ignored.
+- `mangler`: Function(String *id*, String *className*) → String. See the mangler section below. If it is set, the `mangle` and `base` options are ignored.
+- `url`: (sync or async) Function(String *url*, String *id*) → String. It is called for each `url(...)` value in the output CSS.
+- `dest`: String. If it exists, the CSS code is written to options.dest. Otherwise, the CSS code is embedded into script.
 
 ### `mangler` option
 

@@ -2,7 +2,8 @@
 {
 	"format": "umd",
 	"options": {
-		"mangle": true
+		"mangle": true,
+		"dest": "path-to-project-root/output/umd.02.css"
 	}
 }
 */

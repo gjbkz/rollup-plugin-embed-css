@@ -2,7 +2,8 @@
 {
 	"format": "umd",
 	"options": {
-		"base": "path-to-project-root/src"
+		"base": "path-to-project-root/src",
+		"dest": "path-to-project-root/output/umd.00.css"
 	}
 }
 */

@@ -6,6 +6,7 @@ const {encodeString} = require('../encode-string');
 const {generateCode} = require('../generate-code');
 const {minify} = require('../minify');
 const {load} = require('../load');
+const writeFile = require('@nlib/write-file');
 
 exports.embedCSS = function embedCSS(options = {}) {
 
@@ -41,6 +42,9 @@ exports.embedCSS = function embedCSS(options = {}) {
 			}));
 		},
 		transformBundle(source) {
+			if (options.dest) {
+				return null;
+			}
 			const labeler = new Labeler();
 			const encodedRules = [];
 			for (const [, root] of roots) {
@@ -55,6 +59,16 @@ exports.embedCSS = function embedCSS(options = {}) {
 				code: s.toString(),
 				map: s.generateMap(),
 			};
+		},
+		ongenerate() {
+			if (!options.dest) {
+				return null;
+			}
+			const codes = [];
+			for (const [, root] of roots) {
+				codes.push(...minify(root).nodes.map((node) => `${node}`));
+			}
+			return writeFile(options.dest, codes.join('\n'));
 		},
 	};
 };

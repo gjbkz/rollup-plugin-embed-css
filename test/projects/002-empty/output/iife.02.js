@@ -2,7 +2,8 @@
 {
 	"format": "iife",
 	"options": {
-		"mangle": true
+		"mangle": true,
+		"dest": "path-to-project-root/output/iife.02.css"
 	}
 }
 */

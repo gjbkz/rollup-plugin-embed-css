@@ -2,7 +2,8 @@
 {
 	"format": "amd",
 	"options": {
-		"mangle": true
+		"mangle": true,
+		"dest": "path-to-project-root/output/amd.02.css"
 	}
 }
 */
