@@ -6,7 +6,7 @@ node_js:
 before_install:
 - 'export GREENKEEPER=$([[ $(node -v) == v10.* ]]; echo $?)'
 - if [[ ${GREENKEEPER} -eq 0 ]]; then
-  npm install -g greenkeeper-lockfile
+  npm install -g greenkeeper-lockfile;
   fi
 install:
 - npm install
