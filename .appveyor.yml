@@ -10,7 +10,4 @@ install:
   - npm install
 test_script:
   - npm run test
-on_success:
-  - npm install -g codecov
-  - codecov
 build: off
