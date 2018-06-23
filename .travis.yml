@@ -3,13 +3,25 @@ node_js:
 - '10'
 - '8'
 - '6'
+before_install:
+- 'export GREENKEEPER=$([[ $(node -v) == v10.* ]]; echo $?)'
+- if [[ ${GREENKEEPER} -eq 0 ]]; then
+  npm install -g greenkeeper-lockfile;
+  fi
 install:
 - npm install
 - npm install -g nyc eslint
+before_script:
+- if [[ ${GREENKEEPER} -eq 0 ]]; then
+  greenkeeper-lockfile-update;
+  fi
 script:
 - npm run test_coverage
 - npm run lint
 after_success:
+- if [[ ${GREENKEEPER} -eq 0 ]]; then
+  greenkeeper-lockfile-upload;
+  fi
 - npm install -g codecov
 - codecov
 deploy:
@@ -21,3 +33,6 @@ deploy:
     tags: true
     repo: kei-ito/rollup-plugin-embed-css
     branch: rewrite
+env:
+  global:
+    secure: oPRWO28s7YgPcg8uCOEu/C3397wG2aVPpDBwpmCHvISomZstld9m4YxSJuLzSSllfVCt4hosN22UZp2Ehl976BR7xN9QZwFPljQu/TSbGsCRzPBSrdP058bx2b4Wh4M2AZXn5yjKGgWX2XqxJVRFQ9PI37WxW8W0erqCL6E+jaEYqxlAVoyOSdb2un97/7XENNMVjSHu6TvIreZ8Eaozp1+6pBwms4Z4xREkeU7h3YP7x1TNq/AK1WPA4FwyLw/sNOIwvOApmoOi9B+eGTW/pLYLkv9a7/GXed42m5l10Z3gaa7UPyRds7IXDt+GpqdQK5jwvdvyXzAfvwSPhclAlRPplo7MbrkZ9S95oj7IUhI6TtsP7BSv99PVGCl7r7QlABflI22tdtI66v1ImDFTAmSAJEQura3nLOvseTT4NcvzSgWhy3B8cesb/x5VUu9V9zrJD5A72z7F1yOmjCMbtCUzRu0wBt25Cj8r4SuSm7632J8bYXWODr1UOZTaJ4MP4ivCCLMDV+Oo6vebwystSyu9bLeRNehEGdD+GcualRg4StyPqJ91QRJNT+vyMZQPEMQa7Texj6EScUtcDpgU5pLziDcUdBarYCaFB2rB96K8IVeYaEn8d7CAtNBo3yHNLoTZPRQZQjV5MqQ418dDatMb7X6nzODQAUeUPA4qhO0=
