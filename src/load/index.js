@@ -26,8 +26,7 @@ exports.load = function load(id, givenSource, roots, cache, options) {
 		const replacements = new Map();
 		return new Promise((resolve, reject) => {
 			const queue = Array.from(dependencies);
-			next();
-			function next() {
+			const next = () => {
 				if (queue.length === 0) {
 					resolve();
 				}
@@ -41,7 +40,8 @@ exports.load = function load(id, givenSource, roots, cache, options) {
 					next();
 				})
 				.catch(reject);
-			}
+			};
+			next();
 		})
 		.then(() => {
 			const promises = [];
