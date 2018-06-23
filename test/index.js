@@ -1,8 +1,8 @@
 const path = require('path');
 const {rollup} = require('rollup');
 const postcss = require('postcss');
+const t = require('tap');
 const embedCSS = require('..');
-const test = require('@nlib/test');
 const rm = require('@nlib/rm');
 const {loadProjects} = require('./projects');
 const {runInNewContext} = require('vm');
@@ -82,7 +82,7 @@ const createSandbox = () => {
 	};
 	return sandbox;
 };
-const compareCSS = (test, a, b) => Promise.all([a, b].map((css) => postcss().process(css)))
+const compareCSS = (t, a, b) => Promise.all([a, b].map((css) => postcss().process(css, {from: undefined})))
 .then(([{root: actual}, {root: expected}]) => {
 	const filterNode = (node) => {
 		node = Object.assign({}, node);
@@ -95,10 +95,10 @@ const compareCSS = (test, a, b) => Promise.all([a, b].map((css) => postcss().pro
 	actual.walk((node) => actualNodes.push(filterNode(node)));
 	const expectedNodes = [];
 	expected.walk((node) => expectedNodes.push(filterNode(node)));
-	test.compare(actualNodes, expectedNodes);
+	t.match(actualNodes, expectedNodes);
 });
 
-test('rollup-plugin-embed-css', (test) => {
+t.test('rollup-plugin-embed-css', (t) => {
 
 	const projects = [];
 	const formats = ['es', 'iife', 'amd', 'cjs', 'umd'];
@@ -121,19 +121,19 @@ test('rollup-plugin-embed-css', (test) => {
 		() => ({id: '02', mangle: true}),
 	];
 
-	test('load projects', () => loadProjects().then((loaded) => projects.push(...loaded)));
+	t.test('load projects', () => loadProjects().then((loaded) => projects.push(...loaded)));
 
-	test('test projects', (test) => {
+	t.test('test projects', (t) => {
 
-		projects.forEach((project) => test(project.name, (test) => {
-			test('cleanup project/output', () => rm(project.path('output')));
+		projects.forEach((project) => t.test(project.name, (t) => {
+			t.test('cleanup project/output', () => rm(project.path('output')));
 			options.forEach((gen) => {
-				test(JSON.stringify(gen(project)), (test) => {
-					formats.forEach((format) => test(`format: ${format}`, (test) => {
-						test('embed', (test) => {
+				t.test(JSON.stringify(gen(project)), (t) => {
+					formats.forEach((format) => t.test(`format: ${format}`, (t) => {
+						t.test('embed', (t) => {
 							const option = gen(project);
 							const data = {expected: {}};
-							test('rollup()', () => {
+							t.test('rollup()', () => {
 								return rollup({
 									input: project.path('src', 'input.js'),
 									plugins: [
@@ -144,10 +144,10 @@ test('rollup-plugin-embed-css', (test) => {
 									data.bundle = bundle;
 								});
 							});
-							test('bundle.generate()', () => {
+							t.test('bundle.generate()', () => {
 								return data.bundle.generate({format}).then((result) => Object.assign(data, result));
 							});
-							test(`output ${format}.${option.id}.js`, () => {
+							t.test(`output ${format}.${option.id}.js`, () => {
 								const copied = Object.assign({}, option);
 								for (const key of ['id', 'roots', 'cache']) {
 									delete copied[key];
@@ -165,32 +165,35 @@ test('rollup-plugin-embed-css', (test) => {
 									data.code,
 								].join('\n'));
 							});
-							test('run the generated code', () => {
+							t.test('run the generated code', (t) => {
 								data.sandbox = createSandbox();
 								runInNewContext(data.code, data.sandbox);
+								t.end();
 							});
-							test(`load expected.${option.id}.json`, () => {
+							t.test(`load expected.${option.id}.json`, () => {
 								return project.readFile(`expected.${option.id}.json`)
 								.then((jsonString) => {
 									data.expected.classNames = JSON.parse(`${jsonString}`);
 								});
 							});
-							test('test class names', (test) => {
-								test.compare(data.sandbox.classNames, data.expected.classNames);
+							t.test('test class names', (t) => {
+								t.match(data.sandbox.classNames, data.expected.classNames);
+								t.end();
 							});
-							test(`load expected.${option.id}.css`, () => {
+							t.test(`load expected.${option.id}.css`, () => {
 								return project.readFile(`expected.${option.id}.css`)
 								.then((cssString) => {
 									data.expected.css = `${cssString}`;
 								});
 							});
-							test('test generated css', (test) => compareCSS(test, [...data.sandbox.objectURLList].map(([, css]) => css).join(''), data.expected.css));
+							t.test('test generated css', (t) => compareCSS(t, [...data.sandbox.objectURLList].map(([, css]) => css).join(''), data.expected.css));
+							t.end();
 						});
-						test('dest', (test) => {
+						t.test('dest', (t) => {
 							const option = gen(project);
 							const data = {expected: {}};
 							option.dest = project.path('output', `${format}.${option.id}.css`);
-							test('rollup()', () => {
+							t.test('rollup()', () => {
 								return rollup({
 									input: project.path('src', 'input.js'),
 									plugins: [embedCSS(option)],
@@ -199,10 +202,10 @@ test('rollup-plugin-embed-css', (test) => {
 									data.bundle = bundle;
 								});
 							});
-							test('bundle.generate()', () => {
+							t.test('bundle.generate()', () => {
 								return data.bundle.generate({format}).then((result) => Object.assign(data, result));
 							});
-							test(`output ${format}.${option.id}.js`, () => {
+							t.test(`output ${format}.${option.id}.js`, () => {
 								const copied = Object.assign({}, option);
 								for (const key of ['id', 'roots', 'cache']) {
 									delete copied[key];
@@ -223,38 +226,47 @@ test('rollup-plugin-embed-css', (test) => {
 									data.code,
 								].join('\n'));
 							});
-							test('run the generated code', () => {
+							t.test('run the generated code', (t) => {
 								data.sandbox = createSandbox();
 								runInNewContext(data.code, data.sandbox);
+								t.end();
 							});
-							test(`load expected.${option.id}.json`, () => {
+							t.test(`load expected.${option.id}.json`, () => {
 								return project.readFile(`expected.${option.id}.json`)
 								.then((jsonString) => {
 									data.expected.classNames = JSON.parse(`${jsonString}`);
 								});
 							});
-							test('test class names', (test) => {
-								test.compare(data.sandbox.classNames, data.expected.classNames);
+							t.test('test class names', (t) => {
+								t.match(data.sandbox.classNames, data.expected.classNames);
+								t.end();
 							});
-							test(`load ${option.dest}`, () => {
+							t.test(`load ${option.dest}`, () => {
 								return project.readFile(`output/${format}.${option.id}.css`)
 								.then((cssString) => {
 									data.css = `${cssString}`;
 								});
 							});
-							test(`load expected.${option.id}.css`, () => {
+							t.test(`load expected.${option.id}.css`, () => {
 								return project.readFile(`expected.${option.id}.css`)
 								.then((cssString) => {
 									data.expected.css = `${cssString}`;
 								});
 							});
-							test('test generated css', (test) => compareCSS(test, data.css, data.expected.css));
+							t.test('test generated css', (t) => compareCSS(t, data.css, data.expected.css));
+							t.end();
 						});
+						t.end();
 					}));
+					t.end();
 				});
 			});
+			t.end();
 		}));
+		t.end();
 
 	});
+
+	t.end();
 
 });
