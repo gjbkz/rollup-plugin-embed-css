@@ -8,9 +8,8 @@ install:
   - node --version
   - npm --version
   - npm install
-  - npm install -g nyc
 test_script:
-  - npm run test_coverage
+  - npm run test
 on_success:
   - npm install -g codecov
   - codecov

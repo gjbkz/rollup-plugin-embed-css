@@ -10,13 +10,12 @@ before_install:
   fi
 install:
 - npm install
-- npm install -g nyc eslint
 before_script:
 - if [[ ${GREENKEEPER} -eq 0 ]]; then
   greenkeeper-lockfile-update;
   fi
 script:
-- npm run test_coverage
+- npm run test
 - npm run lint
 after_success:
 - if [[ ${GREENKEEPER} -eq 0 ]]; then
