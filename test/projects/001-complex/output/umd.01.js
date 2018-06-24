@@ -3,7 +3,7 @@
 	"format": "umd",
 	"options": {
 		"base": "path-to-project-root",
-		"dest": "path-to-project-root/output/umd.01.css"
+		"dest": "path-to-project-root/output/css-output/umd.01.css"
 	}
 }
 */

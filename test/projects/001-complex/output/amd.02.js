@@ -3,7 +3,7 @@
 	"format": "amd",
 	"options": {
 		"mangle": true,
-		"dest": "path-to-project-root/output/amd.02.css"
+		"dest": "path-to-project-root/output/css-output/amd.02.css"
 	}
 }
 */

@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const {createFilter} = require('rollup-pluginutils');
 const MagicString = require('magic-string');
 const {Labeler} = require('../-labeler');
@@ -7,6 +6,7 @@ const {encodeString} = require('../encode-string');
 const {generateCode} = require('../generate-code');
 const {minify} = require('../minify');
 const {load} = require('../load');
+const writeFile = require('@nlib/write-file');
 
 exports.embedCSS = function embedCSS(options = {}) {
 
@@ -68,15 +68,7 @@ exports.embedCSS = function embedCSS(options = {}) {
 			for (const [, root] of roots) {
 				codes.push(...minify(root).nodes.map((node) => `${node}`));
 			}
-			return new Promise((resolve, reject) => {
-				fs.writeFile(options.dest, codes.join('\n'), (error) => {
-					if (error) {
-						reject(error);
-					} else {
-						resolve();
-					}
-				});
-			});
+			return writeFile(options.dest, codes.join('\n'));
 		},
 	};
 };
