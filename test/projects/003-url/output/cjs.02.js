@@ -3,7 +3,7 @@
 	"format": "cjs",
 	"options": {
 		"mangle": true,
-		"dest": "path-to-project-root/output/cjs.02.css"
+		"dest": "path-to-project-root/output/css-output/cjs.02.css"
 	}
 }
 */

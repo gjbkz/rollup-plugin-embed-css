@@ -3,7 +3,7 @@
 	"format": "es",
 	"options": {
 		"base": "path-to-project-root/src",
-		"dest": "path-to-project-root/output/es.00.css"
+		"dest": "path-to-project-root/output/css-output/es.00.css"
 	}
 }
 */

@@ -9,7 +9,10 @@ exports.loadProjects = () => promisify(fs.readdir)(__dirname)
 	.filter((name) => name.match(/^\d+/))
 	.map((name) => {
 		const root = path.join(__dirname, name);
-		const getPath = (...args) => path.join(root, ...args);
+		const getPath = (...args) => {
+			const filePath = path.join(...args);
+			return path.isAbsolute(filePath) ? filePath : path.join(root, filePath);
+		};
 		return Object.freeze({
 			path: getPath,
 			writeFile: (filename, data) => writeFile(getPath('output', filename), data),

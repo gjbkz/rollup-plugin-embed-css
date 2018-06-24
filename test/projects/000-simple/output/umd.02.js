@@ -3,7 +3,7 @@
 	"format": "umd",
 	"options": {
 		"mangle": true,
-		"dest": "path-to-project-root/output/umd.02.css"
+		"dest": "path-to-project-root/output/css-output/umd.02.css"
 	}
 }
 */

@@ -3,7 +3,7 @@
 	"format": "iife",
 	"options": {
 		"mangle": true,
-		"dest": "path-to-project-root/output/iife.02.css"
+		"dest": "path-to-project-root/output/css-output/iife.02.css"
 	}
 }
 */

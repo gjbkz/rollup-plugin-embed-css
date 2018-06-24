@@ -192,7 +192,7 @@ t.test('rollup-plugin-embed-css', (t) => {
 						t.test('dest', (t) => {
 							const option = gen(project);
 							const data = {expected: {}};
-							option.dest = project.path('output', `${format}.${option.id}.css`);
+							option.dest = project.path('output', 'css-output', `${format}.${option.id}.css`);
 							t.test('rollup()', () => {
 								return rollup({
 									input: project.path('src', 'input.js'),
@@ -242,7 +242,7 @@ t.test('rollup-plugin-embed-css', (t) => {
 								t.end();
 							});
 							t.test(`load ${option.dest}`, () => {
-								return project.readFile(`output/${format}.${option.id}.css`)
+								return project.readFile(option.dest)
 								.then((cssString) => {
 									data.css = `${cssString}`;
 								});

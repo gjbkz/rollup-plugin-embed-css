@@ -3,7 +3,7 @@
 	"format": "es",
 	"options": {
 		"mangle": true,
-		"dest": "path-to-project-root/output/es.02.css"
+		"dest": "path-to-project-root/output/css-output/es.02.css"
 	}
 }
 */
