@@ -21,7 +21,7 @@
 	"dependencies": {
 		"@nlib/write-file": "^1.0.1",
 		"magic-string": "^0.25.0",
-		"postcss": "^6.0.22",
+		"postcss": "^7.0.0",
 		"rollup-pluginutils": "^2.2.0"
 	},
 	"devDependencies": {
