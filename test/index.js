@@ -82,8 +82,8 @@ const createSandbox = () => {
 	};
 	return sandbox;
 };
-const compareCSS = (t, a, b) => Promise.all([a, b].map((css) => postcss().process(css, {from: undefined})))
-.then(([{root: actual}, {root: expected}]) => {
+const compareCSS = (t, a, b) => Promise.all([a, b].map((css) => postcss.parse(css, {from: undefined})))
+.then(([actual, expected]) => {
 	const filterNode = (node) => {
 		node = Object.assign({}, node);
 		for (const key of ['raws', 'parent', 'source', 'nodes', 'lastEach', 'indexes']) {
