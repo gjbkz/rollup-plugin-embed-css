@@ -6,7 +6,7 @@ const afs = require('@nlib/afs');
 const embedCSS = require('../..');
 const {runCode} = require('../util.js');
 const postcss = require('postcss');
-t.test('simple-file', (t) => {
+t.test('mangler', (t) => {
     const formats = ['es', 'iife', 'umd'];
     for (const format of formats) {
         t.test(format, async (t) => {
