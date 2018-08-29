@@ -10,3 +10,8 @@ bar.bar > .foo {
 $2.bar > .foo {
     color: pink;
 }
+@media print {
+    .foo {
+        color: var(--color);
+    }
+}
