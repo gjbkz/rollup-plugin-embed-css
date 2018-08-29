@@ -21,6 +21,7 @@ after_success:
   greenkeeper-lockfile-upload;
   fi
 - npm install -g codecov
+- tap --coverage-report=text-lcov > coverage.lcov
 - codecov
 deploy:
   provider: npm
