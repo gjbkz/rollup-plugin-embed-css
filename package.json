@@ -15,8 +15,7 @@
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
         "lint": "eslint lib test",
-        "test": "tap --coverage test/*/test.js",
-        "docs": "rollup --config docs/rollup.config.js"
+        "test": "tap --coverage test/*/test.js"
     },
     "dependencies": {
         "@nlib/afs": "^0.2.0",
