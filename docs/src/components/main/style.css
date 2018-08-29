@@ -1,7 +1,0 @@
-.container {
-	margin: 30px auto;
-	&>h1 {
-		margin: 16px auto 10px auto;
-		font-size: 24px;
-	}
-}
