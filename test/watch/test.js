@@ -14,7 +14,7 @@ t.test('watch', (t) => {
         watcher = null;
         done();
     });
-    const formats = ['es'];
+    const formats = ['es', 'iife', 'umd'];
     for (const format of formats) {
         t.test(format, async (t) => {
             const directory = await afs.mkdtemp(path.join(os.tmpdir(), `-embedCSS-${format}-`));
@@ -50,7 +50,9 @@ t.test('watch', (t) => {
                         break;
                     case 'END':
                         if (count === 0) {
-                            afs.writeFile(cssFile, '.foo {--color2: blue}').catch(reject);
+                            new Promise((resolve) => setTimeout(resolve, 100))
+                            .then(() => afs.writeFile(cssFile, '.foo {--color2: blue}'))
+                            .catch(reject);
                         } else {
                             clearTimeout(timer);
                             resolve();

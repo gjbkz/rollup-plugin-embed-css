@@ -7,7 +7,7 @@ const embedCSS = require('../..');
 const {runCode} = require('../util.js');
 const postcss = require('postcss');
 t.test('simple-file', (t) => {
-    const formats = ['es'];
+    const formats = ['es', 'iife', 'umd'];
     for (const format of formats) {
         t.test(format, async (t) => {
             const directory = await afs.mkdtemp(path.join(os.tmpdir(), `-embedCSS-${format}-`));
