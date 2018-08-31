@@ -18,7 +18,7 @@ t.test('sourcemap', (t) => {
                 plugins: [embedCSS({dest: cssDest})],
             });
             const result = await bundle.generate({
-                sourceMap: true,
+                sourcemap: true,
                 format,
             });
             const {results} = runCode(result.code);
