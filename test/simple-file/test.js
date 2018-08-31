@@ -20,10 +20,7 @@ t.test('simple-file', (t) => {
                     embedCSS({dest: cssDest}),
                 ],
             });
-            const result = await bundle.generate({
-                sourceMap: true,
-                format,
-            });
+            const result = await bundle.generate({format});
             const {results: {classes, properties}} = runCode(result.code);
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.notOk(classes.bar, 'classes.bar');
