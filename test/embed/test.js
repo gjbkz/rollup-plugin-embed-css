@@ -19,56 +19,11 @@ t.test('embed', (t) => {
                     embedCSS(),
                 ],
             });
-            const result = await bundle.generate({
-                sourceMap: true,
-                format,
-            });
-            const blobs = [];
-            const objectURLs = new Map();
-            const head = {
-                children: [],
-                appendChild(child) {
-                    this.children.push(child);
-                    return child;
-                },
-            };
-            const {results: {classes}} = runCode(result.code, {
-                Blob: class Blob {
-                    constructor(data) {
-                        this.data = data;
-                        blobs.push(this);
-                    }
-                },
-                document: {
-                    createElement: (tag) => ({
-                        tag,
-                        attrs: {},
-                        setAttribute(key, value) {
-                            this.attrs[key] = value;
-                        },
-                        getAttribute(key) {
-                            return this.attrs[key];
-                        },
-                    }),
-                    head,
-                },
-                URL: {
-                    createObjectURL(blob) {
-                        const url = `_${objectURLs.size}`;
-                        objectURLs.set(url, blob);
-                        return url;
-                    },
-                    revokeObjectURL(url) {
-                        const blob = objectURLs.get(url);
-                        if (blob) {
-                            blob.revoked = true;
-                        }
-                    },
-                },
-            });
+            const result = await bundle.generate({format});
+            const {results: {classes}, blobs, document} = runCode(result.code);
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.equal(blobs.length, 1, 'blobs.length');
-            t.equal(head.children.length, 1, 'head.children.length');
+            t.equal(document.head.children.length, 1, 'head.children.length');
             const ast = postcss.parse(blobs[0].data);
             t.match(ast.nodes[0], {
                 type: 'rule',

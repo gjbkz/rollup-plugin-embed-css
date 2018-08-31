@@ -19,7 +19,6 @@
     },
     "dependencies": {
         "@nlib/afs": "^0.2.0",
-        "magic-string": "^0.25.0",
         "postcss": "^7.0.2",
         "rollup-pluginutils": "^2.3.1"
     },

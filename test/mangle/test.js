@@ -23,10 +23,7 @@ t.test('mangle', (t) => {
                     }),
                 ],
             });
-            const result = await bundle.generate({
-                sourceMap: true,
-                format,
-            });
+            const result = await bundle.generate({format});
             const {results: {classes, properties}} = runCode(result.code);
             t.equal(classes.foo, '_2', 'classes.foo');
             t.notOk(classes.bar, 'classes.bar');
