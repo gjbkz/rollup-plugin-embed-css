@@ -6,8 +6,10 @@ exports.runCode = (code, sandbox = {}) => {
     const objectURLs = new Map();
     sandbox = {
         Blob: class Blob {
-            constructor(data) {
-                this.data = data;
+            constructor(array, {type = '', endings = 'transparent'} = {}) {
+                this.data = array.join('');
+                this.type = type;
+                this.endings = endings;
                 blobs.push(this);
             }
         },

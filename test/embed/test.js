@@ -24,6 +24,7 @@ t.test('embed', (t) => {
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.equal(blobs.length, 1, 'blobs.length');
             t.equal(document.head.children.length, 1, 'head.children.length');
+            t.equal(blobs[0].type, 'text/css', 'blobs[0].type');
             const ast = postcss.parse(blobs[0].data);
             t.match(ast.nodes[0], {
                 type: 'rule',
