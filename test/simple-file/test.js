@@ -17,7 +17,14 @@ t.test('simple-file', (t) => {
             const bundle = await rollup.rollup({
                 input,
                 plugins: [
-                    embedCSS({dest: cssDest}),
+                    embedCSS({
+                        dest: cssDest,
+                        onParse: (data) => {
+                            t.ok(typeof data.id, 'string');
+                            t.ok(typeof data.classes, 'object');
+                            t.ok(typeof data.properties, 'object');
+                        },
+                    }),
                 ],
             });
             const result = await bundle.generate({format});
