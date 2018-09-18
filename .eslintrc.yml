@@ -17,3 +17,9 @@ overrides:
       - 'test/**'
     rules:
       no-loop-func: 'off'
+  -
+    files:
+      - 'lib/index.js'
+    rules:
+      global-require: 'off'
+      max-lines-per-function: 'off'
