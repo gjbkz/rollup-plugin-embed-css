@@ -10,7 +10,7 @@ A plugin to embed css into JavaScript codes using [postcss](https://github.com/p
 1. This plugin imports a .css file as an object which maps class names to minified class names. Class names are minified uniquely and it makes styles modular. This means you don't have to concern about naming somethings. For example, you can use `.container` for every components in a project.
 2. This plugin appends a script that loads imported styles into the page using objectURL. You don't have to load external .css files.
 3. This plugin detects `@import` syntax and append imported files to dependencies. It works well with [`rollup.watch`](https://rollupjs.org/#rollup-watch).
-4. You can replace `url(...)` with the `options.url` option.
+4. This plugin generates `*.d.ts` files. You can use this plugin with TypeScript ([rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2)).
 
 ## Installation
 
@@ -76,6 +76,7 @@ You can also name the imports.
 - `processOptions`: An object which passed to [postcss.parse](http://api.postcss.org/postcss.html#.parse) or [processor.process](http://api.postcss.org/Processor.html#process).
 - `mangle`: Boolean. See the mangler section below.
 - `base`: String. See the mangler section below.
+- `classesOnly`: Boolean. If it is true, a CSS file exports classes as default export. Otherwise, `{classes, properties}` is exported.
 - `mangler`: Function(String *id*, String *className*) → String. See the mangler section below. If it is set, the `mangle` and `base` options are ignored.
 - `dest`: String. If it exists, the CSS code is written to options.dest. Otherwise, the CSS code is embedded into script.
 
