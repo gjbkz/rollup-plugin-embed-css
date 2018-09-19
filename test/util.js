@@ -48,6 +48,7 @@ exports.runCode = (code, sandbox = {}) => {
         console,
         ...sandbox,
     };
+    sandbox.g = sandbox;
     sandbox.global = sandbox;
     runInNewContext(code, sandbox);
     return {blobs, objectURLs, ...sandbox};
