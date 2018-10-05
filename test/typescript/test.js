@@ -21,7 +21,7 @@ t.test('typescript', (t) => {
                             tsconfig: path.join(directory, 'tsconfig.json'),
                             tsconfigOverride: {target},
                         }),
-                        embedCSS({dest: cssDest}),
+                        embedCSS({dest: cssDest, typescript: true}),
                     ];
                     if (reverse) {
                         plugins.reverse();
