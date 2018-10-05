@@ -29,6 +29,7 @@ t.test('simple-file', (t) => {
             });
             const result = await bundle.generate({format});
             const {results: {classes, properties}} = runCode(result.code);
+            t.equal(classes.equal, 'equal');
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.notOk(classes.bar, 'classes.bar');
             const ast = postcss.parse(await afs.readFile(cssDest, 'utf8'));
