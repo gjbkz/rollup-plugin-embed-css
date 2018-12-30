@@ -23,8 +23,8 @@ t.test('mangle', (t) => {
                     }),
                 ],
             });
-            const result = await bundle.generate({format});
-            const {results: {classes, properties}} = runCode(result.code);
+            const {output: [{code}]} = await bundle.generate({format});
+            const {results: {classes, properties}} = runCode(code);
             t.equal(classes.foo, '_2', 'classes.foo');
             t.notOk(classes.bar, 'classes.bar');
             const ast = postcss.parse(await afs.readFile(cssDest, 'utf8'));

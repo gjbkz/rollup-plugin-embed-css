@@ -30,11 +30,11 @@ t.test('typescript', (t) => {
                         input,
                         plugins,
                     });
-                    const result = await bundle.generate({
+                    const {output: [{code}]} = await bundle.generate({
                         sourcemap: true,
                         format,
                     });
-                    const {results} = runCode(result.code);
+                    const {results} = runCode(code);
                     t.match(results, {
                         foo: 'foofoo',
                         bar: 'redred',

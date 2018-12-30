@@ -18,16 +18,16 @@ t.test('sourcemap', (t) => {
                     input,
                     plugins: [embedCSS({dest: cssDest})],
                 });
-                const result = await bundle.generate({
+                const {output: [{code, map}]} = await bundle.generate({
                     sourcemap: true,
                     format,
                 });
-                const {results} = runCode(result.code);
+                const {results} = runCode(code);
                 t.match(results, {
                     foo: 'foofoo',
                     properties: {color: 'red'},
                 });
-                t.ok(result.map.mappings.match(/[^;]/));
+                t.ok(map.mappings.match(/[^;]/));
             });
         }
     }
