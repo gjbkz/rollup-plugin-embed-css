@@ -24,8 +24,8 @@ t.test('plugins', (t) => {
                     }),
                 ],
             });
-            const result = await bundle.generate({format});
-            const {results: {classes, properties}} = runCode(result.code);
+            const {output: [{code}]} = await bundle.generate({format});
+            const {results: {classes, properties}} = runCode(code);
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.ok(classes.bar.endsWith('_style_css_bar'), 'classes.bar');
             t.equal(properties.color1, 'red', `properties.color1: ${properties.color1}`);

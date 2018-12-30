@@ -23,8 +23,8 @@ t.test('simple-file', (t) => {
                     }),
                 ],
             });
-            const result = await bundle.generate({format});
-            const {results: {classes}} = runCode(result.code);
+            const {output: [{code}]} = await bundle.generate({format});
+            const {results: {classes}} = runCode(code);
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.notOk(classes.bar, 'classes.bar');
             const ast = postcss.parse(await afs.readFile(cssDest, 'utf8'));

@@ -19,8 +19,8 @@ t.test('embed', (t) => {
                     embedCSS(),
                 ],
             });
-            const result = await bundle.generate({format});
-            const {results: {classes}, blobs, document} = runCode(result.code);
+            const {output: [{code}]} = await bundle.generate({format});
+            const {results: {classes}, blobs, document} = runCode(code);
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
             t.equal(blobs.length, 1, 'blobs.length');
             t.equal(document.head.children.length, 1, 'head.children.length');

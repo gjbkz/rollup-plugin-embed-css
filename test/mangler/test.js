@@ -30,8 +30,8 @@ t.test('mangler', (t) => {
                     }),
                 ],
             });
-            const result = await bundle.generate({format});
-            const {results: {classes, properties}} = runCode(result.code);
+            const {output: [{code}]} = await bundle.generate({format});
+            const {results: {classes, properties}} = runCode(code);
             for (const [id, mangled] of labeler) {
                 if (id.endsWith('style-1.css')) {
                     t.equal(mangled, '_0', 'style-1.css');
