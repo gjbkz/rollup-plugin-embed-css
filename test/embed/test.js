@@ -2,9 +2,9 @@ const path = require('path');
 const t = require('tap');
 const rollup = require('rollup');
 const postcss = require('postcss');
-const {cpr, mktempdir} = require('@nlib/afs');
+const {cpr} = require('@nlib/afs');
+const {runCode, mktempdir} = require('../util.js');
 const embedCSS = require('../..');
-const {runCode} = require('../util.js');
 t.test('embed', (t) => {
     const formats = ['es', 'iife', 'umd'];
     for (const format of formats) {

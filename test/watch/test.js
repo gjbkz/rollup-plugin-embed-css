@@ -2,7 +2,8 @@ const path = require('path');
 const t = require('tap');
 const rollup = require('rollup');
 const postcss = require('postcss');
-const {mktempdir, writeFilep, readFile} = require('@nlib/afs');
+const {writeFilep, readFile} = require('@nlib/afs');
+const {mktempdir} = require('../util.js');
 const embedCSS = require('../..');
 t.test('watch', (t) => {
     let watcher;

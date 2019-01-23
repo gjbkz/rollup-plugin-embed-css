@@ -1,5 +1,10 @@
 const {runInNewContext} = require('vm');
 const console = require('console');
+const {tmpdir} = require('os');
+const {join} = require('path');
+const {mkdtemp, realpath} = require('@nlib/afs');
+
+exports.mktempdir = async (prefix = 'temp') => realpath(await mkdtemp(join(tmpdir(), `${prefix}-`)));
 
 exports.runCode = (code, sandbox = {}) => {
     const blobs = [];

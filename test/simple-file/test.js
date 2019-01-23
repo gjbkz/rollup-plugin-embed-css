@@ -1,9 +1,9 @@
 const path = require('path');
 const t = require('tap');
 const rollup = require('rollup');
-const {mktempdir, cpr, readFile} = require('@nlib/afs');
+const {cpr, readFile} = require('@nlib/afs');
+const {runCode, mktempdir} = require('../util.js');
 const embedCSS = require('../..');
-const {runCode} = require('../util.js');
 const postcss = require('postcss');
 t.test('simple-file', (t) => {
     const formats = ['es', 'iife', 'umd'];

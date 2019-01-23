@@ -1,9 +1,9 @@
 const path = require('path');
 const t = require('tap');
 const rollup = require('rollup');
-const {mktempdir, cpr} = require('@nlib/afs');
+const {cpr} = require('@nlib/afs');
 const embedCSS = require('../..');
-const {runCode} = require('../util.js');
+const {runCode, mktempdir} = require('../util.js');
 t.test('sourcemap', (t) => {
     const formats = ['es', 'iife', 'umd'];
     for (const format of formats) {
