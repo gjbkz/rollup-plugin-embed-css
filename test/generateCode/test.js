@@ -15,16 +15,13 @@ t.test('embed', (t) => {
             const bundle = await rollup.rollup({
                 input,
                 plugins: [
-                    embedCSS(),
+                    embedCSS({generateCode: (css) => `document.head.appendChild(document.createElement('style')).textContent = ${JSON.stringify(css)};`}),
                 ],
             });
             const {output: [{code}]} = await bundle.generate({format});
-            const {results: {classes}, blobs, document} = runCode(code);
+            const {results: {classes}, document} = runCode(code);
             t.ok(classes.foo.endsWith('_style_css_foo'), 'classes.foo');
-            t.equal(blobs.length, 1, 'blobs.length');
-            t.equal(document.head.children.length, 1, 'head.children.length');
-            t.equal(blobs[0].type, 'text/css', 'blobs[0].type');
-            const ast = postcss.parse(blobs[0].data);
+            const ast = postcss.parse(document.head.children[0].textContent);
             t.match(ast.nodes[0], {
                 type: 'rule',
                 nodes: {
