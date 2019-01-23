@@ -1,0 +1,8 @@
+.foo {
+    color: red;
+}
+@media print {
+    .bar {
+        color: blue;
+    }
+}
