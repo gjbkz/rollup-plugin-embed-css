@@ -79,6 +79,7 @@ You can also name the imports.
 - `classesOnly`: Boolean. If it is true, a CSS file exports classes as default export. Otherwise, `{classes, properties}` is exported.
 - `mangler`: Function(String *id*, String *className*) → String. See the mangler section below. If it is set, the `mangle` and `base` options are ignored.
 - `dest`: String. If it exists, the CSS code is written to options.dest. Otherwise, the CSS code is embedded into script.
+- `generateCode`: Function(String *css*) → String. You can specify your function to generate scripts that applies the given CSS to the page. It is called if `dest` is undefined.
 
 ### `mangler` option
 
