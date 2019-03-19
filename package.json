@@ -37,7 +37,7 @@
         "postcss-nested": "4.1.2",
         "rollup": "1.6.0",
         "rollup-plugin-typescript2": "0.20.1",
-        "tap": "12.4.0",
+        "tap": "12.6.0",
         "typescript": "3.3.3333"
     },
     "eslintConfig": {
