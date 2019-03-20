@@ -87,5 +87,10 @@
         "*.js": [
             "eslint"
         ]
+    },
+    "renovate-config": {
+        "extends": [
+            "github>nlibjs/renovate-config"
+        ]
     }
 }
