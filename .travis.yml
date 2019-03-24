@@ -6,10 +6,18 @@ os:
 matrix:
   allow_failures:
     - os: osx
-    - os: windows
 node_js:
 - '10'
 - '8'
+before_install:
+- |
+  if [[ $TRAVIS_OS_NAME == windows ]]; then
+    git config --global core.autocrlf false
+    cd ../..
+    mv $TRAVIS_REPO_SLUG _old
+    git clone _old $TRAVIS_REPO_SLUG
+    cd $TRAVIS_REPO_SLUG
+  fi
 install:
 - npm ci
 script:
@@ -19,11 +27,3 @@ after_success:
 - npm install -g codecov
 - tap --coverage-report=text-lcov > coverage.lcov
 - codecov
-deploy:
-  provider: npm
-  email: kei.itof@gmail.com
-  api_key:
-    secure: eWFVFETlU34rf0aGVWCruK1DP5riawWMhcQYSLy8siFli7vwXZ4oIaq66PaUhhDFD33mqegKTRaDpC3qtI6uRApF6+Az3X/PP7TVLKZGcJko1RfAjhqAqy2eZAOuYhHVAscmJzJ49iXAbscJ8/syHjQDrMewWhjeTv8xh8+oZ2DIwvZ1SdHAuqLga1gBWhuPettlKGI2GUjV9XJ3HRoe41V0J4NDJyBn9MADlIcptFNbrYZOUu22xoaeCXlCszQCrrR5SNH+skbp3zXUNCN/cYchR0BSjE3jzgEdrrkMdva7XER+oPdpVQt3DXKuu8EU0xe0XRRrkEP1lwOvBhG2IJyOgQkcIoCYUpqQEJnqlao2lc91ajm400EHrygj0Y/paMB8tVFD9w/vwdlO605xGv/kdnvX7kecxxxYWk8AxA5EABGiKGdrqk+r4RfKoELtRw46dM3Wbqurp4/33JAe4Gev7bqixCwB6sS/XlFueIauyL7/UUcxXVLY3Ds0k+SqgPOFi5AjBfV7AUafsIWyPuAsAAHDiwp2mR+HHA2y4HhZkOdg+VQ2G/TOy8Rf/4pK2/0xgTtQitBexnb9Uv07BmHrqMbjfj+NB0aqMwu/uEloJ0VCL95kBDC4e9OD6PCR5OBSdULPK32qb5mxNPDbt5MQkkp7hkDsFMDk7xF2zVc=
-  on:
-    tags: true
-    repo: kei-ito/rollup-plugin-embed-css
