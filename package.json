@@ -21,7 +21,7 @@
         "version": "npm-run-all --sequential version:changelog version:add"
     },
     "dependencies": {
-        "@nlib/afs": "^3.4.0",
+        "@nlib/afs": "^3.5.0",
         "postcss": "^7.0.14",
         "rollup-pluginutils": "^2.5.0"
     },
