@@ -6,6 +6,8 @@ os:
 matrix:
   allow_failures:
     - os: osx
+    - os: windows
+      node_js: '8'
 node_js:
 - '10'
 - '8'
