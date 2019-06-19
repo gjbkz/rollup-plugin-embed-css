@@ -19,16 +19,27 @@ exports.runCode = (code, sandbox = {}) => {
             }
         },
         document: {
-            createElement: (tag) => ({
-                tag,
-                attrs: {},
-                setAttribute(key, value) {
-                    this.attrs[key] = value;
-                },
-                getAttribute(key) {
-                    return this.attrs[key];
-                },
-            }),
+            createElement: (tag) => {
+                const element = {
+                    tag,
+                    attrs: {},
+                    setAttribute(key, value) {
+                        this.attrs[key] = value;
+                    },
+                    getAttribute(key) {
+                        return this.attrs[key];
+                    },
+                };
+                if (tag === 'style') {
+                    element.sheet = {
+                        cssRules: [],
+                        insertRule(text, index) {
+                            this.cssRules[index] = text;
+                        },
+                    };
+                }
+                return element;
+            },
             head: {
                 children: [],
                 appendChild(child) {

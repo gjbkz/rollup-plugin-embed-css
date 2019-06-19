@@ -15,6 +15,7 @@
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
         "lint": "eslint lib test",
+        "build": "tsc",
         "test": "tap --coverage test/*/test.js",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
@@ -22,6 +23,7 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.10.0",
+        "esifycss": "^1.1.2",
         "postcss": "^7.0.17",
         "rollup-pluginutils": "^2.8.1"
     },

@@ -1,2 +1,2 @@
-import {classes, properties} from './style.css';
-global.results = {classes, properties};
+import {className, id, keyframes} from './style.css';
+global.results = {className, id, keyframes};
