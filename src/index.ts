@@ -3,11 +3,11 @@ import * as esifycss from 'esifycss';
 import * as rollup from 'rollup';
 import * as pluginUtils from 'rollup-pluginutils';
 
-module.exports = (
-    options: esifycss.ISessionOptions & {
-        exclude: Array<string | RegExp> | string | RegExp | null,
-    },
-): rollup.Plugin => {
+export interface IPluginOptions extends esifycss.ISessionOptions {
+    exclude: Array<string | RegExp> | string | RegExp,
+}
+
+module.exports = (options: IPluginOptions): rollup.Plugin => {
     const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
     const session = new esifycss.Session({...options, include: [], watch: false});
     const helperScriptPromise = session.outputHelperScript();
