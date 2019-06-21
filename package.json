@@ -23,7 +23,7 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.10.0",
-        "esifycss": "^1.1.2",
+        "esifycss": "^1.2.7",
         "postcss": "^7.0.17",
         "rollup-pluginutils": "^2.8.1"
     },
@@ -36,10 +36,7 @@
         "husky": "^2.4.1",
         "lint-staged": "^8.2.1",
         "npm-run-all": "4.1.5",
-        "postcss-nested": "4.1.2",
         "rollup": "^1.15.6",
-        "rollup-plugin-typescript2": "^0.21.2",
-        "tap": "^14.2.3",
         "typescript": "^3.5.2"
     },
     "eslintConfig": {
