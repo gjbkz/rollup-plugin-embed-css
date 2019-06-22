@@ -14,7 +14,7 @@
     },
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
-        "lint": "eslint lib test",
+        "lint": "eslint --ext .ts src test",
         "build": "tsc",
         "test": "ava",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
@@ -32,6 +32,8 @@
         "@commitlint/config-conventional": "^8.0.0",
         "@nlib/lint": "^3.10.0",
         "@types/node": "^12.0.10",
+        "@typescript-eslint/eslint-plugin": "^1.10.2",
+        "@typescript-eslint/parser": "^1.10.2",
         "ava": "^2.1.0",
         "conventional-changelog-cli": "^2.0.21",
         "eslint": "^5.16.0",
@@ -59,7 +61,26 @@
         "env": {
             "es6": true,
             "node": true
-        }
+        },
+        "overrides": [
+            {
+                "files": [
+                    "src/index.ts",
+                    "test/*/test.ts"
+                ],
+                "rules": {
+                    "max-lines-per-function": "off"
+                }
+            },
+            {
+                "files": [
+                    "test/util.ts"
+                ],
+                "rules": {
+                    "class-methods-use-this": "off"
+                }
+            }
+        ]
     },
     "commitlint": {
         "extends": [

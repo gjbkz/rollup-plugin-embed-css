@@ -23,10 +23,7 @@ const getFirstInput = (
 export default (
     options: IPluginOptions = {},
 ): rollup.Plugin => {
-    const filter = pluginUtils.createFilter(
-        options.include || './**/*.css',
-        options.exclude,
-    );
+    const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
     let session: esifycss.Session | undefined;
     let helperScriptPromise: Promise<void> | undefined;
     return {
@@ -57,7 +54,7 @@ export default (
             await session.processCSS(filePath);
             return `${filePath}${session.configuration.ext}`;
         },
-        async generateBundle(_options, bundle) {
+        generateBundle(_options, bundle) {
             for (const [, chunk] of Object.entries(bundle)) {
                 let {code} = chunk;
                 if (code) {
