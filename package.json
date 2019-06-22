@@ -8,7 +8,7 @@
         "email": "kei.itof@gmail.com",
         "url": "https://github.com/kei-ito"
     },
-    "license": "MIT",
+    "license": "Apache-2.0",
     "engines": {
         "node": ">=8"
     },
