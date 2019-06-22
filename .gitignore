@@ -6,3 +6,4 @@ temp
 *.css.js
 *.css.ts
 lib
+output

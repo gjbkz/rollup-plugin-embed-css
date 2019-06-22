@@ -3,17 +3,52 @@ import * as esifycss from 'esifycss';
 import * as rollup from 'rollup';
 import * as pluginUtils from 'rollup-pluginutils';
 
-export interface IPluginOptions extends esifycss.ISessionOptions {
-    exclude: Array<string | RegExp> | string | RegExp,
+interface IPluginOptions extends esifycss.ISessionOptions {
+    exclude?: Array<string | RegExp> | string | RegExp,
 }
 
-module.exports = (options: IPluginOptions): rollup.Plugin => {
-    const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
-    const session = new esifycss.Session({...options, include: [], watch: false});
-    const helperScriptPromise = session.outputHelperScript();
+const getFirstInput = (
+    input: rollup.InputOptions['input'],
+): string | null => {
+    if (typeof input === 'string') {
+        return input;
+    } else if (Array.isArray(input)) {
+        return input[0] || null;
+    } else if (typeof input === 'object') {
+        return input[Object.keys(input)[0]] || null;
+    }
+    return null;
+};
+
+export default (
+    options: IPluginOptions = {},
+): rollup.Plugin => {
+    const filter = pluginUtils.createFilter(
+        options.include || './**/*.css',
+        options.exclude,
+    );
+    let session: esifycss.Session | undefined;
+    let helperScriptPromise: Promise<void> | undefined;
     return {
         name: 'embedCSS',
+        options(inputOptions) {
+            if (!options.helper) {
+                const firstInput = getFirstInput(inputOptions.input);
+                if (firstInput) {
+                    options.helper = path.join(path.dirname(firstInput), 'embedcss-helper.css.js');
+                }
+            }
+            session = new esifycss.Session({...options, include: [], watch: false});
+            helperScriptPromise = session.outputHelperScript();
+            return null;
+        },
         async resolveId(id, importer) {
+            if (!session) {
+                throw new Error(`session is ${session}`);
+            }
+            if (!helperScriptPromise) {
+                throw new Error(`helperScriptPromise is ${helperScriptPromise}`);
+            }
             const filePath = importer ? path.join(path.dirname(importer), id) : id;
             if (!filter(filePath)) {
                 return null;
