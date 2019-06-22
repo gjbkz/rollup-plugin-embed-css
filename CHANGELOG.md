@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v0.4.0...v1.0.0) (2019-06-22)
+
+
+### Features
+
+* use esifycss ([#92](https://github.com/kei-ito/rollup-plugin-embed-css/issues/92)) ([5f55f2d](https://github.com/kei-ito/rollup-plugin-embed-css/commit/5f55f2d))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v0.3.3...v0.4.0) (2019-01-23)
 
