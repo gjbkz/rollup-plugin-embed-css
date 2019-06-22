@@ -12,16 +12,21 @@ jobs:
       - save_cache:
           paths: [node_modules]
           key: dependencies-{{ checksum "package-lock.json" }}
-      # - run: npm run build
-      - run: git diff --exit-code
+      - run: npm run build
       - persist_to_workspace: {root: ., paths: [.]}
   test:
     docker: [{image: "circleci/node:lts"}]
     steps:
       - attach_workspace: {at: .}
-      - run: sudo npm install -g nyc codecov
-      - run: nyc npm test
+      - run: sudo npm install -g codecov c8
+      - run: c8 npm test
+      - run: c8 report --reporter=text-lcov > coverage.lcov
       - run: codecov
+  test-client:
+    docker: [{image: "circleci/node:lts"}]
+    steps:
+      - attach_workspace: {at: .}
+      - run: npm run test-client
   lint:
     docker: [{image: "circleci/node:lts"}]
     steps:
@@ -30,10 +35,9 @@ jobs:
   deploy:
     docker: [{image: "circleci/node:lts"}]
     steps:
-      - attach_workspace:
-          at: .
+      - attach_workspace: {at: .}
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-      - run: npx lerna publish from-package --no-git-reset --yes
+      - run: npm publish
   onBranch:
     docker: [{image: "circleci/node:lts"}]
     steps:
@@ -48,10 +52,11 @@ workflows:
     jobs:
       - onBranch:
           filters:
-            branches: {ignore: master}
+            branches: {only: /.*/}
             tags: {ignore: /.*/}
       - build: {requires: [onBranch]}
       - test: {requires: [build]}
+      - test-client: {requires: [build]}
       - lint: {requires: [build]}
   release:
     jobs:
@@ -69,13 +74,18 @@ workflows:
           filters:
             branches: {ignore: /.*/}
             tags: {only: /^v.*/}
+      - test-client:
+          requires: [build]
+          filters:
+            branches: {ignore: /.*/}
+            tags: {only: /^v.*/}
       - lint:
           requires: [build]
           filters:
             branches: {ignore: /.*/}
             tags: {only: /^v.*/}
       - deploy:
-          requires: [test, lint]
+          requires: [test, test-client, lint]
           filters:
             branches: {ignore: /.*/}
             tags: {only: /^v.*/}
