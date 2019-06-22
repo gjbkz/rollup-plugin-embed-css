@@ -1,3 +1,8 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.0...v1.0.1) (2019-06-22)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v0.4.0...v1.0.0) (2019-06-22)
 
