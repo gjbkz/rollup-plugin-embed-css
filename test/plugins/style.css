@@ -1,8 +1,0 @@
-.foo {
-    --color1: red;
-    color: var(--color1);
-    .bar {
-        --color2: blue;
-        color: var(--color2);
-    }
-}

@@ -14,14 +14,16 @@
     },
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
-        "lint": "eslint lib test",
-        "test": "tap --coverage test/*/test.js",
+        "lint": "eslint --ext .ts src test",
+        "build": "tsc",
+        "test": "ava",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
         "version": "npm-run-all --sequential version:changelog version:add"
     },
     "dependencies": {
         "@nlib/afs": "^3.10.0",
+        "esifycss": "^1.2.8",
         "postcss": "^7.0.17",
         "rollup-pluginutils": "^2.8.1"
     },
@@ -29,16 +31,30 @@
         "@commitlint/cli": "^8.0.0",
         "@commitlint/config-conventional": "^8.0.0",
         "@nlib/lint": "^3.10.0",
+        "@types/node": "^12.0.10",
+        "@typescript-eslint/eslint-plugin": "^1.10.2",
+        "@typescript-eslint/parser": "^1.10.2",
+        "ava": "^2.1.0",
         "conventional-changelog-cli": "^2.0.21",
         "eslint": "^5.16.0",
         "husky": "^2.4.1",
         "lint-staged": "^8.2.1",
         "npm-run-all": "4.1.5",
-        "postcss-nested": "4.1.2",
-        "rollup": "^1.15.6",
-        "rollup-plugin-typescript2": "^0.21.2",
-        "tap": "^14.2.3",
+        "rollup": "^1.16.1",
+        "ts-node": "^8.3.0",
         "typescript": "^3.5.2"
+    },
+    "ava": {
+        "compileEnhancements": false,
+        "extensions": [
+            "ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "files": [
+            "test/*/test.ts"
+        ]
     },
     "eslintConfig": {
         "extends": "./node_modules/@nlib/lint/.eslintrc.json",
@@ -48,26 +64,20 @@
         },
         "overrides": [
             {
-                "files": "lib/index.js",
+                "files": [
+                    "src/index.ts",
+                    "test/*/test.ts"
+                ],
                 "rules": {
-                    "global-require": "off",
                     "max-lines-per-function": "off"
                 }
             },
             {
-                "files": "test/**",
+                "files": [
+                    "test/util.ts"
+                ],
                 "rules": {
-                    "no-loop-func": "off"
-                }
-            },
-            {
-                "files": "*.script.js",
-                "env": {
-                    "es6": false,
-                    "node": false
-                },
-                "globals": {
-                    "self": true
+                    "class-methods-use-this": "off"
                 }
             }
         ]
