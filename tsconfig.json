@@ -16,8 +16,5 @@
     },
     "include": [
         "src/**/*.ts"
-    ],
-    "exclude": [
-        "src/helper/*"
     ]
 }
