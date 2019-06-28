@@ -20,7 +20,7 @@ const getFirstInput = (
     return null;
 };
 
-export default (
+export const plugin = (
     options: IPluginOptions = {},
 ): rollup.Plugin => {
     const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
@@ -74,3 +74,5 @@ export default (
         },
     };
 };
+
+export default plugin;
