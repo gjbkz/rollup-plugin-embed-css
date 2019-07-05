@@ -25,7 +25,7 @@ export const plugin = (
 ): rollup.Plugin => {
     const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
     let session: esifycss.Session | undefined;
-    let helperScriptPromise: Promise<void> | undefined;
+    let helperId = '';
     return {
         name: 'embedCSS',
         options(inputOptions) {
@@ -35,24 +35,29 @@ export const plugin = (
                     options.helper = path.join(path.dirname(firstInput), 'embedcss-helper.css.js');
                 }
             }
-            session = new esifycss.Session({...options, include: [], watch: false});
-            helperScriptPromise = session.outputHelperScript();
+            helperId = path.join(__dirname, `esifycss-helper${path.extname(options.helper || 's.js')}`);
+            session = new esifycss.Session({...options, helper: helperId, include: [], watch: false});
             return null;
         },
-        async resolveId(id, importer) {
+        resolveId(importee, importer) {
+            const id = importer && !path.isAbsolute(importee) ? path.join(path.dirname(importer), importee) : importee;
+            if (id === helperId) {
+                return helperId;
+            }
+            return null;
+        },
+        async load(id) {
             if (!session) {
                 throw new Error(`session is ${session}`);
             }
-            if (!helperScriptPromise) {
-                throw new Error(`helperScriptPromise is ${helperScriptPromise}`);
+            if (id === helperId) {
+                return session.getHelperScript();
             }
-            const filePath = importer ? path.join(path.dirname(importer), id) : id;
-            if (!filter(filePath)) {
+            if (!filter(id)) {
                 return null;
             }
-            await helperScriptPromise;
-            await session.processCSS(filePath);
-            return `${filePath}${session.configuration.ext}`;
+            const {code} = await session.processCSS(id);
+            return code;
         },
         generateBundle(_options, bundle) {
             for (const [, chunk] of Object.entries(bundle)) {
