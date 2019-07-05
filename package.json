@@ -23,7 +23,7 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.10.1",
-        "esifycss": "^1.2.8",
+        "esifycss": "^1.3.0",
         "postcss": "^7.0.17",
         "rollup-pluginutils": "^2.8.1"
     },
@@ -31,16 +31,16 @@
         "@commitlint/cli": "^8.0.0",
         "@commitlint/config-conventional": "^8.0.0",
         "@nlib/lint": "^3.10.1",
-        "@types/node": "^12.0.10",
+        "@types/node": "^12.0.12",
         "@typescript-eslint/eslint-plugin": "^1.11.0",
         "@typescript-eslint/parser": "^1.11.0",
         "ava": "^2.1.0",
         "conventional-changelog-cli": "^2.0.21",
-        "eslint": "^6.0.0",
+        "eslint": "^6.0.1",
         "husky": "^3.0.0",
         "lint-staged": "^9.0.0",
         "npm-run-all": "4.1.5",
-        "rollup": "^1.16.2",
+        "rollup": "^1.16.6",
         "ts-node": "^8.3.0",
         "typescript": "^3.5.2"
     },
