@@ -1,3 +1,13 @@
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.3...v1.0.4) (2019-07-08)
+
+
+### Bug Fixes
+
+* overwrite module.exports directly ([#98](https://github.com/kei-ito/rollup-plugin-embed-css/issues/98)) ([dc7c50b](https://github.com/kei-ito/rollup-plugin-embed-css/commit/dc7c50b))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.2...v1.0.3) (2019-07-08)
 
