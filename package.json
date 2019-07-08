@@ -15,7 +15,9 @@
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
         "lint": "eslint --ext .ts src test",
-        "build": "tsc",
+        "build:tsc": "tsc",
+        "build:types": "cpy src/index.d.ts lib",
+        "build": "run-s build:tsc build:types",
         "test": "ava",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
@@ -36,6 +38,7 @@
         "@typescript-eslint/parser": "^1.11.0",
         "ava": "^2.1.0",
         "conventional-changelog-cli": "^2.0.21",
+        "cpy-cli": "^2.0.0",
         "eslint": "^6.0.1",
         "husky": "^3.0.0",
         "lint-staged": "^9.1.0",
@@ -70,6 +73,14 @@
                 ],
                 "rules": {
                     "max-lines-per-function": "off"
+                }
+            },
+            {
+                "files": [
+                    "src/EmbedCSSPlugin.ts"
+                ],
+                "rules": {
+                    "class-methods-use-this": "off"
                 }
             },
             {

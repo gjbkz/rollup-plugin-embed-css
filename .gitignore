@@ -2,7 +2,6 @@ node_modules
 coverage
 .nyc_output
 temp
-*.d.ts
 *.css.js
 *.css.ts
 lib
