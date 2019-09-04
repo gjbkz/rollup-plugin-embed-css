@@ -33,7 +33,7 @@ class StyleSheet {
         this.cssRules = [];
     }
 
-    public insertRule(cssText: string, index: number = 0) {
+    public insertRule(cssText: string, index = 0) {
         this.cssRules.splice(index, 0, new CSSRule(cssText));
     }
 
