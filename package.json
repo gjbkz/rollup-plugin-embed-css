@@ -3,6 +3,9 @@
     "version": "1.0.4",
     "description": "Embed CSS into JavaScript",
     "main": "lib/index.js",
+    "files": [
+        "lib"
+    ],
     "author": {
         "name": "Kei Ito",
         "email": "kei.itof@gmail.com",
