@@ -1,3 +1,13 @@
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.4...v1.0.5) (2019-09-04)
+
+
+### Bug Fixes
+
+* upgrade esifycss to allow dynamic import ([#102](https://github.com/kei-ito/rollup-plugin-embed-css/issues/102)) ([e924275](https://github.com/kei-ito/rollup-plugin-embed-css/commit/e924275))
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.3...v1.0.4) (2019-07-08)
 
