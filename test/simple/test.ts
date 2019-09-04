@@ -10,10 +10,6 @@ import {createSandbox} from '../util';
 test(path.basename(__dirname), async (t) => {
     const bundle = await rollup.rollup({
         input: path.join(__dirname, 'input.js'),
-        output: {
-            file: path.join(__dirname, 'output.js'),
-            format: 'cjs',
-        },
         plugins: [
             embedCSS(),
         ],
