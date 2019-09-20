@@ -10,7 +10,6 @@ export const updateBundle = (
     .filter(isOutputChunk)
     .map((chunk) => {
         const cssRanges = esifycss.extractCSSFromScript(chunk.code);
-        const tokens = new Map<string, number>();
         for (const rule of cssRanges) {
             for (const token of esifycss.tokenizeString(rule.css)) {
                 tokens.set(token, (tokens.get(token) || 0) + 1);
