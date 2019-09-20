@@ -18,22 +18,23 @@ test(path.basename(__dirname), async (t) => {
     const sandbox = createSandbox<{
         result: esifycss.IEsifyCSSResult,
     }>();
-    vm.runInNewContext(output[0].code, sandbox);
+    const script = output[0].code;
+    vm.runInNewContext(script, sandbox);
     const css = [...sandbox.document.stylesheets].map((sheet) => {
         return [...sheet.cssRules].map((rule) => rule.cssText).join('');
     }).join('');
     const root = postcss.parse(css);
     const nodes = root.nodes || [];
     const result = sandbox.exports.result || {id: {}, className: {}, keyframes: {}};
-    t.is(nodes.length, 3);
+    t.is(nodes.length, 4);
     {
-        const node = nodes[0] as postcss.AtRule;
+        const node = nodes[1] as postcss.AtRule;
         t.is(node.type, 'atrule');
         t.is(node.name, 'keyframes');
         t.is(node.params, result.keyframes.foo);
     }
     {
-        const node = nodes[1] as postcss.Rule;
+        const node = nodes[2] as postcss.Rule;
         t.is(node.type, 'rule');
         t.is(node.selector, `#${result.id.foo}`);
         const declarations = (node.nodes || []) as Array<postcss.Declaration>;
@@ -45,7 +46,7 @@ test(path.basename(__dirname), async (t) => {
         );
     }
     {
-        const node = nodes[2] as postcss.Rule;
+        const node = nodes[3] as postcss.Rule;
         t.is(node.type, 'rule');
         t.is(node.selector, `.${result.className.foo}`);
         const declarations = (node.nodes || []) as Array<postcss.Declaration>;

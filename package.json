@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.13.3",
-        "esifycss": "^1.3.5",
+        "esifycss": "^1.3.6",
         "postcss": "^7.0.18",
         "rollup-pluginutils": "^2.8.2"
     },
@@ -100,7 +100,8 @@
                     "test/util.ts"
                 ],
                 "rules": {
-                    "class-methods-use-this": "off"
+                    "class-methods-use-this": "off",
+                    "@typescript-eslint/no-explicit-any": "off"
                 }
             }
         ]

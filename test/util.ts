@@ -1,3 +1,17 @@
+class Console {
+
+    public readonly data: Array<any>;
+
+    public constructor() {
+        this.data = [];
+    }
+
+    public log(...args: Array<any>): void {
+        this.data.push(args);
+    }
+}
+const console = new Console();
+
 class Element {
 
     public readonly tagName: string;
@@ -10,6 +24,10 @@ class Element {
     }
 
     public appendChild(element: Element) {
+        const index = this.children.indexOf(element);
+        if (0 <= index) {
+            this.children.splice(index, 1);
+        }
         this.children.push(element);
     }
 
@@ -34,7 +52,11 @@ class StyleSheet {
     }
 
     public insertRule(cssText: string, index = 0) {
-        this.cssRules.splice(index, 0, new CSSRule(cssText));
+        if (cssText.trim()) {
+            this.cssRules.splice(index, 0, new CSSRule(cssText));
+        } else {
+            throw new Error('DOMException: Failed to execute \'insertRule\' on \'CSSStyleSheet\': Failed to parse the rule \'\'');
+        }
     }
 
 }
@@ -102,10 +124,12 @@ class Document {
 
 export interface ISandbox<TExports extends {}> {
     document: Document,
+    console: Console,
     exports: Partial<TExports>,
 }
 
 export const createSandbox = <TExports extends {}>(): ISandbox<TExports> => ({
     document: new Document(),
+    console,
     exports: {},
 });
