@@ -28,8 +28,8 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.13.5",
-        "esifycss": "^1.3.9",
-        "postcss": "^7.0.23",
+        "esifycss": "^1.3.11",
+        "postcss": "^7.0.24",
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
