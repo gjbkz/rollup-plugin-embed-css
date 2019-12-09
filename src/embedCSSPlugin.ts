@@ -37,7 +37,7 @@ export const embedCSSPlugin = (
                 throw new Error(`session is ${session}`);
             }
             if (id === helperId) {
-                return session.getHelperScript();
+                return await session.getHelperScript();
             }
             if (!filter(id)) {
                 return null;

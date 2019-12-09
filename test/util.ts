@@ -23,7 +23,7 @@ class Element {
         this.children = [];
     }
 
-    public appendChild(element: Element) {
+    public appendChild(element: Element): void {
         const index = this.children.indexOf(element);
         if (0 <= index) {
             this.children.splice(index, 1);
@@ -51,7 +51,7 @@ class StyleSheet {
         this.cssRules = [];
     }
 
-    public insertRule(cssText: string, index = 0) {
+    public insertRule(cssText: string, index = 0): void {
         if (cssText.trim()) {
             this.cssRules.splice(index, 0, new CSSRule(cssText));
         } else {
@@ -96,7 +96,7 @@ class Document {
         this.body = new Element('body');
     }
 
-    public createElement(tagName: string) {
+    public createElement(tagName: string): Element {
         switch (tagName) {
         case 'style':
             return new StyleElement();
