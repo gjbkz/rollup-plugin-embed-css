@@ -2,19 +2,17 @@ cache:
   - node_modules
 test_script:
   - ps: Install-Product node 12
+  - npm install -g codecov c8 nyc
   - npm ci
   - npm run build
-  - npm install -g codecov c8
   - c8 npm test
   - c8 report --reporter=text-lcov > coverage.lcov
-  - codecov
+  - codecov --disable=gcov
   - ps: Install-Product node 10
-  - npm install -g codecov c8
   - c8 npm test
   - c8 report --reporter=text-lcov > coverage.lcov
-  - codecov
+  - codecov --disable=gcov
   - ps: Install-Product node 8
-  - npm install -g codecov nyc
   - nyc npm test
-  - codecov
-build: 'off'
+  - codecov --disable=gcov
+build: off

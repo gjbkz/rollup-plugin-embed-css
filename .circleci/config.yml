@@ -21,7 +21,7 @@ jobs:
       - run: sudo npm install -g codecov c8
       - run: c8 npm test
       - run: c8 report --reporter=text-lcov > coverage.lcov
-      - run: codecov
+      - run: codecov --disable=gcov
   test-10:
     docker: [{image: "circleci/node:10"}]
     steps:
@@ -29,14 +29,14 @@ jobs:
       - run: sudo npm install -g codecov c8
       - run: c8 npm test
       - run: c8 report --reporter=text-lcov > coverage.lcov
-      - run: codecov
+      - run: codecov --disable=gcov
   test-8:
     docker: [{image: "circleci/node:8"}]
     steps:
       - attach_workspace: {at: .}
       - run: sudo npm install -g codecov nyc
       - run: nyc npm test
-      - run: codecov
+      - run: codecov --disable=gcov
   lint:
     docker: [{image: "circleci/node:lts"}]
     steps:
