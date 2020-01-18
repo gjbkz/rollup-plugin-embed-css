@@ -15,14 +15,18 @@ export const embedCSSPlugin = (
     return {
         name: 'embedCSS',
         options(inputOptions) {
-            if (!options.helper) {
+            const {css} = options;
+            let {helper} = options;
+            if (!css && !helper) {
                 const firstInput = getFirstInput(inputOptions.input);
                 if (firstInput) {
-                    options.helper = path.join(path.dirname(firstInput), 'embedcss-helper.css.js');
+                    helper = path.join(path.dirname(firstInput), 'embedcss-helper.css.js');
                 }
             }
-            helperId = path.join(__dirname, `esifycss-helper${path.extname(options.helper || 's.js')}`);
-            session = new esifycss.Session({...options, helper: helperId, include: [], watch: false});
+            if (helper) {
+                helperId = path.join(__dirname, `esifycss-helper${path.extname(helper || 's.js')}`);
+            }
+            session = new esifycss.Session({...options, helper: helperId, css, include: [], watch: false});
             return null;
         },
         resolveId(importee, importer) {
