@@ -12,7 +12,4 @@ test_script:
   - c8 npm test
   - c8 report --reporter=text-lcov > coverage.lcov
   - codecov --disable=gcov
-  - ps: Install-Product node 8
-  - nyc npm test
-  - codecov --disable=gcov
 build: off

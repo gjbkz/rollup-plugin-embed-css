@@ -13,7 +13,7 @@
     },
     "license": "Apache-2.0",
     "engines": {
-        "node": ">=8"
+        "node": ">=10"
     },
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
