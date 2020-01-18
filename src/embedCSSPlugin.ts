@@ -26,18 +26,15 @@ export const embedCSSPlugin = (
             return null;
         },
         resolveId(importee, importer) {
-            const id = importer && !path.isAbsolute(importee) ? path.join(path.dirname(importer), importee) : importee;
-            if (id === helperId) {
-                return helperId;
+            if (!session) {
+                throw new Error('NoSession');
             }
-            return null;
+            const id = importer && !path.isAbsolute(importee) ? path.join(path.dirname(importer), importee) : importee;
+            return id === helperId ? session.helperPath : null;
         },
         async load(id) {
             if (!session) {
-                throw new Error(`session is ${session}`);
-            }
-            if (id === helperId) {
-                return await session.getHelperScript();
+                throw new Error('NoSession');
             }
             if (!filter(id)) {
                 return null;
