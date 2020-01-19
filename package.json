@@ -38,7 +38,7 @@
         "@commitlint/config-conventional": "^8.3.4",
         "@nlib/lint": "^3.17.0",
         "@nlib/remove-sourcemap": "^3.17.0",
-        "@types/node": "^12.12.25",
+        "@types/node": "^13.0.0",
         "@typescript-eslint/eslint-plugin": "^2.16.0",
         "@typescript-eslint/parser": "^2.16.0",
         "ava": "^2.4.0",
