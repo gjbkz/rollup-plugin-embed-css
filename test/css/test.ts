@@ -8,12 +8,9 @@ import test from 'ava';
 import {createSandbox} from '../util';
 
 test(path.basename(__dirname), async (t) => {
-    const cssOption = 'output.css';
     const bundle = await rollup.rollup({
         input: path.join(__dirname, 'input.js'),
-        plugins: [
-            embedCSS({css: cssOption}),
-        ],
+        plugins: [embedCSS({css: true})],
     });
     const {output} = await bundle.generate({format: 'cjs'});
     t.pass();
@@ -24,7 +21,7 @@ test(path.basename(__dirname), async (t) => {
     vm.runInNewContext(script, sandbox);
     const isCSSAsset = (
         output: rollup.OutputAsset | rollup.OutputChunk,
-    ): output is rollup.OutputAsset => output.fileName === cssOption && output.type === 'asset';
+    ): output is rollup.OutputAsset => output.fileName.endsWith('.css') && output.type === 'asset';
     const cssAsset = output.find(isCSSAsset);
     if (!cssAsset) {
         t.fail('NoCSSAsset');
