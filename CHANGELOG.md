@@ -1,3 +1,13 @@
+<a name="1.0.13"></a>
+## [1.0.13](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.12...v1.0.13) (2020-01-19)
+
+
+### Bug Fixes
+
+* css output ([#110](https://github.com/kei-ito/rollup-plugin-embed-css/issues/110)) ([7dc0d1e](https://github.com/kei-ito/rollup-plugin-embed-css/commit/7dc0d1e))
+
+
+
 <a name="1.0.12"></a>
 ## [1.0.12](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.11...v1.0.12) (2020-01-19)
 
