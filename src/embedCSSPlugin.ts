@@ -27,7 +27,12 @@ const getPluginCoreCSS = (
         return (await session.processCSS(id)).code;
     },
     generateBundle(_options, bundle) {
-        updateBundleCSS(bundle, session.configuration.output, this);
+        const source = updateBundleCSS(bundle, this);
+        this.emitFile({
+            type: 'asset',
+            fileName: session.configuration.output.path,
+            source,
+        });
     },
 });
 
@@ -79,7 +84,17 @@ export const embedCSSPlugin = (
             if (helper) {
                 helperId = path.join(__dirname, `esifycss-helper${path.extname(helper || 's.js')}`);
             }
-            const session = new esifycss.Session({...options, helper: helperId, include: [], watch: false});
+            let css = options.css ? options.css : undefined;
+            if (typeof css === 'boolean') {
+                css = 'esifycssOutput.css';
+            }
+            const session = new esifycss.Session({
+                ...options,
+                helper: helperId,
+                css,
+                include: [],
+                watch: false,
+            });
             const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
             if (session.configuration.output.type === 'css') {
                 core = getPluginCoreCSS(session, filter);

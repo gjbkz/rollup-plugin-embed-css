@@ -4,13 +4,13 @@ import {parseBundle} from './parseBundle';
 
 export const updateBundleCSS = (
     bundle: rollup.OutputBundle,
-    output: esifycss.ISessionOutput,
     context: rollup.PluginContext,
-) => {
+): string => {
     const {chunks} = parseBundle(bundle);
-    const cssList: Array<string> = [];
+    const all: Array<string> = [];
     for (const {chunk, cssRanges} of chunks) {
         if (0 < cssRanges.length) {
+            const cssList: Array<string> = [];
             let {code} = chunk;
             for (let index = cssRanges.length; index--;) {
                 const range = cssRanges[index];
@@ -36,13 +36,16 @@ export const updateBundleCSS = (
             }
             code = code.replace(new RegExp(`const\\s+${methodName}\\s*=.*?[;\\r\\n]+`), '');
             chunk.code = code;
+            const source = cssList.join('\n');
+            all.push(source);
+            context.emitFile({
+                type: 'asset',
+                fileName: `${chunk.fileName}.css`,
+                source,
+            });
         }
     }
-    context.emitFile({
-        type: 'asset',
-        fileName: output.path,
-        source: cssList.join('\n'),
-    });
+    return all.join('\n');
 };
 
 export const updateBundleScript = (
