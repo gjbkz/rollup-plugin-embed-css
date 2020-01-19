@@ -13,7 +13,7 @@
     },
     "license": "Apache-2.0",
     "engines": {
-        "node": ">=8"
+        "node": ">=10"
     },
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
@@ -28,28 +28,28 @@
         "prepack": "remove-sourcemap lib"
     },
     "dependencies": {
-        "@nlib/afs": "^3.15.1",
-        "esifycss": "^1.3.12",
-        "postcss": "^7.0.24",
+        "@nlib/afs": "^3.17.0",
+        "esifycss": "^1.4.3",
+        "postcss": "^7.0.26",
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
-        "@commitlint/cli": "^8.2.0",
-        "@commitlint/config-conventional": "^8.2.0",
-        "@nlib/lint": "^3.15.1",
-        "@nlib/remove-sourcemap": "^3.15.6",
-        "@types/node": "^12.12.14",
-        "@typescript-eslint/eslint-plugin": "^2.10.0",
-        "@typescript-eslint/parser": "^2.10.0",
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4",
+        "@nlib/lint": "^3.17.0",
+        "@nlib/remove-sourcemap": "^3.17.0",
+        "@types/node": "^12.12.25",
+        "@typescript-eslint/eslint-plugin": "^2.16.0",
+        "@typescript-eslint/parser": "^2.16.0",
         "ava": "^2.4.0",
-        "conventional-changelog-cli": "^2.0.28",
-        "eslint": "^6.7.2",
-        "husky": "^3.1.0",
+        "conventional-changelog-cli": "^2.0.31",
+        "eslint": "^6.8.0",
+        "husky": "^4.0.10",
         "lint-staged": "^9.5.0",
         "npm-run-all": "4.1.5",
-        "rollup": "^1.27.9",
-        "ts-node": "^8.5.4",
-        "typescript": "^3.7.3"
+        "rollup": "^1.29.0",
+        "ts-node": "^8.6.2",
+        "typescript": "^3.7.5"
     },
     "ava": {
         "compileEnhancements": false,

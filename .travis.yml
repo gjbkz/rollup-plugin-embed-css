@@ -15,7 +15,3 @@ script:
   - c8 npm run test
   - c8 report --reporter=text-lcov > coverage.lcov
   - codecov --disable=gcov
-  - nvm install 8
-  - npm install -g codecov nyc
-  - nyc npm run test
-  - codecov --disable=gcov
