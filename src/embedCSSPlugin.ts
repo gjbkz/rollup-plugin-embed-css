@@ -12,6 +12,7 @@ export const embedCSSPlugin = (
     const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
     let session: esifycss.Session | undefined;
     let helperId = '';
+    let cssMode = false;
     return {
         name: 'embedCSS',
         options(inputOptions) {
@@ -27,11 +28,15 @@ export const embedCSSPlugin = (
                 helperId = path.join(__dirname, `esifycss-helper${path.extname(helper || 's.js')}`);
             }
             session = new esifycss.Session({...options, helper: helperId, css, include: [], watch: false});
+            cssMode = session.configuration.output.type === 'css';
             return null;
         },
         resolveId(importee, importer) {
             if (!session) {
                 throw new Error('NoSession');
+            }
+            if (cssMode && importee === session.helperPath) {
+                return importee;
             }
             const id = importer && !path.isAbsolute(importee) ? path.join(path.dirname(importer), importee) : importee;
             return id === helperId ? session.helperPath : null;
@@ -40,6 +45,9 @@ export const embedCSSPlugin = (
             if (!session) {
                 throw new Error('NoSession');
             }
+            if (cssMode && id === session.helperPath) {
+                return 'export const addStyle = (rules) => console.log(rules);';
+            }
             if (!filter(id)) {
                 return null;
             }
@@ -47,7 +55,10 @@ export const embedCSSPlugin = (
             return code;
         },
         generateBundle(_options, bundle) {
-            updateBundle(bundle);
+            if (!session) {
+                throw new Error('NoSession');
+            }
+            updateBundle(bundle, session.configuration.output, this);
         },
     };
 };
