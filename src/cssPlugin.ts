@@ -1,6 +1,8 @@
 import * as esifycss from 'esifycss';
 import * as rollup from 'rollup';
+import * as pluginUtils from 'rollup-pluginutils';
 import {parseBundle} from './parseBundle';
+import {IPluginCore} from './types';
 
 export const updateBundleCSS = (
     bundle: rollup.OutputBundle,
@@ -48,14 +50,26 @@ export const updateBundleCSS = (
     return all.join('\n');
 };
 
-export const updateBundleScript = (
-    bundle: rollup.OutputBundle,
-): void => {
-    const {chunks, tokens} = parseBundle(bundle);
-    const identifier = esifycss.createOptimizedIdentifier(tokens);
-    for (const {chunk, cssRanges} of chunks) {
-        let code = esifycss.minifyCSSInScript(chunk.code, cssRanges, identifier);
-        code = esifycss.setDictionary(code, identifier.idList);
-        chunk.code = code;
-    }
-};
+export const cssPlugin = (
+    session: esifycss.Session,
+    filter: ReturnType<typeof pluginUtils.createFilter>,
+): IPluginCore => ({
+    resolveId: (importee) => importee === session.helperPath ? importee : null,
+    async load(id) {
+        if (id === session.helperPath) {
+            return 'export const addStyle = (rules) => console.log(rules);';
+        }
+        if (!filter(id)) {
+            return null;
+        }
+        return (await session.processCSS(id)).code;
+    },
+    generateBundle(_options, bundle) {
+        const source = updateBundleCSS(bundle, this);
+        this.emitFile({
+            type: 'asset',
+            fileName: session.configuration.output.path,
+            source,
+        });
+    },
+});
