@@ -2,74 +2,16 @@ import * as path from 'path';
 import * as esifycss from 'esifycss';
 import * as rollup from 'rollup';
 import * as pluginUtils from 'rollup-pluginutils';
-import {updateBundleCSS, updateBundleScript} from './updateBundle';
-import {IPluginOptions} from './types';
 import {getFirstInput} from './getFirstInput';
-
-interface IPluginCore {
-    resolveId: rollup.ResolveIdHook,
-    load: rollup.LoadHook,
-    generateBundle: rollup.OutputPluginHooks['generateBundle'],
-}
-
-const getPluginCoreCSS = (
-    session: esifycss.Session,
-    filter: ReturnType<typeof pluginUtils.createFilter>,
-): IPluginCore => ({
-    resolveId: (importee) => importee === session.helperPath ? importee : null,
-    async load(id) {
-        if (id === session.helperPath) {
-            return 'export const addStyle = (rules) => console.log(rules);';
-        }
-        if (!filter(id)) {
-            return null;
-        }
-        return (await session.processCSS(id)).code;
-    },
-    generateBundle(_options, bundle) {
-        const source = updateBundleCSS(bundle, this);
-        this.emitFile({
-            type: 'asset',
-            fileName: session.configuration.output.path,
-            source,
-        });
-    },
-});
-
-const getPluginCoreScript = (
-    session: esifycss.Session,
-    filter: ReturnType<typeof pluginUtils.createFilter>,
-): IPluginCore => ({
-    resolveId(importee, importer) {
-        const id = importer && !path.isAbsolute(importee) ? path.join(path.dirname(importer), importee) : importee;
-        return id === session.configuration.output.path ? session.helperPath : null;
-    },
-    async load(id) {
-        if (!filter(id)) {
-            return null;
-        }
-        return (await session.processCSS(id)).code;
-    },
-    generateBundle(_options, bundle) {
-        updateBundleScript(bundle);
-    },
-});
-
-const getPluginCoreDefault = (): IPluginCore => {
-    const throwError = () => {
-        throw new Error('NoSession');
-    };
-    return {
-        resolveId: throwError,
-        load: throwError,
-        generateBundle: throwError,
-    };
-};
+import {cssPlugin} from './cssPlugin';
+import {scriptPlugin} from './scriptPlugin';
+import {IPluginOptions} from './types';
+import {defaultPlugin} from './defaultPlugin';
 
 export const embedCSSPlugin = (
     options: IPluginOptions = {},
 ): rollup.Plugin => {
-    let core = getPluginCoreDefault();
+    let core = defaultPlugin();
     return {
         name: 'embedCSS',
         options(inputOptions) {
@@ -97,9 +39,9 @@ export const embedCSSPlugin = (
             });
             const filter = pluginUtils.createFilter(options.include || './**/*.css', options.exclude);
             if (session.configuration.output.type === 'css') {
-                core = getPluginCoreCSS(session, filter);
+                core = cssPlugin(session, filter);
             } else {
-                core = getPluginCoreScript(session, filter);
+                core = scriptPlugin(session, filter);
             }
             return null;
         },

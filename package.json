@@ -29,7 +29,7 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.17.0",
-        "esifycss": "^1.4.3",
+        "esifycss": "^1.4.11",
         "postcss": "^7.0.26",
         "rollup-pluginutils": "^2.8.2"
     },
@@ -40,15 +40,16 @@
         "@nlib/lint": "^3.17.0",
         "@nlib/remove-sourcemap": "^3.17.0",
         "@types/node": "^13.1.8",
-        "@typescript-eslint/eslint-plugin": "^2.16.0",
-        "@typescript-eslint/parser": "^2.16.0",
+        "@typescript-eslint/eslint-plugin": "^2.17.0",
+        "@typescript-eslint/parser": "^2.17.0",
+        "acorn": "^7.1.0",
         "ava": "^3.0.0",
         "conventional-changelog-cli": "^2.0.31",
         "eslint": "^6.8.0",
-        "husky": "^4.0.10",
-        "lint-staged": "^9.5.0",
+        "husky": "^4.2.0",
+        "lint-staged": "^10.0.1",
         "npm-run-all": "4.1.5",
-        "rollup": "^1.29.0",
+        "rollup": "^1.29.1",
         "ts-node": "^8.6.2",
         "typescript": "^3.7.5"
     },
@@ -64,6 +65,9 @@
             "test/*/test.ts"
         ]
     },
+    "eslintIgnore": [
+        "./test/**/*.js"
+    ],
     "eslintConfig": {
         "extends": "./node_modules/@nlib/lint/.eslintrc.json",
         "env": {
@@ -82,19 +86,11 @@
             },
             {
                 "files": [
-                    "src/index.ts",
                     "test/*/test.ts"
                 ],
                 "rules": {
+                    "complexity": "off",
                     "max-lines-per-function": "off"
-                }
-            },
-            {
-                "files": [
-                    "src/EmbedCSSPlugin.ts"
-                ],
-                "rules": {
-                    "class-methods-use-this": "off"
                 }
             },
             {
@@ -103,6 +99,14 @@
                 ],
                 "rules": {
                     "class-methods-use-this": "off",
+                    "@typescript-eslint/no-explicit-any": "off"
+                }
+            },
+            {
+                "files": [
+                    "test/css/test.ts"
+                ],
+                "rules": {
                     "@typescript-eslint/no-explicit-any": "off"
                 }
             }
@@ -120,7 +124,7 @@
         }
     },
     "lint-staged": {
-        "*.js": [
+        "*.ts": [
             "eslint"
         ]
     },

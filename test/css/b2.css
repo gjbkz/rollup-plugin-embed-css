@@ -1,0 +1,6 @@
+.bar {
+    --file: b2;
+}
+:root {
+    --file: b2;
+}

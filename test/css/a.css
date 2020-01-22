@@ -1,9 +1,9 @@
 @keyframes foo {
     0% {
-        transform: rotate(0deg);
+        --key: foo-0;
     }
     100% {
-        transform: rotate(720deg);
+        --key: foo-100;
     }
 }
 
