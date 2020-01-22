@@ -65,6 +65,9 @@
             "test/*/test.ts"
         ]
     },
+    "eslintIgnore": [
+        "./test/**/*.js"
+    ],
     "eslintConfig": {
         "extends": "./node_modules/@nlib/lint/.eslintrc.json",
         "env": {
@@ -86,6 +89,7 @@
                     "test/*/test.ts"
                 ],
                 "rules": {
+                    "complexity": "off",
                     "max-lines-per-function": "off"
                 }
             },
@@ -120,7 +124,7 @@
         }
     },
     "lint-staged": {
-        "*.js": [
+        "*.ts": [
             "eslint"
         ]
     },

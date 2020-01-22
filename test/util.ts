@@ -122,13 +122,13 @@ class Document {
 
 }
 
-export interface ISandbox<TExports extends {}> {
+export interface ISandbox<TExports> {
     document: Document,
     console: Console,
     exports: Partial<TExports>,
 }
 
-export const createSandbox = <TExports extends {}>(): ISandbox<TExports> => ({
+export const createSandbox = <TExports = {[key: string]: any}>(): ISandbox<TExports> => ({
     document: new Document(),
     console,
     exports: {},
