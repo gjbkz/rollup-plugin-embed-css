@@ -12,5 +12,8 @@
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "typeRoots": [
+            "node_modules/esifycss/@types"
+        ]
     }
 }

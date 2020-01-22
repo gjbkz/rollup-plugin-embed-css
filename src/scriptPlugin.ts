@@ -19,10 +19,14 @@ export const scriptPlugin = (
         return (await session.processCSS(id)).code;
     },
     generateBundle(_options, bundle) {
-        const {chunks, tokens} = parseBundle(bundle);
+        const {chunks, tokens} = parseBundle({
+            bundle,
+            cssKey: session.configuration.cssKey,
+            helper: session.configuration.output.path,
+        });
         const identifier = esifycss.createOptimizedIdentifier(tokens);
-        for (const {chunk, cssRanges} of chunks) {
-            let code = esifycss.minifyCSSInScript(chunk.code, cssRanges, identifier);
+        for (const {chunk, css} of chunks) {
+            let code = esifycss.minifyCSSInScript(chunk.code, css.ranges, identifier);
             code = esifycss.setDictionary(code, identifier.idList);
             chunk.code = code;
         }
