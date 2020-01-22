@@ -1,3 +1,18 @@
+<a name="1.0.14"></a>
+## [1.0.14](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.13...v1.0.14) (2020-01-22)
+
+
+### Bug Fixes
+
+* sorting chunks ([e61fdd5](https://github.com/kei-ito/rollup-plugin-embed-css/commit/e61fdd5))
+
+
+### Features
+
+* hoist css imported by dependencies ([7b5794e](https://github.com/kei-ito/rollup-plugin-embed-css/commit/7b5794e))
+
+
+
 <a name="1.0.13"></a>
 ## [1.0.13](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.12...v1.0.13) (2020-01-19)
 
