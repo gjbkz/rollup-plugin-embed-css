@@ -6,8 +6,9 @@ import * as esifycss from 'esifycss';
 import test from 'ava';
 import {isOutputChunk} from '../../src/isOutputChunk';
 import {createSandbox} from '../util';
-import embedCSS from '../..';
 import * as postcss from 'postcss';
+// import {embedCSSPlugin as embedCSS} from '../../src/embedCSSPlugin';
+import embedCSS from '../..';
 
 interface INode {
     type: string,
