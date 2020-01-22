@@ -3,6 +3,7 @@ import * as esifycss from 'esifycss';
 import * as rollup from 'rollup';
 import {isOutputChunk} from './isOutputChunk';
 import {IParseResult} from 'esifycss/lib/minifier/types';
+import {compareChunk} from './compareChunk';
 
 export const parseBundle = (
     props: {
@@ -14,7 +15,7 @@ export const parseBundle = (
     const tokens = new Map<string, number>();
     const chunks: Array<{chunk: rollup.OutputChunk, css: IParseResult}> = [];
     const directories = new Map<string, string>();
-    for (const chunk of Object.values(props.bundle)) {
+    for (const chunk of Object.values(props.bundle).sort(compareChunk)) {
         if (isOutputChunk(chunk)) {
             if (chunk.facadeModuleId) {
                 directories.set(chunk.fileName, path.dirname(chunk.facadeModuleId));

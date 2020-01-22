@@ -26,9 +26,7 @@ export const cssPlugin = (
             bundle,
             cssKey: session.configuration.cssKey,
             helper: session.helperPath,
-        }).chunks
-        .sort(({chunk: c1}, {chunk: {fileName}}) => c1.imports.includes(fileName) || c1.dynamicImports.includes(fileName) ? 1 : -1)
-        .forEach(({chunk, css}) => {
+        }).chunks.forEach(({chunk, css}) => {
             chunk.code = [css.addStyle, ...css.statements]
             .sort((range1, range2) => range1.start < range2.start ? 1 : -1)
             .reduce(removeRange, chunk.code);
