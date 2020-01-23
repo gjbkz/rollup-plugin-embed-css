@@ -21,7 +21,7 @@
         "build:tsc": "tsc",
         "build:types": "node -e \"require('fs').copyFileSync('src/index.d.ts','lib/index.d.ts')\"",
         "build": "run-s build:tsc build:types",
-        "test": "ava",
+        "test": "ts-node test/index.ts",
         "version:changelog": "conventional-changelog --preset angular --infile CHANGELOG.md --same-file --release-count 0",
         "version:add": "git add .",
         "version": "npm-run-all --sequential version:changelog version:add",
@@ -34,7 +34,6 @@
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
-        "@ava/babel": "^1.0.0",
         "@commitlint/cli": "^8.3.5",
         "@commitlint/config-conventional": "^8.3.4",
         "@nlib/lint": "^3.17.0",
@@ -43,7 +42,6 @@
         "@typescript-eslint/eslint-plugin": "^2.17.0",
         "@typescript-eslint/parser": "^2.17.0",
         "acorn": "^7.1.0",
-        "ava": "^3.0.0",
         "conventional-changelog-cli": "^2.0.31",
         "eslint": "^6.8.0",
         "husky": "^4.2.0",
@@ -52,19 +50,6 @@
         "rollup": "^1.29.1",
         "ts-node": "^8.6.2",
         "typescript": "^3.7.5"
-    },
-    "ava": {
-        "babel": true,
-        "extensions": [
-            "ts"
-        ],
-        "require": [
-            "ts-node/register"
-        ],
-        "files": [
-            "src/**/*.test.ts",
-            "test/*/test.ts"
-        ]
     },
     "eslintIgnore": [
         "./test/**/*.js"
@@ -91,6 +76,7 @@
                 ],
                 "rules": {
                     "complexity": "off",
+                    "no-console": "off",
                     "max-lines-per-function": "off"
                 }
             },

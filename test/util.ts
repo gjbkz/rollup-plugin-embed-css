@@ -133,3 +133,43 @@ export const createSandbox = <TExports = {[key: string]: any}>(): ISandbox<TExpo
     console,
     exports: {},
 });
+
+export const $runTest = async (
+    props: {
+        title: string,
+        test: () => Promise<void>,
+        timeout: number,
+    },
+) => {
+    let stopTimer = (): void => undefined;
+    await Promise.all([
+        new Promise<null>((resolve, reject) => {
+            global.console.log(`Start: ${props.title}`);
+            setTimeout(() => reject(new Error(`Timeout: ${props.timeout}ms`)), props.timeout);
+            stopTimer = () => {
+                global.console.log(`Passed: ${props.title}`);
+                resolve();
+            };
+        }),
+        Promise.resolve()
+        .then(async () => {
+            await props.test();
+            stopTimer();
+        }),
+    ]);
+};
+
+export const runTest = (
+    props: {
+        title: string,
+        test: () => Promise<void>,
+        timeout: number,
+    },
+) => {
+    $runTest(props)
+    .then(() => process.exit(0))
+    .catch((error) => {
+        global.console.error(error);
+        process.exit(1);
+    });
+};
