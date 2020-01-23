@@ -1,14 +1,17 @@
+import * as assert from 'assert';
 import * as path from 'path';
 import * as vm from 'vm';
 import * as rollup from 'rollup';
 import * as acorn from 'acorn';
 import * as esifycss from 'esifycss';
-import test from 'ava';
 import {isOutputChunk} from '../../src/isOutputChunk';
-import {createSandbox} from '../util';
+import {createSandbox, runTest} from '../util';
 import * as postcss from 'postcss';
 // import {embedCSSPlugin as embedCSS} from '../../src/embedCSSPlugin';
 import embedCSS from '../..';
+
+export const title = path.basename(__dirname);
+export const timeout = 3000;
 
 interface INode {
     type: string,
@@ -145,7 +148,7 @@ const loadCSS = (
     return postcss.parse(chunk.source);
 };
 
-test(path.basename(__dirname), async (t) => {
+export const test = async () => {
     const bundle = await rollup.rollup({
         input: [
             path.join(__dirname, 'input1.js'),
@@ -157,103 +160,107 @@ test(path.basename(__dirname), async (t) => {
     {
         const {className, id, keyframes} = getCSSData(output, 'input1.js');
         const root = loadCSS(output, 'input1.js.css');
-        t.is(typeof className.c, 'string');
-        t.is(typeof className.foo, 'string');
-        t.is(typeof id.foo, 'string');
-        t.is(typeof keyframes.foo, 'string');
-        t.deepEqual(className, {c: className.c, foo: className.foo});
-        t.deepEqual(id, {foo: id.foo});
-        t.deepEqual(keyframes, {foo: keyframes.foo});
+        assert.equal(typeof className.c, 'string');
+        assert.equal(typeof className.foo, 'string');
+        assert.equal(typeof id.foo, 'string');
+        assert.equal(typeof keyframes.foo, 'string');
+        assert.deepEqual(className, {c: className.c, foo: className.foo});
+        assert.deepEqual(id, {foo: id.foo});
+        assert.deepEqual(keyframes, {foo: keyframes.foo});
         const [, n2, n3, n4, n5, n6, n7] = root.nodes || [];
-        t.is(n2.type, 'rule');
+        assert.equal(n2.type, 'rule');
         if (n2.type === 'rule') {
-            t.is(n2.selector, ':root');
+            assert.equal(n2.selector, ':root');
             const [d1, d2] = n2.nodes || [];
-            t.is(d2, undefined);
-            t.is(d1.type, 'decl');
+            assert.equal(d2, undefined);
+            assert.equal(d1.type, 'decl');
             if (d1.type === 'decl') {
-                t.is(d1.prop, '--file');
-                t.is(d1.value, 'b1');
+                assert.equal(d1.prop, '--file');
+                assert.equal(d1.value, 'b1');
             }
         }
-        t.is(n3.type, 'atrule');
+        assert.equal(n3.type, 'atrule');
         if (n3.type === 'atrule') {
-            t.is(n3.name, 'keyframes');
-            t.is(n3.params, keyframes.foo);
+            assert.equal(n3.name, 'keyframes');
+            assert.equal(n3.params, keyframes.foo);
         }
-        t.is(n4.type, 'rule');
+        assert.equal(n4.type, 'rule');
         if (n4.type === 'rule') {
-            t.is(n4.selector, `#${id.foo}`);
+            assert.equal(n4.selector, `#${id.foo}`);
             const [d1, d2] = n4.nodes || [];
-            t.is(d2, undefined);
-            t.is(d1.type, 'decl');
+            assert.equal(d2, undefined);
+            assert.equal(d1.type, 'decl');
             if (d1.type === 'decl') {
-                t.is(d1.prop, 'animation');
-                t.is(d1.value, `2s infinite ${keyframes.foo}`);
+                assert.equal(d1.prop, 'animation');
+                assert.equal(d1.value, `2s infinite ${keyframes.foo}`);
             }
         }
-        t.is(n5.type, 'rule');
+        assert.equal(n5.type, 'rule');
         if (n5.type === 'rule') {
-            t.is(n5.selector, `.${className.foo}`);
+            assert.equal(n5.selector, `.${className.foo}`);
         }
-        t.is(n6.type, 'rule');
+        assert.equal(n6.type, 'rule');
         if (n6.type === 'rule') {
-            t.is(n6.selector, ':root');
+            assert.equal(n6.selector, ':root');
         }
-        t.is(n7.type, 'rule');
+        assert.equal(n7.type, 'rule');
         if (n7.type === 'rule') {
-            t.is(n7.selector, `.${className.c}`);
+            assert.equal(n7.selector, `.${className.c}`);
         }
     }
     {
         const {className, id, keyframes} = getCSSData(output, 'input2.js');
         const root = loadCSS(output, 'input2.js.css');
-        t.is(typeof className.c, 'string');
-        t.is(typeof className.foo, 'string');
-        t.is(typeof id.foo, 'string');
-        t.is(typeof keyframes.foo, 'string');
-        t.deepEqual(className, {c: className.c, foo: className.foo});
-        t.deepEqual(id, {foo: id.foo});
-        t.deepEqual(keyframes, {foo: keyframes.foo});
+        assert.equal(typeof className.c, 'string');
+        assert.equal(typeof className.foo, 'string');
+        assert.equal(typeof id.foo, 'string');
+        assert.equal(typeof keyframes.foo, 'string');
+        assert.deepEqual(className, {c: className.c, foo: className.foo});
+        assert.deepEqual(id, {foo: id.foo});
+        assert.deepEqual(keyframes, {foo: keyframes.foo});
         const [, n2, n3, n4, n5, n6, n7] = root.nodes || [];
-        t.is(n2.type, 'rule');
+        assert.equal(n2.type, 'rule');
         if (n2.type === 'rule') {
-            t.is(n2.selector, ':root');
+            assert.equal(n2.selector, ':root');
             const [d1, d2] = n2.nodes || [];
-            t.is(d2, undefined);
-            t.is(d1.type, 'decl');
+            assert.equal(d2, undefined);
+            assert.equal(d1.type, 'decl');
             if (d1.type === 'decl') {
-                t.is(d1.prop, '--file');
-                t.is(d1.value, 'b2');
+                assert.equal(d1.prop, '--file');
+                assert.equal(d1.value, 'b2');
             }
         }
-        t.is(n3.type, 'atrule');
+        assert.equal(n3.type, 'atrule');
         if (n3.type === 'atrule') {
-            t.is(n3.name, 'keyframes');
-            t.is(n3.params, keyframes.foo);
+            assert.equal(n3.name, 'keyframes');
+            assert.equal(n3.params, keyframes.foo);
         }
-        t.is(n4.type, 'rule');
+        assert.equal(n4.type, 'rule');
         if (n4.type === 'rule') {
-            t.is(n4.selector, `#${id.foo}`);
+            assert.equal(n4.selector, `#${id.foo}`);
             const [d1, d2] = n4.nodes || [];
-            t.is(d2, undefined);
-            t.is(d1.type, 'decl');
+            assert.equal(d2, undefined);
+            assert.equal(d1.type, 'decl');
             if (d1.type === 'decl') {
-                t.is(d1.prop, 'animation');
-                t.is(d1.value, `2s infinite ${keyframes.foo}`);
+                assert.equal(d1.prop, 'animation');
+                assert.equal(d1.value, `2s infinite ${keyframes.foo}`);
             }
         }
-        t.is(n5.type, 'rule');
+        assert.equal(n5.type, 'rule');
         if (n5.type === 'rule') {
-            t.is(n5.selector, `.${className.foo}`);
+            assert.equal(n5.selector, `.${className.foo}`);
         }
-        t.is(n6.type, 'rule');
+        assert.equal(n6.type, 'rule');
         if (n6.type === 'rule') {
-            t.is(n6.selector, ':root');
+            assert.equal(n6.selector, ':root');
         }
-        t.is(n7.type, 'rule');
+        assert.equal(n7.type, 'rule');
         if (n7.type === 'rule') {
-            t.is(n7.selector, `.${className.c}`);
+            assert.equal(n7.selector, `.${className.c}`);
         }
     }
-});
+};
+
+if (!module.parent) {
+    runTest({title, test, timeout});
+}
