@@ -3,9 +3,10 @@ import * as rollup from 'rollup';
 import * as postcss from 'postcss';
 import * as vm from 'vm';
 import * as esifycss from 'esifycss';
-import embedCSS from '../..';
 import test from 'ava';
 import {createSandbox} from '../util';
+// import {embedCSSPlugin as embedCSS} from '../../src/embedCSSPlugin';
+import embedCSS from '../..';
 
 test(path.basename(__dirname), async (t) => {
     const bundle = await rollup.rollup({
