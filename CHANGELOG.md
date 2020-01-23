@@ -1,3 +1,13 @@
+<a name="1.0.15"></a>
+## [1.0.15](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.14...v1.0.15) (2020-01-23)
+
+
+### Bug Fixes
+
+* process dependencies first ([60371c1](https://github.com/kei-ito/rollup-plugin-embed-css/commit/60371c1))
+
+
+
 <a name="1.0.14"></a>
 ## [1.0.14](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.13...v1.0.14) (2020-01-22)
 
