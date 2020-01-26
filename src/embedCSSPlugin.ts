@@ -14,7 +14,7 @@ export const embedCSSPlugin = (
     let core = defaultPlugin();
     return {
         name: 'embedCSS',
-        options(inputOptions) {
+        buildStart(inputOptions) {
             let {helper} = options;
             if (!options.css && !helper) {
                 const firstInput = getFirstInput(inputOptions.input);
@@ -43,7 +43,6 @@ export const embedCSSPlugin = (
             } else {
                 core = scriptPlugin(session, filter);
             }
-            return null;
         },
         async resolveId(importee, importer) {
             return await core.resolveId.call(this, importee, importer);
