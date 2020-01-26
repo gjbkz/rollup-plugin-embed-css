@@ -1,3 +1,13 @@
+<a name="1.0.16"></a>
+## [1.0.16](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.15...v1.0.16) (2020-01-26)
+
+
+### Bug Fixes
+
+* use buildStart hook instead of options hook ([071bcf9](https://github.com/kei-ito/rollup-plugin-embed-css/commit/071bcf9))
+
+
+
 <a name="1.0.15"></a>
 ## [1.0.15](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.14...v1.0.15) (2020-01-23)
 
