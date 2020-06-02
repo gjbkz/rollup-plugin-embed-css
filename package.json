@@ -91,7 +91,7 @@
             },
             {
                 "files": [
-                    "test/css/test.ts"
+                    "test/css-*/test.ts"
                 ],
                 "rules": {
                     "@typescript-eslint/no-explicit-any": "off"

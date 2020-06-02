@@ -19,13 +19,14 @@ export const cssPlugin = (
         return id === session.helperPath ? {id, external: true, moduleSideEffects: false} : null;
     },
     load: async (id) => filter(id) ? (await session.processCSS(id)).code : null,
-    generateBundle(_options, bundle) {
+    generateBundle(options, bundle) {
         const history = new Map<string, rollup.EmittedAsset>();
         const lookupHistory = (key: string) => (history.get(key) || {source: ''}).source;
         parseBundle({
             bundle,
             cssKey: session.configuration.cssKey,
             helper: session.helperPath,
+            format: options.format,
         }).chunks.forEach(({chunk, css}) => {
             chunk.code = [css.addStyle, ...css.statements]
             .sort((range1, range2) => range1.start < range2.start ? 1 : -1)

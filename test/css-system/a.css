@@ -1,0 +1,16 @@
+@keyframes foo {
+    0% {
+        --key: foo-0;
+    }
+    100% {
+        --key: foo-100;
+    }
+}
+
+#foo {
+    animation: 2s infinite foo;
+}
+
+.foo {
+    animation-name: foo;
+}

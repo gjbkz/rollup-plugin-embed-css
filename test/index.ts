@@ -1,8 +1,13 @@
 import * as simple from './simple/test';
-import * as css from './css/test';
+import * as cssEs from './css-es/test';
+import * as cssSystem from './css-system/test';
 import {$runTest, runTest} from './util';
 
-const tests = [simple, css];
+const tests = [
+    simple,
+    cssEs,
+    cssSystem,
+];
 
 const test = async () => {
     for (const props of tests) {
