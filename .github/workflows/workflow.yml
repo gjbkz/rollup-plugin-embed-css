@@ -1,0 +1,42 @@
+name: test-build-publish
+on:
+  - push
+  - pull_request
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: node_modules_${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
+            node_modules-
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - run: npm ci
+  build:
+    needs:
+      - install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+          - '10'
+          - '12'
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: node_modules_${{hashFiles('**/package-lock.json')}}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install --no-save c8
+      - run: npx c8 npm test
+      - run: npx c8 report --reporter=text-lcov > coverage.lcov
+      - run: bash <(curl -s https://codecov.io/bash)
