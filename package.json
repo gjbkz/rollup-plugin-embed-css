@@ -29,25 +29,31 @@
     },
     "dependencies": {
         "@nlib/afs": "^3.17.2",
-        "esifycss": "^1.4.13",
+        "esifycss": "^1.4.19",
         "postcss": "^7.0.32",
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
-        "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-conventional": "^8.3.4",
+        "@commitlint/cli": "^9.0.1",
+        "@commitlint/config-conventional": "^9.0.1",
         "@nlib/lint": "^3.17.2",
+        "@nlib/node-net": "^3.17.2",
         "@nlib/remove-sourcemap": "^3.17.2",
-        "@types/node": "^14.0.13",
-        "@typescript-eslint/eslint-plugin": "^3.2.0",
-        "@typescript-eslint/parser": "^3.2.0",
-        "acorn": "^7.2.0",
+        "@rollup/plugin-commonjs": "^13.0.0",
+        "@types/node": "^14.0.14",
+        "@types/selenium-webdriver": "^4.0.9",
+        "@typescript-eslint/eslint-plugin": "^3.4.0",
+        "@typescript-eslint/parser": "^3.4.0",
+        "acorn": "^7.3.1",
         "conventional-changelog-cli": "^2.0.34",
-        "eslint": "^7.2.0",
+        "eslint": "^7.3.1",
         "husky": "^4.2.5",
-        "lint-staged": "^10.2.9",
+        "lint-staged": "^10.2.11",
         "npm-run-all": "4.1.5",
-        "rollup": "^2.15.0",
+        "rollup": "^2.18.0",
+        "sable": "^0.5.8",
+        "selenium-webdriver": "^4.0.0-alpha.7",
+        "systemjs": "^6.3.2",
         "ts-node": "^8.10.2",
         "typescript": "^3.9.5"
     },
@@ -72,12 +78,10 @@
             },
             {
                 "files": [
-                    "test/*/test.ts"
+                    "test/**/*.ts"
                 ],
                 "rules": {
-                    "complexity": "off",
-                    "no-console": "off",
-                    "max-lines-per-function": "off"
+                    "no-console": "off"
                 }
             },
             {
@@ -86,14 +90,6 @@
                 ],
                 "rules": {
                     "class-methods-use-this": "off",
-                    "@typescript-eslint/no-explicit-any": "off"
-                }
-            },
-            {
-                "files": [
-                    "test/css-*/test.ts"
-                ],
-                "rules": {
                     "@typescript-eslint/no-explicit-any": "off"
                 }
             }
