@@ -18,12 +18,10 @@ export const scriptPlugin = (
         }
         return (await session.processCSS(id)).code;
     },
-    generateBundle(options, bundle) {
+    generateBundle(_options, bundle) {
         const {chunks, tokens} = parseBundle({
             bundle,
             cssKey: session.configuration.cssKey,
-            helper: session.configuration.output.path,
-            format: options.format,
         });
         const identifier = esifycss.createOptimizedIdentifier(tokens);
         for (const {chunk, css} of chunks) {
