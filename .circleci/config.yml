@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    docker: [{image: "circleci/node:lts"}]
+    docker: [{image: "circleci/node:lts-browsers"}]
     steps:
       - checkout
       - restore_cache:
