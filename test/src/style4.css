@@ -1,0 +1,24 @@
+:root {
+    --style4: Loaded;
+}
+
+.element {
+    --name: style4;
+}
+
+#element {
+    --name: style4;
+}
+
+.element4 {
+    --name: style4;
+}
+
+#element4 {
+    --name: style4;
+}
+
+@keyframes style4 {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
