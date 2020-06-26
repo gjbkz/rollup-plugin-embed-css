@@ -2,20 +2,12 @@
     --style2: Loaded;
 }
 
-.element {
-    --name: style2;
-}
-
-#element {
-    --name: style2;
-}
-
 .element2 {
-    --name: style2;
+    --name2: style2;
 }
 
 #element2 {
-    --name: style2;
+    --name2: style2;
 }
 
 @keyframes style2 {

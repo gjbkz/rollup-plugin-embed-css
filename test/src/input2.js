@@ -1,5 +1,4 @@
-import {set} from './set';
 import './style1.css';
 import * as style3 from './style3.css';
-set(style3);
+document.body.classList.add(style3.className.element3);
 import './test';

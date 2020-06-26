@@ -8,20 +8,12 @@ body {
     white-space: pre;
 }
 
-.element {
-    --name: style1;
-}
-
-#element {
-    --name: style1;
-}
-
 .element1 {
-    --name: style1;
+    --name1: style1;
 }
 
 #element1 {
-    --name: style1;
+    --name1: style1;
 }
 
 @keyframes style1 {

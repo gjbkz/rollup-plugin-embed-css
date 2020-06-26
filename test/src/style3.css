@@ -2,20 +2,12 @@
     --style3: Loaded;
 }
 
-.element {
-    --name: style3;
-}
-
-#element {
-    --name: style3;
-}
-
 .element3 {
-    --name: style3;
+    --name3: style3;
 }
 
 #element3 {
-    --name: style3;
+    --name3: style3;
 }
 
 @keyframes style3 {

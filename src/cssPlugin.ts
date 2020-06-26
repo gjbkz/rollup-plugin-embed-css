@@ -1,6 +1,6 @@
 import * as path from 'path';
+import {AcornNode} from 'rollup';
 import * as esifycss from 'esifycss';
-import * as rollup from 'rollup';
 import * as pluginUtils from 'rollup-pluginutils';
 import {parseBundle} from './parseBundle';
 import {IPluginCore} from './types';
@@ -18,10 +18,29 @@ export const cssPlugin = (
         const id = path.isAbsolute(importee) || !importer ? importee : path.join(path.dirname(importer), importee);
         return id === session.helperPath ? {id, external: true, moduleSideEffects: false} : null;
     },
-    load: async (id) => filter(id) ? (await session.processCSS(id)).code : null,
+    async load(id) {
+        if (filter(id)) {
+            let {code} = await session.processCSS(id);
+            const {body} = this.parse(code, {}) as unknown as {
+                body: Array<AcornNode & {
+                    source: {value: string},
+                }>,
+            };
+            for (let {length: index} = body; 0 < index--;) {
+                const node = body[index];
+                if (node.type === 'ImportDeclaration') {
+                    const source = path.join(path.dirname(id), node.source.value);
+                    if (source === session.helperPath) {
+                        code = removeRange(code, node);
+                    }
+                }
+            }
+            return code;
+        }
+        return null;
+    },
     generateBundle(_options, bundle) {
-        const history = new Map<string, rollup.EmittedAsset>();
-        const lookupHistory = (key: string) => (history.get(key) || {source: ''}).source;
+        const cssList: Array<string> = [];
         parseBundle({
             bundle,
             cssKey: session.configuration.cssKey,
@@ -29,18 +48,12 @@ export const cssPlugin = (
             chunk.code = css.statements
             .sort((range1, range2) => range1.start < range2.start ? 1 : -1)
             .reduce(removeRange, chunk.code);
-            const source = [
-                css.ranges.map((range) => range.css).join('\n'),
-                chunk.imports.map(lookupHistory).join('\n'),
-                chunk.dynamicImports.map(lookupHistory).join('\n'),
-            ].join('\n');
-            const file: rollup.EmittedAsset = {
-                type: 'asset',
-                fileName: `${chunk.fileName}.css`,
-                source,
-            };
-            history.set(chunk.fileName, file);
-            this.emitFile(file);
+            cssList.push(css.ranges.map((range) => range.css).join('\n').trim());
+        });
+        this.emitFile({
+            type: 'asset',
+            fileName: session.configuration.output.path,
+            source: cssList.join('\n'),
         });
     },
 });

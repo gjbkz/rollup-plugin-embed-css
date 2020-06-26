@@ -22,7 +22,7 @@ export const embedCSSPlugin = (
                     helper = path.join(path.dirname(firstInput), 'embedcss-helper.css.js');
                 }
             }
-            let helperId = '';
+            let helperId: string | undefined;
             if (helper) {
                 helperId = path.join(__dirname, `esifycss-helper${path.extname(helper || 's.js')}`);
             }

@@ -16,6 +16,7 @@ export const prepare = async (
         {
             'index.html': [
                 '<!doctype html>',
+                '<link rel="stylesheet" href="./esifycssOutput.css">',
                 '<script src="./s.min.js"></script>',
                 `<script>System.import('./${input}')</script>`,
             ].join('\n'),
@@ -25,8 +26,8 @@ export const prepare = async (
 };
 
 export const test = async () => {
-    console.log('---------------- System');
-    const directory = path.join(__dirname, 'output', 'system');
+    console.log('---------------- CSS');
+    const directory = path.join(__dirname, 'output', 'css');
     await afs.rmrf(directory);
     {
         const bundle = await rollup.rollup({
@@ -34,7 +35,9 @@ export const test = async () => {
                 path.join(__dirname, 'src/input1.js'),
                 path.join(__dirname, 'src/input2.js'),
             ],
-            plugins: [embedCSSPlugin()],
+            plugins: [embedCSSPlugin({
+                css: true,
+            })],
         });
         await bundle.write({format: 'system', dir: directory, sourcemap: true});
     }
@@ -45,7 +48,7 @@ export const test = async () => {
         {
             root1: 'Loaded',
             root2: 'Loaded',
-            root3: '',
+            root3: 'Loaded',
             root4: 'Loaded',
             class1: '',
             class2: 'style2',
@@ -60,7 +63,7 @@ export const test = async () => {
         result2,
         {
             root1: 'Loaded',
-            root2: '',
+            root2: 'Loaded',
             root3: 'Loaded',
             root4: 'Loaded',
             class1: '',
@@ -68,6 +71,6 @@ export const test = async () => {
             class3: 'style3',
             class4: 'style4',
         },
-        `input1 returned unexpected result\n${JSON.stringify(result1, null, 2)}`,
+        `input2 returned unexpected result\n${JSON.stringify(result2, null, 2)}`,
     );
 };

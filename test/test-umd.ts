@@ -4,11 +4,8 @@ import * as assert from 'assert';
 import * as afs from '@nlib/afs';
 import {run} from './run';
 import {embedCSSPlugin} from '../src/embedCSSPlugin';
-import {ServerSet} from './servers';
 
-export const test = async (
-    servers: ServerSet,
-) => {
+export const test = async () => {
     console.log('---------------- UMD');
     const directory = path.join(__dirname, 'output', 'umd');
     await afs.rmrf(directory);
@@ -30,25 +27,18 @@ export const test = async (
             ].join('\n'),
         },
     );
-    const result = await run({directory, servers});
+    const result = await run(directory);
     assert.deepEqual(
         result,
         {
-            className: {
-                element: '_5',
-                element2: '_7',
-            },
-            id: {
-                element: '_6',
-                element2: '_8',
-            },
-            keyframes: {
-                style2: '_9',
-            },
-            style1: 'Loaded',
-            style2: 'Loaded',
-            style3: '',
-            style4: 'Loaded',
+            root1: 'Loaded',
+            root2: 'Loaded',
+            root3: '',
+            root4: 'Loaded',
+            class1: '',
+            class2: 'style2',
+            class3: '',
+            class4: 'style4',
         },
     );
 };

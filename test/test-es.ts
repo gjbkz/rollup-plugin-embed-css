@@ -5,7 +5,6 @@ import * as afs from '@nlib/afs';
 import {commonjs} from './plugins';
 import {run} from './run';
 import {embedCSSPlugin} from '../src/embedCSSPlugin';
-import {ServerSet} from './servers';
 
 export const prepare = async (
     {directory, input, output}: {
@@ -36,9 +35,7 @@ export const prepare = async (
     );
 };
 
-export const test = async (
-    servers: ServerSet,
-) => {
+export const test = async () => {
     console.log('---------------- ES');
     const directory = path.join(__dirname, 'output', 'es');
     await afs.rmrf(directory);
@@ -54,32 +51,36 @@ export const test = async (
     }
     const output1 = path.join(directory, 'input1');
     await prepare({directory, input: 'input1.js', output: output1});
-    const result1 = await run({directory: output1, servers});
+    const result1 = await run(output1);
     assert.deepEqual(
         result1,
         {
-            className: {
-                element: '_f',
-                element4: '_h',
-            },
-            id: {
-                element: '_g',
-                element4: '_i',
-            },
-            keyframes: {
-                style4: '_j',
-            },
-            style1: 'Loaded',
-            style2: 'Loaded',
-            style3: '',
-            style4: 'Loaded',
+            root1: 'Loaded',
+            root2: 'Loaded',
+            root3: '',
+            root4: 'Loaded',
+            class1: '',
+            class2: 'style2',
+            class3: '',
+            class4: 'style4',
         },
+        `input1 returned unexpected result\n${JSON.stringify(result1, null, 2)}`,
     );
     const output2 = path.join(directory, 'input2');
     await prepare({directory, input: 'input2.js', output: output2});
-    const result2 = await run({directory: output2, servers});
+    const result2 = await run(output2);
     assert.deepEqual(
         result2,
-        {...result1, style2: '', style3: 'Loaded'},
+        {
+            root1: 'Loaded',
+            root2: '',
+            root3: 'Loaded',
+            root4: 'Loaded',
+            class1: '',
+            class2: '',
+            class3: 'style3',
+            class4: 'style4',
+        },
+        `input1 returned unexpected result\n${JSON.stringify(result1, null, 2)}`,
     );
 };

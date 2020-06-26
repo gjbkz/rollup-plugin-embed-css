@@ -15,10 +15,7 @@ export const parseBundle = (
         chunkOrName: rollup.OutputAsset | rollup.OutputChunk | string,
     ) => {
         const chunk = typeof chunkOrName === 'string' ? bundle[chunkOrName] : chunkOrName;
-        if (typeof chunk === 'undefined') {
-            throw new Error(`NoChunk: ${chunkOrName as string}`);
-        }
-        if (chunk.type === 'asset' || processed.has(chunk)) {
+        if (typeof chunk === 'undefined' || chunk.type === 'asset' || processed.has(chunk)) {
             return;
         }
         processed.add(chunk);

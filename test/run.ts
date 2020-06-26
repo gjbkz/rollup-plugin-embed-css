@@ -1,28 +1,58 @@
+import * as http from 'http';
+import * as connect from 'connect';
+import * as serveStatic from 'serve-static';
 import * as selenium from 'selenium-webdriver';
-import {getBaseURL} from '@nlib/node-net';
+import * as chrome from 'selenium-webdriver/chrome';
+import {getBaseURL, listenPort, closeServers} from '@nlib/node-net';
 import {ITestResult} from './type';
-import {ServerSet} from './servers';
+
+export const startServer = async (
+    documentRoot: string,
+) => {
+    const app = connect();
+    app.use((req: http.IncomingMessage, _res: http.ServerResponse, next: () => void) => {
+        console.log(`${req.method} ${req.url}`);
+        next();
+    });
+    app.use(serveStatic(documentRoot) as connect.SimpleHandleFunction);
+    const server = http.createServer(app);
+    await listenPort(server, 3000);
+    return server;
+};
+
+export const startBrowser = async () => {
+    const builder = new selenium.Builder().withCapabilities({browserName: 'chrome'});
+    builder.setChromeOptions(
+        new chrome.Options()
+        .addArguments('--headless')
+        .addArguments('--auto-open-devtools-for-tabs'),
+    );
+    return await builder.build();
+};
 
 export const run = async (
-    {directory, servers}: {
-        directory: string,
-        servers: ServerSet,
-    },
+    directory: string,
 ): Promise<ITestResult> => {
-    const server = await servers.create(directory);
-    const baseURL = getBaseURL(server.address());
-    const {driver, close} = await servers.startBrowser();
+    const [server, driver] = await Promise.all([startServer(directory), startBrowser()]);
+    const close = async () => {
+        // await new Promise((resolve) => setTimeout(resolve, 60000));
+        console.log('closing');
+        await Promise.all([
+            closeServers(server),
+            driver.close(),
+        ]);
+        console.log('closed');
+    };
     try {
+        const baseURL = getBaseURL(server.address());
         await driver.get(`${baseURL}`);
         console.log(`title: ${await driver.getTitle()}`);
-        await driver.wait(selenium.until.titleIs('Done'), 10000);
+        await driver.wait(selenium.until.titleIs('Done'), 5000);
         const result = await (await driver.findElement({css: 'body'})).getText();
-        console.log(result);
-        await Promise.all([server.close(), close()]);
+        await close();
         return JSON.parse(result) as ITestResult;
     } catch (error) {
-        // await new Promise((resolve) => setTimeout(resolve, 60000));
-        await Promise.all([server.close(), close()]);
+        await close();
         throw error;
     }
 };

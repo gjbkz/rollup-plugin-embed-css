@@ -3,16 +3,19 @@ Promise.all([
     import('./style4.css'),
 ])
 .then(([{set}, style4]) => {
-    const style = getComputedStyle(document.documentElement);
-    set(
-        {
-            'style1': style.getPropertyValue('--style1'),
-            'style2': style.getPropertyValue('--style2'),
-            'style3': style.getPropertyValue('--style3'),
-            'style4': style.getPropertyValue('--style4'),
-        },
-        style4,
-    );
+    document.body.classList.add(style4.className.element4);
+    const rootStyle = getComputedStyle(document.documentElement);
+    const bodyStyle = getComputedStyle(document.body);
+    set({
+        root1: rootStyle.getPropertyValue('--style1'),
+        root2: rootStyle.getPropertyValue('--style2'),
+        root3: rootStyle.getPropertyValue('--style3'),
+        root4: rootStyle.getPropertyValue('--style4'),
+        class1: bodyStyle.getPropertyValue('--name1'),
+        class2: bodyStyle.getPropertyValue('--name2'),
+        class3: bodyStyle.getPropertyValue('--name3'),
+        class4: bodyStyle.getPropertyValue('--name4'),
+    });
 })
 .catch(console.error)
 .finally(() => {
