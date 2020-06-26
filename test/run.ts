@@ -13,11 +13,10 @@ export const run = async (
     const baseURL = getBaseURL(server.address());
     const {driver, close} = await servers.startBrowser();
     try {
-        await driver.get(`${baseURL}`);
+        await driver.get(`title: ${baseURL}`);
         console.log(await driver.getTitle());
         await driver.wait(selenium.until.titleIs('Done'), 10000);
-        const body = await driver.findElement({css: 'body'});
-        const result = await body.getText();
+        const result = await (await driver.findElement({css: 'body'})).getText();
         console.log(result);
         await Promise.all([server.close(), close()]);
         return JSON.parse(result) as ITestResult;
