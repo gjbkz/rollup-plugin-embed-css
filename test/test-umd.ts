@@ -9,6 +9,7 @@ import {ServerSet} from './servers';
 export const test = async (
     servers: ServerSet,
 ) => {
+    console.log('---------------- UMD');
     const directory = path.join(__dirname, 'output', 'umd');
     await afs.rmrf(directory);
     const bundle = await rollup.rollup({

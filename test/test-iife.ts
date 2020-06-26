@@ -9,6 +9,7 @@ import {ServerSet} from './servers';
 export const test = async (
     servers: ServerSet,
 ) => {
+    console.log('---------------- IIFE');
     const directory = path.join(__dirname, 'output', 'iife');
     await afs.rmrf(directory);
     const bundle = await rollup.rollup({

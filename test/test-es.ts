@@ -39,6 +39,7 @@ export const prepare = async (
 export const test = async (
     servers: ServerSet,
 ) => {
+    console.log('---------------- ES');
     const directory = path.join(__dirname, 'output', 'es');
     await afs.rmrf(directory);
     {
@@ -79,10 +80,6 @@ export const test = async (
     const result2 = await run({directory: output2, servers});
     assert.deepEqual(
         result2,
-        {
-            ...result1,
-            style2: '',
-            style3: 'Loaded',
-        },
+        {...result1, style2: '', style3: 'Loaded'},
     );
 };

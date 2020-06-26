@@ -6,13 +6,9 @@ import {test as testSystem} from './test-system';
 
 const test = async () => {
     await testES(servers);
-    console.log('#### passed: es');
     await testIIFE(servers);
-    console.log('#### passed: iife');
     await testUMD(servers);
-    console.log('#### passed: umd');
     await testSystem(servers);
-    console.log('#### passed: system');
 };
 
 test()
