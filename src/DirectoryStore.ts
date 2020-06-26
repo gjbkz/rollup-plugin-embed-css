@@ -6,7 +6,7 @@ export class DirectoryStore {
     private readonly store: Map<string, string>;
 
     public constructor() {
-        this.store = new Map();
+        this.store = new Map<string, string>();
     }
 
     public consumeImports(

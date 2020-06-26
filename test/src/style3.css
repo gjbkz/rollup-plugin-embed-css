@@ -1,0 +1,16 @@
+:root {
+    --style3: Loaded;
+}
+
+.element3 {
+    --name3: style3;
+}
+
+#element3 {
+    --name3: style3;
+}
+
+@keyframes style3 {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}

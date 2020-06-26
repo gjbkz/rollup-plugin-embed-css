@@ -1,0 +1,22 @@
+:root {
+    --style1: Loaded;
+}
+
+body {
+    margin: 0;
+    font-family: Courier, monospace;
+    white-space: pre;
+}
+
+.element1 {
+    --name1: style1;
+}
+
+#element1 {
+    --name1: style1;
+}
+
+@keyframes style1 {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}

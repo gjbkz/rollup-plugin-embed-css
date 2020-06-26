@@ -1,17 +1,24 @@
-import * as simple from './simple/test';
-import * as css from './css/test';
-import {$runTest, runTest} from './util';
-
-const tests = [simple, css];
+import {test as testES} from './test-es';
+import {test as testIIFE} from './test-iife';
+import {test as testUMD} from './test-umd';
+import {test as testSystem} from './test-system';
+import {test as testCSS} from './test-css';
 
 const test = async () => {
-    for (const props of tests) {
-        await $runTest(props);
+    const tests = [
+        testES,
+        testIIFE,
+        testUMD,
+        testSystem,
+        testCSS,
+    ];
+    for (const test of tests) {
+        await test();
     }
 };
 
-runTest({
-    title: 'rollup-plugin-embed-css',
-    test,
-    timeout: tests.reduce((sum, props) => sum + Number(props.timeout), 0),
+test()
+.catch((error) => {
+    console.error(error);
+    process.exit(1);
 });
