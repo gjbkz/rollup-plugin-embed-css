@@ -1,6 +1,6 @@
 {
     "name": "rollup-plugin-embed-css",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "description": "Embed CSS into JavaScript",
     "main": "lib/index.js",
     "files": [
