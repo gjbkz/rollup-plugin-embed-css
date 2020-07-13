@@ -1,3 +1,12 @@
+## [1.0.18](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.17...v1.0.18) (2020-07-13)
+
+
+### Bug Fixes
+
+* update esifycss to support import url(...) ([4d3364c](https://github.com/kei-ito/rollup-plugin-embed-css/commit/4d3364c58324316e42e20bc98d5b86ef46771358))
+
+
+
 ## [1.0.17](https://github.com/kei-ito/rollup-plugin-embed-css/compare/v1.0.16...v1.0.17) (2020-06-26)
 
 
