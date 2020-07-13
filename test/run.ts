@@ -45,6 +45,7 @@ export const run = async (
     };
     try {
         const baseURL = getBaseURL(server.address());
+        baseURL.hostname = 'localhost';
         await driver.get(`${baseURL}`);
         console.log(`title: ${await driver.getTitle()}`);
         await driver.wait(selenium.until.titleIs('Done'), 5000);
