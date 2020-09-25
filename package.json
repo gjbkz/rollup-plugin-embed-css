@@ -34,7 +34,7 @@
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
-        "@commitlint/cli": "^9.0.1",
+        "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^9.0.1",
         "@nlib/lint": "^3.17.2",
         "@nlib/node-net": "^3.17.2",
