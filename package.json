@@ -35,7 +35,7 @@
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
-        "@commitlint/config-conventional": "^9.0.1",
+        "@commitlint/config-conventional": "^11.0.0",
         "@nlib/lint": "^3.17.2",
         "@nlib/node-net": "^3.17.2",
         "@nlib/remove-sourcemap": "^3.17.2",
