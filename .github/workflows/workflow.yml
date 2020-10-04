@@ -93,6 +93,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           registry-url: https://registry.npmjs.org
+      - run: npx remove-sourcemap --directory lib --ext js
+      - run: npx cleanup-package-json --file package.json
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

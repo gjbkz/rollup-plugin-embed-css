@@ -52,7 +52,7 @@ export const run = async (
         const result = await (await driver.findElement({css: 'body'})).getText();
         await close();
         return JSON.parse(result) as ITestResult;
-    } catch (error) {
+    } catch (error: unknown) {
         await close();
         throw error;
     }
