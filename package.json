@@ -31,14 +31,14 @@
     "dependencies": {
         "@nlib/afs": "^3.17.2",
         "esifycss": "^1.4.24",
-        "postcss": "^7.0.35",
+        "postcss": "^8.1.1",
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^9.1.2",
         "@nlib/changelog": "^0.1.9",
-        "@nlib/lint": "^3.17.2",
+        "@nlib/eslint-config": "^3.17.14",
         "@nlib/node-net": "^3.17.2",
         "@nlib/nodetool": "^0.1.11",
         "@nlib/remove-sourcemap": "^3.17.4",
@@ -48,7 +48,7 @@
         "@types/selenium-webdriver": "^4.0.9",
         "@types/serve-static": "^1.13.5",
         "@typescript-eslint/eslint-plugin": "^4.3.0",
-        "@typescript-eslint/parser": "^3.10.1",
+        "@typescript-eslint/parser": "^4.3.0",
         "connect": "^3.7.0",
         "eslint": "^7.10.0",
         "husky": "^4.3.0",
@@ -59,16 +59,21 @@
         "serve-static": "^1.14.1",
         "systemjs": "^6.6.1",
         "ts-node": "^9.0.0",
-        "typescript": "^3.9.7"
+        "typescript": "^4.0.3"
     },
     "eslintIgnore": [
         "./test/**/*.js"
     ],
     "eslintConfig": {
-        "extends": "./node_modules/@nlib/lint/.eslintrc.json",
+        "extends": [
+            "@nlib"
+        ],
         "env": {
             "es6": true,
             "node": true
+        },
+        "rules": {
+            "@nlib/no-globals": "off"
         },
         "overrides": [
             {
