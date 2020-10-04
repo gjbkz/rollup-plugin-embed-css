@@ -35,10 +35,9 @@
         "rollup-pluginutils": "^2.8.2"
     },
     "devDependencies": {
-        "@commitlint/cli": "^11.0.0",
-        "@commitlint/config-conventional": "^9.1.2",
         "@nlib/changelog": "^0.1.9",
         "@nlib/eslint-config": "^3.17.14",
+        "@nlib/lint-commit": "^0.1.3",
         "@nlib/node-net": "^3.17.2",
         "@nlib/nodetool": "^0.1.11",
         "@nlib/remove-sourcemap": "^3.17.4",
@@ -104,14 +103,9 @@
             }
         ]
     },
-    "commitlint": {
-        "extends": [
-            "@commitlint/config-conventional"
-        ]
-    },
     "husky": {
         "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+            "commit-msg": "nlib-lint-commit --input HUSKY_GIT_PARAMS",
             "pre-commit": "lint-staged"
         }
     },
