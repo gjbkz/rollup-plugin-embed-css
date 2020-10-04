@@ -12,8 +12,8 @@ const test = async () => {
         testSystem,
         testCSS,
     ];
-    for (const test of tests) {
-        await test();
+    for (const testFormat of tests) {
+        await testFormat();
     }
 };
 
