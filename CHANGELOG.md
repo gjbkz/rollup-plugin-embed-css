@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.20 (2020-12-20)
+
+### Dependency Upgrades
+
+- upgrade dependencies (#139) (160c96a)
+
+
 ## v1.0.19 (2020-10-04)
 
 ### Styles
