@@ -44,14 +44,14 @@ export const embedCSSPlugin = (
                 core = scriptPlugin(session, filter);
             }
         },
-        async resolveId(importee, importer) {
-            return await core.resolveId.call(this, importee, importer);
+        async resolveId(importee, importer, options) {
+            return await core.resolveId.call(this, importee, importer, options);
         },
         async load(id) {
             return await core.load.call(this, id);
         },
         async generateBundle(options, bundle, isWrite) {
-            return await core.generateBundle.call(this, options, bundle, isWrite);
+            await core.generateBundle.call(this, options, bundle, isWrite);
         },
     };
 };
