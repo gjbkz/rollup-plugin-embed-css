@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.21 (2020-12-20)
+
+### Bug Fixes
+
+- uninstall remove-sourcemap (1ef82a6)
+
+
 ## v1.0.20 (2020-12-20)
 
 ### Dependency Upgrades
