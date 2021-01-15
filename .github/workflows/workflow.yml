@@ -24,7 +24,7 @@ jobs:
             node_modules-${{ matrix.os }}-${{ hashFiles('**/package-lock.json') }}
             node_modules-${{ matrix.os }}-
             node_modules-
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
@@ -33,7 +33,7 @@ jobs:
         with:
           path: lib
           key: lib-${{ matrix.os }}-${{ github.run_number }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
       - run: npm run build
@@ -61,7 +61,7 @@ jobs:
         with:
           path: lib
           key: lib-${{ matrix.os }}-${{ github.run_number }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
       - run: npx c8 npm test
@@ -89,7 +89,7 @@ jobs:
         with:
           path: lib
           key: lib-${{ matrix.os }}-${{ github.run_number }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
           registry-url: https://registry.npmjs.org
