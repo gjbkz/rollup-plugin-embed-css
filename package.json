@@ -31,7 +31,7 @@
     "dependencies": {
         "@nlib/afs": "3.17.2",
         "esifycss": "1.4.26",
-        "postcss": "8.2.1",
+        "postcss": "8.2.6",
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
