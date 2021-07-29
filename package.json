@@ -40,7 +40,7 @@
         "@nlib/lint-commit": "0.1.4",
         "@nlib/node-net": "3.17.2",
         "@nlib/nodetool": "0.1.17",
-        "@rollup/plugin-commonjs": "17.1.0",
+        "@rollup/plugin-commonjs": "19.0.2",
         "@types/connect": "3.4.35",
         "@types/node": "15.14.2",
         "@types/selenium-webdriver": "4.0.15",
