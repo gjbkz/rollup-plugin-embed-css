@@ -35,7 +35,7 @@
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
-        "@nlib/changelog": "0.1.9",
+        "@nlib/changelog": "0.1.11",
         "@nlib/eslint-config": "3.17.24",
         "@nlib/lint-commit": "0.1.4",
         "@nlib/node-net": "3.17.2",
