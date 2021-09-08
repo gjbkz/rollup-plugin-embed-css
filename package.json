@@ -39,7 +39,7 @@
         "@nlib/eslint-config": "3.17.25",
         "@nlib/lint-commit": "0.1.7",
         "@nlib/node-net": "3.17.2",
-        "@nlib/nodetool": "0.1.17",
+        "@nlib/nodetool": "0.4.1",
         "@rollup/plugin-commonjs": "17.1.0",
         "@types/connect": "3.4.35",
         "@types/node": "15.14.9",
