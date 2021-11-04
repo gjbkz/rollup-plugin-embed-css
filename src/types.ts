@@ -1,5 +1,5 @@
-import * as esifycss from 'esifycss';
-import * as rollup from 'rollup';
+import type * as esifycss from 'esifycss';
+import type * as rollup from 'rollup';
 
 export interface IRollupChunkLike {
     type: 'chunk',
@@ -13,8 +13,8 @@ export interface IRollupAssetLike {
     fileName: string,
 }
 
-export interface IPluginOptions extends Omit<esifycss.ISessionOptions, 'css'> {
-    exclude?: Array<string | RegExp> | string | RegExp,
+export interface IPluginOptions extends Omit<esifycss.SessionOptions, 'css'> {
+    exclude?: Array<RegExp | string> | RegExp | string,
     css?: boolean | string,
 }
 

@@ -4,7 +4,16 @@ import * as serveStatic from 'serve-static';
 import * as selenium from 'selenium-webdriver';
 import * as chrome from 'selenium-webdriver/chrome';
 import {getBaseURL, listenPort, closeServers} from '@nlib/node-net';
-import {ITestResult} from './type';
+
+interface TestResult {
+    className: Record<string, string>,
+    id: Record<string, string>,
+    keyframes: Record<string, string>,
+    style1: string,
+    style2: string,
+    style3: string,
+    style4: string,
+}
 
 export const startServer = async (
     documentRoot: string,
@@ -32,7 +41,7 @@ export const startBrowser = async () => {
 
 export const run = async (
     directory: string,
-): Promise<ITestResult> => {
+): Promise<TestResult> => {
     const [server, driver] = await Promise.all([startServer(directory), startBrowser()]);
     const close = async () => {
         // await new Promise((resolve) => setTimeout(resolve, 60000));
@@ -51,7 +60,7 @@ export const run = async (
         await driver.wait(selenium.until.titleIs('Done'), 5000);
         const result = await (await driver.findElement({css: 'body'})).getText();
         await close();
-        return JSON.parse(result) as ITestResult;
+        return JSON.parse(result) as TestResult;
     } catch (error: unknown) {
         await close();
         throw error;

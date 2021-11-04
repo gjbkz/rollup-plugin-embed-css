@@ -1,13 +1,13 @@
 import * as path from 'path';
-import {AcornNode} from 'rollup';
-import * as esifycss from 'esifycss';
-import * as pluginUtils from 'rollup-pluginutils';
+import type {AcornNode} from 'rollup';
+import type * as esifycss from 'esifycss';
+import type * as pluginUtils from 'rollup-pluginutils';
 import {parseBundle} from './parseBundle';
-import {IPluginCore} from './types';
+import type {IPluginCore} from './types';
 
 const removeRange = (
     code: string,
-    range: esifycss.IRange,
+    range: esifycss.Range,
 ): string => `${code.slice(0, range.start)}${code.slice(range.end)}`;
 
 export const cssPlugin = (
@@ -45,7 +45,7 @@ export const cssPlugin = (
             bundle,
             cssKey: session.configuration.cssKey,
         }).chunks.forEach(({chunk, css}) => {
-            chunk.code = css.statements
+            chunk.code = css.expressionStatements
             .sort((range1, range2) => range1.start < range2.start ? 1 : -1)
             .reduce(removeRange, chunk.code);
             cssList.push(css.ranges.map((range) => range.css).join('\n').trim());

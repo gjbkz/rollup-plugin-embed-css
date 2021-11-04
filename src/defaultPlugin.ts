@@ -1,4 +1,4 @@
-import {IPluginCore} from './types';
+import type {IPluginCore} from './types';
 
 export const defaultPlugin = (): IPluginCore => {
     const throwError = () => {

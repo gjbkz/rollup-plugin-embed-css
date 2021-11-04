@@ -1,4 +1,4 @@
-import * as rollup from 'rollup';
+import type * as rollup from 'rollup';
 
 export const getFirstInput = (
     input: rollup.InputOptions['input'],
