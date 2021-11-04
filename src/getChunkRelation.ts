@@ -1,4 +1,4 @@
-import {IRollupChunkLike} from './types';
+import type {IRollupChunkLike} from './types';
 
 export const getChunkRelation = (
     c1: IRollupChunkLike,

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as rollup from 'rollup';
+import type * as rollup from 'rollup';
 
 export class DirectoryStore {
 

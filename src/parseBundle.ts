@@ -1,6 +1,6 @@
 import * as esifycss from 'esifycss';
-import * as rollup from 'rollup';
-import {IParseResult} from 'esifycss/lib/minifier/types';
+import type * as rollup from 'rollup';
+import type {ParseResult} from 'esifycss/lib/minifier/types';
 
 export const parseBundle = (
     {bundle, cssKey}: {
@@ -9,7 +9,7 @@ export const parseBundle = (
     },
 ) => {
     const tokens = new Map<string, number>();
-    const chunks: Array<{chunk: rollup.OutputChunk, css: IParseResult}> = [];
+    const chunks: Array<{chunk: rollup.OutputChunk, css: ParseResult}> = [];
     const processed = new WeakSet<rollup.OutputChunk>();
     const process = (
         chunkOrName: rollup.OutputAsset | rollup.OutputChunk | string,

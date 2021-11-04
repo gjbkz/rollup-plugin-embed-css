@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as esifycss from 'esifycss';
-import * as rollup from 'rollup';
+import type * as rollup from 'rollup';
 import * as pluginUtils from 'rollup-pluginutils';
 import {getFirstInput} from './getFirstInput';
 import {cssPlugin} from './cssPlugin';
 import {scriptPlugin} from './scriptPlugin';
-import {IPluginOptions} from './types';
+import type {IPluginOptions} from './types';
 import {defaultPlugin} from './defaultPlugin';
 
 export const embedCSSPlugin = (

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as esifycss from 'esifycss';
-import * as pluginUtils from 'rollup-pluginutils';
-import {IPluginCore} from './types';
+import type * as pluginUtils from 'rollup-pluginutils';
+import type {IPluginCore} from './types';
 import {parseBundle} from './parseBundle';
 
 export const scriptPlugin = (
@@ -23,7 +23,7 @@ export const scriptPlugin = (
             bundle,
             cssKey: session.configuration.cssKey,
         });
-        const identifier = esifycss.createOptimizedIdentifier(tokens);
+        const identifier = esifycss.createOptimizedIdGenerator(tokens);
         for (const {chunk, css} of chunks) {
             let code = esifycss.minifyCSSInScript(chunk.code, css.ranges, identifier);
             code = esifycss.setDictionary(code, identifier.idList);
