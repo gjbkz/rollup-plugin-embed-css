@@ -31,17 +31,16 @@ export const startServer = async (
 
 export const startBrowser = async () => {
     const builder = new selenium.Builder().withCapabilities({browserName: 'chrome'});
-    builder.setChromeOptions(
-        new chrome.Options()
-        .addArguments('--headless')
-        .addArguments('--auto-open-devtools-for-tabs'),
-    );
+    const options = new chrome.Options();
+    if (process.env.CI) {
+        options.addArguments('--headless');
+    }
+    options.addArguments('--auto-open-devtools-for-tabs');
+    builder.setChromeOptions(options);
     return await builder.build();
 };
 
-export const run = async (
-    directory: string,
-): Promise<TestResult> => {
+export const run = async (directory: string): Promise<TestResult> => {
     const [server, driver] = await Promise.all([startServer(directory), startBrowser()]);
     const close = async () => {
         // await new Promise((resolve) => setTimeout(resolve, 60000));

@@ -5,8 +5,7 @@
     "main": "lib/index.js",
     "files": [
         "lib",
-        "!*.test.*",
-        "!*.map"
+        "!*.test.*"
     ],
     "author": {
         "name": "Kei Ito",
@@ -20,7 +19,7 @@
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
         "lint": "eslint --ext .ts src test --ignore-pattern src/index.d.ts",
-        "build:tsc": "tsc",
+        "build:tsc": "tsc --project tsconfig.build.json",
         "build:types": "node -e \"require('fs').copyFileSync('src/index.d.ts','lib/index.d.ts')\"",
         "build": "run-s build:tsc build:types",
         "test": "ts-node test/index.ts",
@@ -29,19 +28,16 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "@nlib/afs": "3.17.2",
         "esifycss": "1.4.35",
         "postcss": "8.3.11",
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
-        "@nlib/changelog": "0.1.11",
         "@nlib/eslint-config": "3.17.28",
         "@nlib/eslint-plugin": "1.0.16",
         "@nlib/githooks": "0.1.0",
         "@nlib/lint-commit": "0.1.8",
         "@nlib/node-net": "3.17.2",
-        "@nlib/nodetool": "1.0.0",
         "@rollup/plugin-commonjs": "21.0.1",
         "@types/connect": "3.4.35",
         "@types/node": "16.11.6",
@@ -79,10 +75,7 @@
                 "files": [
                     "test/**/*.ts",
                     "src/index.d.ts"
-                ],
-                "parserOptions": {
-                    "project": "./tsconfig.base.json"
-                }
+                ]
             },
             {
                 "files": [

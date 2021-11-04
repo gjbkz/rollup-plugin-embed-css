@@ -1,12 +1,14 @@
+import * as fs from 'fs';
+import * as assert from 'assert';
 import * as path from 'path';
 import * as rollup from 'rollup';
-import * as assert from 'assert';
-import * as afs from '@nlib/afs';
+import {embedCSSPlugin} from '../src/embedCSSPlugin';
+import {deleteFiles} from './deleteFiles';
 import {commonjs} from './plugins';
 import {run} from './run';
-import {embedCSSPlugin} from '../src/embedCSSPlugin';
+import {deployFiles} from './deployFiles';
 
-export const prepare = async (
+const prepare = async (
     {directory, input, output}: {
         directory: string,
         input: string,
@@ -22,23 +24,20 @@ export const prepare = async (
         format: 'system',
         dir: output,
     });
-    await afs.deploy(
-        output,
-        {
-            'index.html': [
-                '<!doctype html>',
-                '<script src="./s.min.js"></script>',
-                `<script>System.import('./${input}')</script>`,
-            ].join('\n'),
-            's.min.js': await afs.readFile(require.resolve('systemjs/dist/s.min.js')),
-        },
-    );
+    await deployFiles(output, {
+        'index.html': [
+            '<!doctype html>',
+            '<script src="./s.min.js"></script>',
+            `<script>System.import('./${input}')</script>`,
+        ].join('\n'),
+        's.min.js': await fs.promises.readFile(require.resolve('systemjs/dist/s.min.js')),
+    });
 };
 
 export const test = async () => {
     console.log('---------------- ES');
     const directory = path.join(__dirname, 'output', 'es');
-    await afs.rmrf(directory);
+    await deleteFiles(directory);
     {
         const bundle = await rollup.rollup({
             input: [
