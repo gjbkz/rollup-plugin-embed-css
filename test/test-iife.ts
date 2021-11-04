@@ -1,9 +1,9 @@
 import * as assert from 'assert';
-import * as fs from 'fs';
 import * as path from 'path';
 import * as rollup from 'rollup';
 import {embedCSSPlugin} from '../src/embedCSSPlugin';
 import {deleteFiles} from './deleteFiles';
+import {deployFiles} from './deployFiles';
 import {run} from './run';
 
 export const test = async () => {
@@ -19,13 +19,12 @@ export const test = async () => {
         dir: directory,
         sourcemap: true,
     });
-    await fs.promises.writeFile(
-        path.join(directory, 'index.html'),
-        [
+    await deployFiles(directory, {
+        'index.html': [
             '<!doctype html>',
             '<script src="./input-sync.js" defer></script>',
         ].join('\n'),
-    );
+    });
     const result = await run(directory);
     assert.deepEqual(
         result,

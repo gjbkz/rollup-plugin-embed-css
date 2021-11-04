@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as rollup from 'rollup';
 import {embedCSSPlugin} from '../src/embedCSSPlugin';
 import {deleteFiles} from './deleteFiles';
+import {deployFiles} from './deployFiles';
 import {run} from './run';
 
 export const prepare = async (
@@ -12,19 +13,15 @@ export const prepare = async (
         input: string,
     },
 ) => {
-    await fs.promises.writeFile(
-        path.join(directory, 'index.html'),
-        [
+    await deployFiles(directory, {
+        'index.html': [
             '<!doctype html>',
             '<link rel="stylesheet" href="./esifycssOutput.css">',
             '<script src="./s.min.js"></script>',
             `<script>System.import('./${input}')</script>`,
         ].join('\n'),
-    );
-    await fs.promises.writeFile(
-        path.join(directory, 's.min.js'),
-        await fs.promises.readFile(require.resolve('systemjs/dist/s.min.js')),
-    );
+        's.min.js': await fs.promises.readFile(require.resolve('systemjs/dist/s.min.js')),
+    });
 };
 
 export const test = async () => {

@@ -6,6 +6,7 @@ import {embedCSSPlugin} from '../src/embedCSSPlugin';
 import {deleteFiles} from './deleteFiles';
 import {commonjs} from './plugins';
 import {run} from './run';
+import {deployFiles} from './deployFiles';
 
 export const prepare = async (
     {directory, input, output}: {
@@ -23,18 +24,14 @@ export const prepare = async (
         format: 'system',
         dir: output,
     });
-    await fs.promises.writeFile(
-        path.join(directory, 'index.html'),
-        [
+    await deployFiles(directory, {
+        'index.html': [
             '<!doctype html>',
             '<script src="./s.min.js"></script>',
             `<script>System.import('./${input}')</script>`,
         ].join('\n'),
-    );
-    await fs.promises.writeFile(
-        path.join(directory, 's.min.js'),
-        await fs.promises.readFile(require.resolve('systemjs/dist/s.min.js')),
-    );
+        's.min.js': await fs.promises.readFile(require.resolve('systemjs/dist/s.min.js')),
+    });
 };
 
 export const test = async () => {
