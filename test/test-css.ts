@@ -7,7 +7,7 @@ import {deleteFiles} from './deleteFiles';
 import {deployFiles} from './deployFiles';
 import {run} from './run';
 
-export const prepare = async (
+const prepare = async (
     {directory, input}: {
         directory: string,
         input: string,

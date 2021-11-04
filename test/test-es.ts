@@ -8,7 +8,7 @@ import {commonjs} from './plugins';
 import {run} from './run';
 import {deployFiles} from './deployFiles';
 
-export const prepare = async (
+const prepare = async (
     {directory, input, output}: {
         directory: string,
         input: string,
@@ -24,7 +24,7 @@ export const prepare = async (
         format: 'system',
         dir: output,
     });
-    await deployFiles(directory, {
+    await deployFiles(output, {
         'index.html': [
             '<!doctype html>',
             '<script src="./s.min.js"></script>',
