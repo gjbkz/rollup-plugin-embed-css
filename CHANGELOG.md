@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.23 (2021-11-04)
+
+
 ## v1.0.22 (2021-11-04)
 
 ### Dependency Upgrades
