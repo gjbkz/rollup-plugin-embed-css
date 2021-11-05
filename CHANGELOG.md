@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.0.24 (2021-11-05)
+
+### Dependency Upgrades
+
+- esifycss:1.4.35→1.4.36 ([3cbc877](https://github.com/kei-ito/rollup-plugin-embed-css/commit/3cbc8770c1e9e00332c393a0507efa6209074ab6))
+
+
 ## v1.0.23 (2021-11-04)
 
 
