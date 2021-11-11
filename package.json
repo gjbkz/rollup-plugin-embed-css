@@ -40,7 +40,7 @@
         "@nlib/node-net": "3.17.2",
         "@rollup/plugin-commonjs": "21.0.1",
         "@types/connect": "3.4.35",
-        "@types/node": "16.11.6",
+        "@types/node": "16.11.7",
         "@types/selenium-webdriver": "4.0.16",
         "@types/serve-static": "1.13.10",
         "@typescript-eslint/eslint-plugin": "5.3.1",
