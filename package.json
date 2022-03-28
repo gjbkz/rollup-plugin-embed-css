@@ -54,7 +54,7 @@
         "serve-static": "1.14.2",
         "systemjs": "6.12.1",
         "ts-node": "10.7.0",
-        "typescript": "4.6.2"
+        "typescript": "4.6.3"
     },
     "eslintIgnore": [
         "./test/**/*.js"
