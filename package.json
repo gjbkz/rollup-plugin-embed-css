@@ -41,7 +41,7 @@
         "@rollup/plugin-commonjs": "21.1.0",
         "@types/connect": "3.4.35",
         "@types/node": "16.11.27",
-        "@types/selenium-webdriver": "4.0.18",
+        "@types/selenium-webdriver": "4.0.19",
         "@types/serve-static": "1.13.10",
         "@typescript-eslint/eslint-plugin": "5.20.0",
         "@typescript-eslint/parser": "5.20.0",
