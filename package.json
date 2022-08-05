@@ -38,7 +38,7 @@
         "@nlib/githooks": "0.1.0",
         "@nlib/lint-commit": "0.1.8",
         "@nlib/node-net": "3.17.2",
-        "@rollup/plugin-commonjs": "21.1.0",
+        "@rollup/plugin-commonjs": "22.0.2",
         "@types/connect": "3.4.35",
         "@types/node": "16.11.39",
         "@types/selenium-webdriver": "4.1.1",
