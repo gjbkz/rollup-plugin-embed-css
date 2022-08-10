@@ -33,7 +33,7 @@
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
-        "@nlib/eslint-config": "3.18.0",
+        "@nlib/eslint-config": "3.19.4",
         "@nlib/eslint-plugin": "1.1.1",
         "@nlib/githooks": "0.1.0",
         "@nlib/lint-commit": "0.1.8",
