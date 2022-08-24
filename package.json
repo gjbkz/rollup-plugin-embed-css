@@ -23,8 +23,8 @@
         "build:types": "node -e \"require('fs').copyFileSync('src/index.d.ts','lib/index.d.ts')\"",
         "build": "run-s build:tsc build:types",
         "test": "ts-node test/index.ts",
-        "version": "run-s version:changelog version:add",
-        "version:changelog": "npx @nlib/changelog --output CHANGELOG.md",
+        "version": "run-s version:*",
+        "version:changelog": "npx nlib-changelog --output CHANGELOG.md",
         "version:add": "git add ."
     },
     "dependencies": {
@@ -33,6 +33,7 @@
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
+        "@nlib/changelog": "0.2.3",
         "@nlib/eslint-config": "3.18.0",
         "@nlib/eslint-plugin": "1.1.1",
         "@nlib/githooks": "0.1.0",
