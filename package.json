@@ -18,10 +18,9 @@
     },
     "repository": "kei-ito/rollup-plugin-embed-css",
     "scripts": {
-        "lint": "eslint --ext .ts src test --ignore-pattern src/index.d.ts",
+        "lint": "eslint --ext .ts src test",
+        "build": "run-s build:*",
         "build:tsc": "tsc --project tsconfig.build.json",
-        "build:types": "node -e \"require('fs').copyFileSync('src/index.d.ts','lib/index.d.ts')\"",
-        "build": "run-s build:tsc build:types",
         "test": "ts-node test/index.ts",
         "version": "run-s version:*",
         "version:changelog": "npx nlib-changelog --output CHANGELOG.md",
@@ -73,8 +72,7 @@
         "overrides": [
             {
                 "files": [
-                    "test/**/*.ts",
-                    "src/index.d.ts"
+                    "test/**/*.ts"
                 ],
                 "rules": {
                     "no-lone-blocks": "off",
