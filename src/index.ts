@@ -1,5 +1,5 @@
 import {embedCSSPlugin} from './embedCSSPlugin';
-module.exports = Object.assign(embedCSSPlugin, {
-    default: embedCSSPlugin,
-    embedCSSPlugin,
-});
+
+export {embedCSSPlugin};
+// eslint-disable-next-line import/no-default-export
+export default embedCSSPlugin;

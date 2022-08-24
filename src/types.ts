@@ -1,5 +1,5 @@
 import type * as esifycss from 'esifycss';
-import type * as rollup from 'rollup';
+import type {FunctionPluginHooks, Plugin, PluginContext} from 'rollup';
 
 export interface IRollupChunkLike {
     type: 'chunk',
@@ -18,8 +18,9 @@ export interface IPluginOptions extends Omit<esifycss.SessionOptions, 'css'> {
     css?: boolean | string,
 }
 
-export interface IPluginCore {
-    resolveId: rollup.ResolveIdHook,
-    load: rollup.LoadHook,
-    generateBundle: rollup.OutputPluginHooks['generateBundle'],
+type Async<T> = T extends ((...args: infer A) => infer S) ? ((this: PluginContext, ...args: A) => Promise<S> | S) : never;
+export interface IPluginCore extends Omit<Plugin, 'name'> {
+    resolveId: Async<FunctionPluginHooks['resolveId']>,
+    load: Async<FunctionPluginHooks['load']>,
+    generateBundle: Async<FunctionPluginHooks['generateBundle']>,
 }
