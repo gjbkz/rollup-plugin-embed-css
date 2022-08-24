@@ -28,7 +28,7 @@
         "version:add": "git add ."
     },
     "dependencies": {
-        "esifycss": "1.4.37",
+        "esifycss": "1.4.39",
         "postcss": "8.4.16",
         "rollup-pluginutils": "2.8.2"
     },
