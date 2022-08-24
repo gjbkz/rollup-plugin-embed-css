@@ -75,7 +75,11 @@
                 "files": [
                     "test/**/*.ts",
                     "src/index.d.ts"
-                ]
+                ],
+                "rules": {
+                    "no-lone-blocks": "off",
+                    "import/no-relative-parent-imports": "off"
+                }
             },
             {
                 "files": [
