@@ -45,7 +45,7 @@
         "@typescript-eslint/eslint-plugin": "5.36.1",
         "@typescript-eslint/parser": "5.35.1",
         "connect": "3.7.0",
-        "eslint": "8.22.0",
+        "eslint": "8.23.0",
         "lint-staged": "13.0.3",
         "npm-run-all": "4.1.5",
         "rollup": "2.78.1",
