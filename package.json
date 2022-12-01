@@ -43,7 +43,7 @@
         "@types/selenium-webdriver": "4.1.9",
         "@types/serve-static": "1.15.0",
         "@typescript-eslint/eslint-plugin": "5.43.0",
-        "@typescript-eslint/parser": "5.44.0",
+        "@typescript-eslint/parser": "5.45.0",
         "connect": "3.7.0",
         "eslint": "8.28.0",
         "lint-staged": "13.0.4",
