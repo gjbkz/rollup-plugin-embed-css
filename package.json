@@ -37,7 +37,7 @@
         "@nlib/eslint-plugin": "1.1.1",
         "@nlib/githooks": "0.1.0",
         "@nlib/lint-commit": "0.2.0",
-        "@rollup/plugin-commonjs": "22.0.2",
+        "@rollup/plugin-commonjs": "23.0.7",
         "@types/connect": "3.4.35",
         "@types/node": "18.11.17",
         "@types/selenium-webdriver": "4.1.9",
