@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.0.26 (2023-01-09)
+
+### Dependency Upgrades
+
+- npm update ([4f6c6b6](https://github.com/gjbkz/rollup-plugin-embed-css/commit/4f6c6b61e55b2a60a92d28f358451f55c476bf17))
+- esifycss:1.4.39→1.4.40 ([19c3416](https://github.com/gjbkz/rollup-plugin-embed-css/commit/19c3416dbba26d62e83a4e4ff20c33262a6973b7))
+- postcss:8.4.20→8.4.21 ([446b83e](https://github.com/gjbkz/rollup-plugin-embed-css/commit/446b83efa228bffe3398802f62a72e414801dce4))
+- @nlib/changelog:0.2.3→0.2.4 ([8cc8435](https://github.com/gjbkz/rollup-plugin-embed-css/commit/8cc8435f802ff3dffb7c4a2124ec8383fb8a439c))
+
+
 ## v1.0.25 (2022-08-24)
 
 ### Build System
