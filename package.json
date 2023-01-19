@@ -42,7 +42,7 @@
         "@types/node": "18.11.18",
         "@types/selenium-webdriver": "4.1.10",
         "@types/serve-static": "1.15.0",
-        "@typescript-eslint/eslint-plugin": "5.48.1",
+        "@typescript-eslint/eslint-plugin": "5.48.2",
         "@typescript-eslint/parser": "5.48.1",
         "connect": "3.7.0",
         "eslint": "8.32.0",
