@@ -39,7 +39,7 @@
         "@nlib/lint-commit": "0.2.0",
         "@rollup/plugin-commonjs": "24.1.0",
         "@types/connect": "3.4.35",
-        "@types/node": "18.15.11",
+        "@types/node": "18.15.12",
         "@types/selenium-webdriver": "4.1.13",
         "@types/serve-static": "1.15.1",
         "@typescript-eslint/eslint-plugin": "5.59.0",
