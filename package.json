@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "esifycss": "1.4.40",
-        "postcss": "8.4.26",
+        "postcss": "8.4.27",
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
