@@ -35,7 +35,7 @@
         "@nlib/changelog": "0.3.0",
         "@nlib/eslint-config": "3.19.6",
         "@nlib/eslint-plugin": "1.1.2",
-        "@nlib/githooks": "0.1.0",
+        "@nlib/githooks": "0.2.0",
         "@nlib/lint-commit": "0.2.0",
         "@rollup/plugin-commonjs": "24.1.0",
         "@types/connect": "3.4.35",
