@@ -32,7 +32,7 @@
         "rollup-pluginutils": "2.8.2"
     },
     "devDependencies": {
-        "@nlib/changelog": "0.3.0",
+        "@nlib/changelog": "0.3.1",
         "@nlib/eslint-config": "3.19.6",
         "@nlib/eslint-plugin": "1.1.2",
         "@nlib/githooks": "0.2.0",
