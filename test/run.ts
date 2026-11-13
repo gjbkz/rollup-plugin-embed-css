@@ -57,8 +57,12 @@ export const run = async (directory: string): Promise<TestResult> => {
     const close = async () => {
         // await new Promise((resolve) => setTimeout(resolve, 60000));
         console.log('closing');
-        server.close();
-        await driver.close();
+        await Promise.all([
+            new Promise<void>((resolve, reject) => {
+                server.close((error) => error ? reject(error) : resolve());
+            }),
+            driver.quit(),
+        ]);
         console.log('closed');
     };
     try {
@@ -72,10 +76,8 @@ export const run = async (directory: string): Promise<TestResult> => {
         const result = await (
             await driver.findElement({css: 'body'})
         ).getText();
-        await close();
         return JSON.parse(result) as TestResult;
-    } catch (error: unknown) {
+    } finally {
         await close();
-        throw error;
     }
 };
