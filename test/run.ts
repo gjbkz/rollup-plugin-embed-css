@@ -69,7 +69,17 @@ export const run = async (directory: string): Promise<TestResult> => {
         if (!address || typeof address === 'string') {
             throw new Error('InvalieAddress');
         }
-        await driver.get(`http://127.0.0.1:${address.port}/`);
+        const url = `http://127.0.0.1:${address.port}/`;
+        await driver.get(url);
+        // Retry navigation only while ChromeDriver is still on its bootstrap page.
+        await driver.wait(async () => {
+            const currentUrl = await driver.getCurrentUrl();
+            if (currentUrl === 'data:,') {
+                await driver.get(url);
+                return false;
+            }
+            return currentUrl === url;
+        }, 5000);
         console.log(`title: ${await driver.getTitle()}`);
         await driver.wait(selenium.until.titleIs('Done'), 5000);
         const result = await (

@@ -52,7 +52,7 @@ jobs:
           cache: npm
       - run: npm ci
       # Recent Selenium requires Node 20; retain the legacy-compatible driver binding.
-      - run: npm install --no-save --package-lock=false --ignore-scripts selenium-webdriver@4.17.0
+      - run: npm install --no-save --package-lock=false --ignore-scripts selenium-webdriver@4.27.0
         if: matrix.node == '14.x' || matrix.node == '16.x' || matrix.node == '18.x'
       - run: npm run build
       - run: npm test
