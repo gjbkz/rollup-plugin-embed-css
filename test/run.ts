@@ -31,7 +31,7 @@ export const startServer = async (documentRoot: string) => {
     await new Promise((resolve, reject) => {
         server.once('error', reject);
         server.once('listening', resolve);
-        server.listen(3000);
+        server.listen(0, '127.0.0.1');
     });
     return server;
 };
@@ -44,7 +44,6 @@ export const startBrowser = async () => {
     if (process.env.CI) {
         options.addArguments('--headless');
     }
-    options.addArguments('--auto-open-devtools-for-tabs');
     builder.setChromeOptions(options);
     return await builder.build();
 };
@@ -57,8 +56,12 @@ export const run = async (directory: string): Promise<TestResult> => {
     const close = async () => {
         // await new Promise((resolve) => setTimeout(resolve, 60000));
         console.log('closing');
-        server.close();
-        await driver.close();
+        await Promise.all([
+            new Promise<void>((resolve, reject) => {
+                server.close((error) => error ? reject(error) : resolve());
+            }),
+            driver.quit(),
+        ]);
         console.log('closed');
     };
     try {
@@ -66,16 +69,27 @@ export const run = async (directory: string): Promise<TestResult> => {
         if (!address || typeof address === 'string') {
             throw new Error('InvalieAddress');
         }
-        await driver.get(`http://localhost:${address.port}/`);
+        const url = `http://127.0.0.1:${address.port}/`;
+        await driver.get(url);
+        // Retry navigation only while ChromeDriver is still on its bootstrap page.
+        await driver.wait(async () => {
+            const currentUrl = await driver.getCurrentUrl();
+            if (currentUrl === 'data:,') {
+                await driver.get(url);
+                return false;
+            }
+            return currentUrl === url;
+        }, 5000);
         console.log(`title: ${await driver.getTitle()}`);
         await driver.wait(selenium.until.titleIs('Done'), 5000);
         const result = await (
             await driver.findElement({css: 'body'})
         ).getText();
-        await close();
         return JSON.parse(result) as TestResult;
     } catch (error: unknown) {
-        await close();
+        console.error(`Browser URL: ${await driver.getCurrentUrl()}`);
         throw error;
+    } finally {
+        await close();
     }
 };
