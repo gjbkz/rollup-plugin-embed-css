@@ -44,7 +44,6 @@ export const startBrowser = async () => {
     if (process.env.CI) {
         options.addArguments('--headless');
     }
-    options.addArguments('--auto-open-devtools-for-tabs');
     builder.setChromeOptions(options);
     return await builder.build();
 };
