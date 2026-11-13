@@ -31,7 +31,7 @@ export const startServer = async (documentRoot: string) => {
     await new Promise((resolve, reject) => {
         server.once('error', reject);
         server.once('listening', resolve);
-        server.listen(3000);
+        server.listen(0, '127.0.0.1');
     });
     return server;
 };
@@ -69,13 +69,16 @@ export const run = async (directory: string): Promise<TestResult> => {
         if (!address || typeof address === 'string') {
             throw new Error('InvalieAddress');
         }
-        await driver.get(`http://localhost:${address.port}/`);
+        await driver.get(`http://127.0.0.1:${address.port}/`);
         console.log(`title: ${await driver.getTitle()}`);
         await driver.wait(selenium.until.titleIs('Done'), 5000);
         const result = await (
             await driver.findElement({css: 'body'})
         ).getText();
         return JSON.parse(result) as TestResult;
+    } catch (error: unknown) {
+        console.error(`Browser URL: ${await driver.getCurrentUrl()}`);
+        throw error;
     } finally {
         await close();
     }
